@@ -93,6 +93,7 @@ body, #root {
     background: #061;
     border: none;
     color: #fff;
+    cursor: pointer;
     display: inline-block;
     font: inherit;
     font-size: 16px;
