@@ -11,9 +11,6 @@
   "author": "Gwilyn Saunders",
   "license": "MIT",
   "dependencies": {
-    "@types/react-redux": "^7.1.4",
-    "bulma": "^0.7.5",
-    "express": "^4.17.1",
     "luxon": "^1.19.3",
     "preact": "^10.0.0-rc.3",
     "react-redux": "^7.1.1",
@@ -22,20 +19,22 @@
     "redux": "^4.0.4",
     "redux-persist": "^6.0.0",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.3",
     "workbox-expiration": "^4.3.1",
     "workbox-routing": "^4.3.1",
     "workbox-strategies": "^4.3.1"
   },
   "devDependencies": {
     "@types/luxon": "^1.15.2",
+    "@types/react-redux": "^7.1.4",
     "@types/react-router": "^5.1.1",
     "@types/react-router-dom": "^5.1.0",
     "@types/webpack": "^4.39.1",
     "@types/workbox-sw": "^4.2.0",
+    "express": "^4.17.1",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "serviceworker-webpack-plugin": "^1.0.1",
     "ts-loader": "^6.1.2",
+    "typescript": "^3.6.3",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   }
