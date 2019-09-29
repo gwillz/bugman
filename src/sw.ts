@@ -1,8 +1,7 @@
 
-import workbox from 'workbox-sw';
-const { registerRoute, setCatchHandler } = workbox.routing;
-const { Plugin: ExpirationPlugin } = workbox.expiration;
-const { StaleWhileRevalidate, CacheFirst } = workbox.strategies;
+import { registerRoute, registerNavigationRoute, setDefaultHandler } from 'workbox-routing';
+import { Plugin as ExpirationPlugin } from 'workbox-expiration';
+import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
 
 const ONE_YEAR = 365 * 24 * 60 * 60;
 
@@ -11,7 +10,7 @@ registerRoute(/\//, new StaleWhileRevalidate());
 
 // Cache Assets
 registerRoute(
-    /\.(?:js|css|webmanifest)$/,
+    /\.(?:js|css|html|webmanifest)$/,
     new StaleWhileRevalidate({
         plugins: [
             new ExpirationPlugin({
@@ -37,4 +36,5 @@ registerRoute(
 );
 
 // Push-state behaviour
-setCatchHandler(async () => await caches.match("/") || Response.error());
+registerNavigationRoute('/index.html');
+setDefaultHandler(async () => await caches.match("/index.html") || Response.error());
