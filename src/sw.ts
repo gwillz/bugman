@@ -7,6 +7,6 @@ import {StaleWhileRevalidate} from 'workbox-strategies';
 console.log("hello from sw");
 
 registerRoute(
-    /\.(?:js|css|html|webmanifest)$/,
+    /\.(?:js|css|html|png|ico|webmanifest)$/,
     new StaleWhileRevalidate()
 );

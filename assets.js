@@ -8,6 +8,8 @@ const INCLUDE = [
     ".css",
     ".html",
     ".webmanifest",
+    ".png",
+    ".ico",
 ]
 
 function filter(file) {
