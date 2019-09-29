@@ -1,0 +1,15 @@
+{
+    "background_color": "#fff",
+    "description": "Bugman Field Assistant",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/apple-touch-cino.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "name": "Bugman",
+    "short_name": "Bugman",
+    "start_url": "/"
+}
