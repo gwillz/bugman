@@ -1,12 +1,40 @@
 
-// @ts-ignore
-import {registerRoute} from 'workbox-routing/registerRoute';
-// @ts-ignore
-import {StaleWhileRevalidate} from 'workbox-strategies';
+import workbox from 'workbox-sw';
+const { registerRoute, setCatchHandler } = workbox.routing;
+const { Plugin: ExpirationPlugin } = workbox.expiration;
+const { StaleWhileRevalidate, CacheFirst } = workbox.strategies;
 
-console.log("hello from sw");
+const ONE_YEAR = 365 * 24 * 60 * 60;
 
+// Home
+registerRoute(/\//, new StaleWhileRevalidate());
+
+// Cache Assets
 registerRoute(
-    /\.(?:js|css|html|png|ico|webmanifest)$/,
-    new StaleWhileRevalidate()
+    /\.(?:js|css|webmanifest)$/,
+    new StaleWhileRevalidate({
+        plugins: [
+            new ExpirationPlugin({
+              maxEntries: 10,
+              maxAgeSeconds: ONE_YEAR,
+            }),
+          ],
+    })
 );
+
+// Cache images
+registerRoute(
+    /\.(?:png|ico)$/,
+    new CacheFirst({
+        cacheName: 'images',
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 10,
+                maxAgeSeconds: ONE_YEAR,
+            }),
+        ],
+    }),
+);
+
+// Push-state behaviour
+setCatchHandler(async () => await caches.match("/") || Response.error());
