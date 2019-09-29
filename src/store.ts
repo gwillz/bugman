@@ -1,5 +1,5 @@
 
-import { useMemo } from 'react';
+import { useMemo } from 'preact/hooks';
 import { createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';

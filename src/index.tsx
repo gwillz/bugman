@@ -1,6 +1,5 @@
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { h, render } from 'preact';
 // @ts-ignore
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -13,9 +12,9 @@ import { Provider } from 'react-redux';
 
 function App() {
     return (
-        <BrowserRouter>
         <PersistGate persistor={persistor}>
         <Provider store={store}>
+        <BrowserRouter>
             <header className="header">
                 <h1>Bugman</h1>
             </header>
@@ -33,9 +32,9 @@ function App() {
                     <EditView/>
                 </Route>
             </Switch>
+        </BrowserRouter>
         </Provider>
         </PersistGate>
-        </BrowserRouter>
     )
 }
 
@@ -43,4 +42,4 @@ if (process.env.NODE_ENV === "production") {
     if ('serviceWorker' in navigator) runtime.register();
 }
 
-ReactDOM.render(<App/>, document.getElementById('root') as HTMLElement);
+render(<App/>, document.getElementById('root') as HTMLElement);

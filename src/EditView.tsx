@@ -1,6 +1,6 @@
 
-import * as React from 'react';
-import { useState } from 'react';
+import { h } from 'preact';
+import { useState } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
 import { useGetEntry, DispatchFn, Mark } from './store';
 import { useInput } from './useInput';
@@ -21,7 +21,7 @@ export function EditView() {
     const [name, onName] = useInput(entry && entry.name);
     const [notes, onNotes] = useInput(entry && entry.notes);
     
-    async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    async function onSubmit(event: Event) {
         event.preventDefault();
         if (!entry) {
             const mark = await getGeo();

@@ -1,6 +1,5 @@
 
-import * as React from 'react';
-import { DateTime } from 'luxon';
+import { h } from 'preact';
 import { useParams } from 'react-router';
 import { useGetEntry } from './store';
 import { Link } from 'react-router-dom';
