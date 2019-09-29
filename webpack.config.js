@@ -27,15 +27,22 @@ module.exports = {
     module: {
         rules: [
             {
-                // Compile here, but type-checking happens in parallel.
                 test: /\.(js|json|ts|tsx)$/,
                 include: r("src"),
-                exclude: r("node_modules"),
+                exclude: r("src/sw.ts"),
                 loader: 'ts-loader',
                 options: {
-                    transpileOnly: true,
                     experimentalWatchApi: true,
                     configFile: r("tsconfig.json"),
+                },
+            },
+            {
+                test: /\.(js|json|ts|tsx|mjs)$/,
+                include: r("src/sw.ts"),
+                loader: 'ts-loader',
+                options: {
+                    experimentalWatchApi: true,
+                    configFile: r("tsconfig.sw.json"),
                 },
             },
         ]
@@ -48,11 +55,12 @@ module.exports = {
         },
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            async: true,
-            watch: r("/src"),
-            tsconfig: r("tsconfig.json"),
-        }),
+        // new ForkTsCheckerWebpackPlugin({
+        //     async: true,
+        //     watch: r("/src"),
+        //     tsconfig: r("tsconfig.json"),
+            
+        // }),
         new ServiceWorkerWebpackPlugin({
             entry: r("src/sw.ts"),
         }),

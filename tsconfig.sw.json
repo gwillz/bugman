@@ -1,0 +1,7 @@
+{
+    "extends": ".",
+    "compilerOptions": {
+        "lib": ["webworker", "es2015"]
+    },
+    "include": ["./src/sw.ts"]
+}
