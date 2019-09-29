@@ -16,7 +16,9 @@ function App() {
         <BrowserRouter>
         <PersistGate persistor={persistor}>
         <Provider store={store}>
-            <h1>Bugman</h1>
+            <header className="header">
+                <h1>Bugman</h1>
+            </header>
             <Switch>
                 <Route exact path="/">
                     <TableView/>
@@ -37,6 +39,6 @@ function App() {
     )
 }
 
-if ('serviceWorker' in navigator) runtime.register();
+// if ('serviceWorker' in navigatsor) runtime.register();
 
 ReactDOM.render(<App/>, document.getElementById('root') as HTMLElement);

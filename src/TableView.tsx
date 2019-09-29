@@ -9,10 +9,12 @@ export function TableView() {
     
     return (
         <div>
-            <div>
-                <Link to="/new">Add Entry</Link>
-            </div>
-            <div>
+            <nav className="navbar">
+                <Link className="button" to="/new">
+                    Add Entry
+                </Link>
+            </nav>
+            <div className="entry-group">
                 {entries.map(entry => (
                     <EntryBlock
                         key={entry.entry_id}

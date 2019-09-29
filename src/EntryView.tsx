@@ -18,10 +18,14 @@ export function EntryView() {
     
     return (
         <div>
-            <div>
-                <Link to="/">All</Link>
-                <Link to={`/${entry_id}/edit`}>Edit</Link>
-            </div>
+            <nav className="navbar">
+                <Link className="button" to="/">
+                    Back
+                </Link>
+                <Link className="button" to={`/${entry_id}/edit`}>
+                    Edit
+                </Link>
+            </nav>
             <EntryBlock entry={entry} />
         </div>
     )

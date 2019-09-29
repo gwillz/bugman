@@ -41,32 +41,38 @@ export function EditView() {
     
     return (
         <div>
-            <div>
+            <nav className="navbar">
+                <Link className="button" to="/">
+                    Back
+                </Link>
                 {entry && (
-                    <Link to={`/${entry.entry_id}`}>View</Link>
+                    <Link className="button" to={`/${entry.entry_id}`}>
+                        View
+                    </Link>
                 )}
-                <Link to="/">All</Link>
-            </div>
-            <form onSubmit={onSubmit}>
-                <label>Name</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={name}
-                    onChange={onName}
-                    required
-                />
-                <br/>
-                <label>Notes</label>
-                <textarea
-                    name="notes"
-                    value={notes}
-                    onChange={onNotes}
-                />
-                <br/>
-                <button type="submit">
+                <button className="button" type="submit">
                     {entry ? "Save" : "Create"}
                 </button>
+            </nav>
+            <form className="form" onSubmit={onSubmit}>
+                <div className="form-field">
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={onName}
+                        required
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Notes</label>
+                    <textarea
+                        name="notes"
+                        value={notes}
+                        onChange={onNotes}
+                    />
+                </div>
             </form>
         </div>
     )
