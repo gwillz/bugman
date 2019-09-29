@@ -3,7 +3,7 @@ html {
     box-sizing: border-box;
     font-family: sans-serif;
     font-size: 18px;
-    max-width: 320px;
+    min-width: 320px;
     height: 100%;
     width: 100%;
 }
@@ -15,7 +15,8 @@ html {
 body, #root {
     height: 100%;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 680px;
 }
 
 .header {
@@ -43,7 +44,7 @@ body, #root {
 }
 
 .entry-group .entry-block + .entry-block {
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .entry-footer {
@@ -58,7 +59,7 @@ body, #root {
     color: #777;
     display: inline-block;
     padding-right: 5px;
-    min-width: 60px;
+    min-width: 65px;
 }
 
 .entry-record label::after {
@@ -80,22 +81,21 @@ body, #root {
 
 .form-field textarea,
 .form-field input {
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 0;
-    padding: 5px;
     font: inherit;
     font-size: 16px;
+    padding: 5px;
+    width: 100%;
 }
 
 .button {
     background: #061;
     border: none;
-    font: inherit;
-    display: inline-block;
     color: #fff;
+    display: inline-block;
+    font: inherit;
+    font-size: 16px;
     padding: 5px 10px;
     text-decoration: none;
 }
-
-.

@@ -1,11 +1,12 @@
 
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import { useState, useMemo } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
 import { useGetEntry, DispatchFn, Mark } from './store';
 import { useInput } from './useInput';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 type Params = {
     entry_id?: string;
@@ -20,11 +21,15 @@ export function EditView() {
     
     const [name, onName] = useInput(entry && entry.name);
     const [notes, onNotes] = useInput(entry && entry.notes);
+    const mark = useGeo(entry && entry.mark);
     
     async function onSubmit(event: Event) {
         event.preventDefault();
+        
+        if (!mark) await sleep(200);
+        if (!mark) return;
+        
         if (!entry) {
-            const mark = await getGeo();
             dispatch({type: "ADD", name, notes, mark });
             setRedirect('/');
         }
@@ -40,7 +45,7 @@ export function EditView() {
     if (redirect) return <Redirect to={redirect} />
     
     return (
-        <div>
+        <form onSubmit={onSubmit}>
             <nav className="navbar">
                 <Link className="button" to="/">
                     Back
@@ -54,7 +59,7 @@ export function EditView() {
                     {entry ? "Save" : "Create"}
                 </button>
             </nav>
-            <form className="form" onSubmit={onSubmit}>
+            <div className="form">
                 <div className="form-field">
                     <label>Name</label>
                     <input
@@ -66,6 +71,15 @@ export function EditView() {
                     />
                 </div>
                 <div className="form-field">
+                    <label>Mark</label>
+                    <input
+                        type="text"
+                        name="mark"
+                        value={mark ? `${mark[0]}, ${mark[1]}` : '...'}
+                        readOnly
+                    />
+                </div>
+                <div className="form-field">
                     <label>Notes</label>
                     <textarea
                         name="notes"
@@ -73,14 +87,29 @@ export function EditView() {
                         onChange={onNotes}
                     />
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     )
 }
 
+function useGeo(mark?: Mark) {
+    const [state, set] = useState(mark);
+    
+    useEffect(() => void get(), [mark]);
+    
+    async function get() {
+        await sleep(200);
+        set(mark || await getGeo());
+    }
+    
+    return state;
+}
 
+async function sleep(timeout: number) {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
-function getGeo() {
+async function getGeo() {
     return new Promise<Mark>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(geo => {
             const { latitude, longitude } = geo.coords;

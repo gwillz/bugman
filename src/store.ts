@@ -102,7 +102,15 @@ export function useGetEntry(entry_id?: string | number) {
 export function useGetEntries() {
     const state = useSelector((state: State) => state, equalState);
     
-    return useMemo(() => (
-        Object.values(state.entries).filter(e => !!e) as Entry[]
-    ), [state.timestamp]);
+    return useMemo(() => {
+        const entries = Object.values(state.entries as Entry[])
+            .filter(e => !!e);
+        entries.sort(compareEntry);
+        return entries;
+    }, [state.timestamp]);
+}
+
+function compareEntry(left: Entry, right: Entry) {
+    // Ascending order.
+    return right.entry_id - left.entry_id;
 }

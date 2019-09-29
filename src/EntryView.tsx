@@ -25,7 +25,18 @@ export function EntryView() {
                     Edit
                 </Link>
             </nav>
+            
             <EntryBlock entry={entry} />
+            <br/>
+            <br/>
+            <div className="form entry-record">
+                <label>Notes</label>
+                <div dangerouslySetInnerHTML={{
+                    __html: entry.notes 
+                        ? entry.notes.replace(/[\r\n]+/, "<br/>")
+                        : '',
+                }}/>
+            </div>
         </div>
     )
 }

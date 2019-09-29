@@ -15,16 +15,16 @@ export function EntryBlock(props: Props) {
     return (
         <div className="entry-block">
             <div className="entry-record">
+                <label>Name</label>
+                <span>
+                    {name}
+                </span>
+            </div>
+            <div className="entry-record">
                 <label>Date</label>
                 <span>
                     {DateTime.fromMillis(entry_id)
                     .toLocaleString(DateTime.DATETIME_MED)}
-                </span>
-            </div>
-            <div className="entry-record">
-                <label>Name</label>
-                <span>
-                    {name}
                 </span>
             </div>
             <div className="entry-record">
@@ -33,14 +33,6 @@ export function EntryBlock(props: Props) {
                     {mark[0]},&nbsp;{mark[1]}
                 </span>
             </div>
-            {!props.short && (
-                <div className="entry-record">
-                    <label>Notes</label>
-                    <div dangerouslySetInnerHTML={{
-                        __html: notes ? notes.replace(/[\r\n]+/, "<br/>"): '',
-                    }}/>
-                </div>
-            )}
             {props.short && (
                 <div className="entry-footer">
                     <Link className="button" to={`/${entry_id}`}>
