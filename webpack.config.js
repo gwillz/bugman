@@ -52,5 +52,6 @@ module.exports = {
         new ServiceWorkerWebpackPlugin({
             entry: r("src/sw.ts"),
         }),
+        new webpack.EnvironmentPlugin(process.env),
     ]
 }

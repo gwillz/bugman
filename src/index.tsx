@@ -39,6 +39,8 @@ function App() {
     )
 }
 
-// if ('serviceWorker' in navigatsor) runtime.register();
+if (process.env.NODE_ENV === "production") {
+    if ('serviceWorker' in navigator) runtime.register();
+}
 
 ReactDOM.render(<App/>, document.getElementById('root') as HTMLElement);
