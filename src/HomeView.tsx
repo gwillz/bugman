@@ -2,10 +2,10 @@
 import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import { Link } from 'react-router-dom';
-import { useGetEntries } from './store';
+import { useGetEntries } from './entry';
 import { EntryBlock } from './EntryBlock';
 
-export function TableView() {
+export function HomeView() {
     const entries = useGetEntries();
     const ref = useRef<HTMLAnchorElement | null>(null);
     

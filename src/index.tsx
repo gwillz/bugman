@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Settings } from 'luxon';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store';
-import { TableView } from './TableView';
+import { HomeView } from './HomeView';
 import { EntryView } from './EntryView';
 import { EditView } from './EditView';
 import { DeleteView } from './DeleteView';
@@ -32,7 +32,7 @@ function App() {
             </header>
             <Switch>
                 <Route exact path="/">
-                    <TableView/>
+                    <HomeView/>
                 </Route>
                 <Route exact path="/new">
                     <EditView/>

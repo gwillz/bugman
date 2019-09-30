@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'preact/hooks';
-import { EntryPosition } from 'store';
+import { EntryPosition } from './entry';
 
 export function useGeo(mark?: EntryPosition) {
     const [state, set] = useState(mark);
@@ -26,7 +26,7 @@ async function getGeo(options?: PositionOptions) {
             resolve({
                 latitude,
                 longitude,
-                elevation: altitude || 0,
+                elevation: parseInt(altitude ? altitude.toFixed(0) : "0"),
             });
         }, reject, options);
     });

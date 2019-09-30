@@ -1,8 +1,8 @@
 
 import { h, Fragment } from 'preact';
-import { Entry } from 'store';
 import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
+import { Entry, positionToString } from './entry';
 
 type Props = {
     entry: Entry;
@@ -42,6 +42,10 @@ export function EntryBlock(props: Props) {
             </div>
             {props.detailed && (
                 <Fragment>
+                    <div className="entry-record">
+                        <label>Position</label>
+                        <span>{positionToString(entry.position)}</span>
+                    </div>
                     <div className="entry-record">
                         <label>Specimen Count</label>
                         <span>{entry.specimen_count}</span>

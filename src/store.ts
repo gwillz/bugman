@@ -1,28 +1,8 @@
 
-import { useMemo } from 'preact/hooks';
 import { createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { shallowEqual, useSelector } from 'react-redux';
-
-export interface EntryPosition {
-    latitude: number;
-    longitude: number;
-    elevation: number;
-};
-
-export interface Entry {
-    entry_id: number; // timestamp
-    position: EntryPosition;
-    voucher: string;
-    collector: string;
-    specimen_type: string;
-    specimen_count?: number;
-    location?: string;
-    method?: string;
-    flower_type?: string;
-    notes?: string;
-}
+import { Entry } from './entry';
 
 export interface State {
     timestamp: number;
@@ -95,29 +75,6 @@ export const store = createStore(
 // @ts-ignore
 export const persistor = persistStore(store);
 
-
-function equalState(left: State, right: State): boolean {
+export function stateEqual(left: State, right: State): boolean {
     return left.timestamp === right.timestamp;
-}
-
-export function useGetEntry(entry_id?: string | number) {
-    const id = entry_id ? parseInt(entry_id + "") : -1;
-    
-    return useSelector((state: State) => state.entries[id], shallowEqual);
-}
-
-export function useGetEntries() {
-    const state = useSelector((state: State) => state, equalState);
-    
-    return useMemo(() => {
-        const entries = Object.values(state.entries as Entry[])
-            .filter(e => !!e);
-        entries.sort(compareEntry);
-        return entries;
-    }, [state.timestamp]);
-}
-
-function compareEntry(left: Entry, right: Entry) {
-    // Ascending order.
-    return right.entry_id - left.entry_id;
 }

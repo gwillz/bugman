@@ -1,8 +1,8 @@
 
 import { h } from 'preact';
 import { useParams } from 'react-router';
-import { useGetEntry } from './store';
 import { Link } from 'react-router-dom';
+import { useGetEntry } from './entry';
 import { EntryBlock } from './EntryBlock';
 
 type Params = {

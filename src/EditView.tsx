@@ -2,12 +2,13 @@
 import { h } from 'preact';
 import { useState, useMemo } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
-import { useGetEntry, DispatchFn } from './store';
-import { useInput } from './useInput';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useGeo, sleep } from './useGeo';
 import { DateTime } from 'luxon';
+import { DispatchFn } from './store';
+import { useGetEntry, positionToString } from './entry';
+import { useInput } from './useInput';
+import { useGeo, sleep } from './useGeo';
 
 type Params = {
     entry_id?: string;
@@ -130,7 +131,7 @@ export function EditView() {
                         type="text"
                         name="position"
                         value={position
-                            ? `${position.latitude}, ${position.longitude} @ ${position.elevation}m`
+                            ? positionToString(position)
                             : '...'}
                         readOnly
                     />
