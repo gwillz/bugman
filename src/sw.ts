@@ -10,7 +10,7 @@ registerRoute(/\//, new StaleWhileRevalidate());
 
 // Cache Assets
 registerRoute(
-    /\.(?:js|css|html|webmanifest)$/,
+    /\.(?:js|css|html)$/,
     new StaleWhileRevalidate({
         plugins: [
             new ExpirationPlugin({
