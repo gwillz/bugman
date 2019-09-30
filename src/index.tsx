@@ -1,6 +1,5 @@
 
 import { h, render } from 'preact';
-// @ts-ignore
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
