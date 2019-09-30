@@ -7,6 +7,20 @@ import { useGetEntries } from './entry';
 import { CSVBuilder } from './CSVBuilder';
 import { useInput } from './useInput';
 
+declare global {
+    interface WebShare {
+        files?: Blob[];
+        url?: string;
+        text?: string;
+        title?: string;
+    }
+    
+    interface Navigator {
+        share?: (data: WebShare) => Promise<void>;
+        canShare?: (data: WebShare) => boolean;
+    }
+}
+
 
 export function ExportView() {
     const entries = useGetEntries();
@@ -16,11 +30,38 @@ export function ExportView() {
         DateTime.local().toFormat("yyyy-MM-dd_HH-mm")
     ))
     
-    function onExport(event: Event) {
-        event.preventDefault();
-        
-        if (!ref.current) return;
-        
+    function onExport() {
+        const csv = buildCSV();
+        if (navigator.share && navigator.canShare) {
+            const file = new File(
+                [csv],
+                filename + ".csv",
+                { type: 'text/csv' },
+            );
+            
+            const data: WebShare = {
+                files: [ file ],
+            };
+            
+            if (navigator.canShare(data)) {
+                navigator.share(data)
+                .then(() => void 0)
+                .catch(err => {
+                    console.log(err, err.message);
+                })
+            }
+        }
+        else if (ref.current) {
+            ref.current.href = encodeURI("data:text/csv," + csv);
+            ref.current.download = filename + ".csv";
+            ref.current.click();
+        }
+        else {
+            console.log("cant export!");
+        }
+    }
+    
+    function buildCSV() {
         const builder = new CSVBuilder();
         
         builder.setHeaders(
@@ -58,24 +99,21 @@ export function ExportView() {
                 entry.notes || "",
             );
         }
-        
-        // @todo Download name prompt.
-        ref.current.href = encodeURI("data:text/csv," + builder.build());
-        ref.current.download = filename + ".csv";
-        ref.current.click();
+        return builder.build();
     }
     
     return (
-        <form onSubmit={onExport}>
+        <div>
             <a ref={ref} style={{display: 'none'}} />
             
             <div className="navbar">
                 <Link to="/" className="button">
                     Home
                 </Link>
-                <button type="submit"
+                <button type="button"
                     className="button"
-                    disabled={entries.length > 0}>
+                    onClick={onExport}
+                    disabled={entries.length == 0}>
                     Export
                 </button>
             </div>
@@ -94,6 +132,6 @@ export function ExportView() {
                     />
                 </div>
             </div>
-        </form>
+        </div>
     )
 }
