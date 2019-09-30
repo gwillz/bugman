@@ -70,18 +70,20 @@ export function ExportView() {
         <form onSubmit={onExport}>
             <a ref={ref} style={{display: 'none'}} />
             
-            <div>
+            <div className="navbar">
                 <Link to="/" className="button">
                     Home
                 </Link>
-                <button type="submit" className="button">
+                <button type="submit"
+                    className="button"
+                    disabled={entries.length > 0}>
                     Export
                 </button>
             </div>
             
-            <h3>Exporting {entries.length} entries.</h3>
-            
             <div className="form">
+                <h3>Exporting {entries.length} entries.</h3>
+                
                 <div className="form-field">
                     <label>File name</label>
                     <input

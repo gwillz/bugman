@@ -32,8 +32,9 @@ export function DeleteView() {
     
     return (
         <div>
-            <h3>Deleting "{entry.voucher}" - are you sure?</h3>
-            <div>
+            <div className="form">
+                <h3>Deleting "{entry.voucher}" - are you sure?</h3>
+                
                 <button type="button"
                     className="button"
                     onClick={onRemove}>

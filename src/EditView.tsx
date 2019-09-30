@@ -199,7 +199,11 @@ export function EditView() {
                         onChange={onNotes}
                     />
                 </div>
+                <button className="button" type="submit">
+                    {entry ? "Save" : "Create"}
+                </button>
             </div>
         </form>
+        
     )
 }
