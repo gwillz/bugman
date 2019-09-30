@@ -18,7 +18,7 @@ const VERSION = require("./version")();
 module.exports = {
     mode: presetMode,
     context: __dirname,
-    devtool: 'cheap-module-source-map',
+    devtool: isProduction ? false : 'cheap-module-source-map',
     entry: {
         'index': r("src/index.tsx"),
     },
