@@ -19,3 +19,9 @@ NODE_ENV=production npm run webpack
 firebase login # only once
 firebase deploy
 ```
+
+
+### TODO
+- rich text notes
+- button colours?
+- footer (w/ repo link)
