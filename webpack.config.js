@@ -12,6 +12,8 @@ const isProduction = (presetMode === 'production');
 
 const r = path.resolve.bind(null, __dirname);
 
+const VERSION = require("./version")();
+
 /** @type {webpack.Configuration} */
 module.exports = {
     mode: presetMode,
@@ -65,6 +67,10 @@ module.exports = {
         new ServiceWorkerWebpackPlugin({
             entry: r("src/sw.ts"),
         }),
-        new webpack.EnvironmentPlugin(process.env),
+        new webpack.EnvironmentPlugin({
+            ...process.env,
+            VERSION,
+            BUILD_TIMESTAMP: +new Date(),
+        }),
     ]
 }

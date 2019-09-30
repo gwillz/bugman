@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node serve.js",
     "webpack": "webpack",
-    "assets": "node assets.js"
+    "assets": "node assets.js",
+    "version": "node version.js"
   },
   "author": "Gwilyn Saunders",
   "license": "MIT",
