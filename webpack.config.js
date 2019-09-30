@@ -1,5 +1,7 @@
 // @ts-check
 
+/// <reference path="./src/serviceworker-webpack-plugin.d.ts" />
+
 const path = require('path');
 const webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -14,7 +16,7 @@ const r = path.resolve.bind(null, __dirname);
 module.exports = {
     mode: presetMode,
     context: __dirname,
-    devtool: isProduction ? false : 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     entry: {
         'index': r("src/index.tsx"),
     },
@@ -59,7 +61,6 @@ module.exports = {
         //     async: true,
         //     watch: r("/src"),
         //     tsconfig: r("tsconfig.json"),
-            
         // }),
         new ServiceWorkerWebpackPlugin({
             entry: r("src/sw.ts"),

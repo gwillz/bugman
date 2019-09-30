@@ -1,7 +1,10 @@
 
-import { registerRoute, registerNavigationRoute, setDefaultHandler } from 'workbox-routing';
-import { Plugin as ExpirationPlugin } from 'workbox-expiration';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { registerRoute } from 'workbox-routing/registerRoute';
+import { Plugin as ExpirationPlugin } from 'workbox-expiration/Plugin';
+import { StaleWhileRevalidate } from 'workbox-strategies/StaleWhileRevalidate';
+import { CacheFirst } from 'workbox-strategies/CacheFirst';
+import { setDefaultHandler } from 'workbox-routing/setDefaultHandler';
+import { setCatchHandler } from 'workbox-routing/setCatchHandler';
 
 const ONE_YEAR = 365 * 24 * 60 * 60;
 
@@ -34,7 +37,13 @@ registerRoute(
         ],
     }),
 );
-
+    
 // Push-state behaviour
-registerNavigationRoute('/index.html');
-setDefaultHandler(async () => await caches.match("/index.html") || Response.error());
+setDefaultHandler(async () => (
+    await caches.match("/") || Response.error()
+));
+
+setCatchHandler(async () => (
+    await caches.match("/") || Response.error()
+))
+
