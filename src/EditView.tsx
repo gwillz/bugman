@@ -2,11 +2,12 @@
 import { h } from 'preact';
 import { useState, useMemo } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
-import { useGetEntry, DispatchFn, Mark } from './store';
+import { useGetEntry, DispatchFn } from './store';
 import { useInput } from './useInput';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useGeo, sleep } from './useGeo';
+import { DateTime } from 'luxon';
 
 type Params = {
     entry_id?: string;
@@ -19,23 +20,67 @@ export function EditView() {
     
     const dispatch = useDispatch<DispatchFn>();
     
-    const [name, onName] = useInput(entry && entry.name);
+    const timestamp = +new Date();
+    
+    const datetime = useMemo(() => {
+        const date = DateTime.fromMillis(entry
+                ? entry.entry_id
+                : timestamp);
+        return date.toLocaleString(DateTime.DATE_SHORT) + " " +
+            date.toLocaleString(DateTime.TIME_24_SIMPLE);
+    }, [entry && entry.entry_id, timestamp]);
+    
+    const [voucher, onVoucher] = useInput(entry && entry.voucher);
+    const [collector, onCollector] = useInput(entry && entry.collector);
+    const [specimen_type, onSpecimenType] = useInput(entry && entry.specimen_type);
+    const [specimen_count, onSpecimenCount] = useInput(entry && (entry.specimen_count + ""));
+    const [location, onLocation] = useInput(entry && entry.location);
+    const [method, onMethod] = useInput(entry && entry.method);
+    const [flower_type, onFlowerType] = useInput(entry && entry.flower_type);
     const [notes, onNotes] = useInput(entry && entry.notes);
-    const mark = useGeo(entry && entry.mark);
+    const position = useGeo(entry && entry.position);
     
     async function onSubmit(event: Event) {
         event.preventDefault();
         
-        if (!mark) await sleep(200);
-        if (!mark) return;
+        // Wait some more if the mark isn't populated yet.
+        if (!position) await sleep(200);
+        // @todo Can this actually update here?
+        if (!position) return;
         
         if (!entry) {
-            dispatch({type: "ADD", name, notes, mark });
+            dispatch({
+                type: "ADD",
+                entry: {
+                    entry_id: timestamp,
+                    voucher,
+                    position,
+                    collector,
+                    specimen_type,
+                    specimen_count: parseInt(specimen_count) || 1,
+                    flower_type,
+                    location,
+                    method,
+                    notes,
+                },
+            });
             setRedirect('/');
         }
         else {
-            const { entry_id } = entry;
-            dispatch({type: "EDIT", entry_id, entry: { name, notes }});
+            dispatch({
+                type: "EDIT",
+                entry_id: entry.entry_id,
+                entry: {
+                    voucher,
+                    collector,
+                    specimen_type,
+                    specimen_count: parseInt(specimen_count) || 1,
+                    flower_type,
+                    location,
+                    method,
+                    notes,
+                },
+            });
             setRedirect(`/${entry.entry_id}`);
         }
     }
@@ -48,7 +93,7 @@ export function EditView() {
         <form onSubmit={onSubmit}>
             <nav className="navbar">
                 <Link className="button" to="/">
-                    Back
+                    Home
                 </Link>
                 {entry && (
                     <Link className="button" to={`/${entry.entry_id}`}>
@@ -61,22 +106,89 @@ export function EditView() {
             </nav>
             <div className="form">
                 <div className="form-field">
-                    <label>Name</label>
+                    <label>Voucher*</label>
                     <input
                         type="text"
-                        name="name"
-                        value={name}
-                        onChange={onName}
+                        name="voucher"
+                        value={voucher}
+                        onChange={onVoucher}
                         required
                     />
                 </div>
                 <div className="form-field">
-                    <label>Mark</label>
+                    <label>Date/Time*</label>
                     <input
                         type="text"
-                        name="mark"
-                        value={mark ? `${mark[0]}, ${mark[1]}` : '...'}
+                        name="datetime"
+                        value={datetime}
                         readOnly
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Position*</label>
+                    <input
+                        type="text"
+                        name="position"
+                        value={position
+                            ? `${position.latitude}, ${position.longitude} @ ${position.elevation}m`
+                            : '...'}
+                        readOnly
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Collector*</label>
+                    <input
+                        type="text"
+                        name="collector"
+                        value={collector}
+                        onChange={onCollector}
+                        required
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Specimen Type*</label>
+                    <input
+                        type="text"
+                        name="collector"
+                        value={specimen_type}
+                        onChange={onSpecimenType}
+                        required
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Specimen Count</label>
+                    <input
+                        type="number"
+                        name="specimen_count"
+                        value={specimen_count}
+                        onChange={onSpecimenCount}
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Location</label>
+                    <input
+                        type="text"
+                        name="location"
+                        value={location}
+                        onChange={onLocation}
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Method</label>
+                    <input
+                        type="text"
+                        name="method"
+                        value={method}
+                        onChange={onMethod}
+                    />
+                </div>
+                <div className="form-field">
+                    <label>Flower Type</label>
+                    <input
+                        type="text"
+                        name="flower_type"
+                        value={flower_type}
+                        onChange={onFlowerType}
                     />
                 </div>
                 <div className="form-field">
@@ -90,30 +202,4 @@ export function EditView() {
             </div>
         </form>
     )
-}
-
-function useGeo(mark?: Mark) {
-    const [state, set] = useState(mark);
-    
-    useEffect(() => void get(), [mark]);
-    
-    async function get() {
-        await sleep(200);
-        set(mark || await getGeo());
-    }
-    
-    return state;
-}
-
-async function sleep(timeout: number) {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
-
-async function getGeo() {
-    return new Promise<Mark>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(geo => {
-            const { latitude, longitude } = geo.coords;
-            resolve([latitude, longitude]);
-        }, reject);
-    });
 }

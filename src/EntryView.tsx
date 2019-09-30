@@ -19,24 +19,18 @@ export function EntryView() {
         <div>
             <nav className="navbar">
                 <Link className="button" to="/">
-                    Back
+                    Home
                 </Link>
                 <Link className="button" to={`/${entry_id}/edit`}>
                     Edit
                 </Link>
+                <Link className="button" to={`/${entry_id}/remove`}>
+                    Delete
+                </Link>
             </nav>
             
-            <EntryBlock entry={entry} />
-            <br/>
-            <br/>
-            <div className="form entry-record">
-                <label>Notes</label>
-                <div dangerouslySetInnerHTML={{
-                    __html: entry.notes 
-                        ? entry.notes.replace(/[\r\n]+/, "<br/>")
-                        : '',
-                }}/>
-            </div>
+            <EntryBlock entry={entry} detailed />
+            
         </div>
     )
 }

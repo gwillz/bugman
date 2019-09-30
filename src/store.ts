@@ -5,12 +5,22 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { shallowEqual, useSelector } from 'react-redux';
 
-export type Mark = [number, number];
+export interface EntryPosition {
+    latitude: number;
+    longitude: number;
+    elevation: number;
+};
 
 export interface Entry {
     entry_id: number; // timestamp
-    mark: Mark;
-    name: string;
+    position: EntryPosition;
+    voucher: string;
+    collector: string;
+    specimen_type: string;
+    specimen_count?: number;
+    location?: string;
+    method?: string;
+    flower_type?: string;
     notes?: string;
 }
 
@@ -21,9 +31,7 @@ export interface State {
 
 export type Actions = ({
     type: "ADD";
-    name: string;
-    notes: string;
-    mark: Mark;
+    entry: Entry;
 } | {
     type: "REMOVE";
     entry_id: number;
@@ -31,6 +39,8 @@ export type Actions = ({
     type: "EDIT";
     entry_id: number;
     entry: Partial<Entry>;
+} | {
+    type: "CLEAR";
 })
 
 export type DispatchFn = (action: Actions) => void;
@@ -44,29 +54,21 @@ function reducer(state = INIT_STATE, action: Actions): State {
     const timestamp = +new Date();
     
     switch (action.type) {
-    case "ADD":
-        return {
+        case "ADD": return {
             timestamp,
             entries: {
                 ...state.entries,
-                [timestamp]: {
-                    entry_id: timestamp,
-                    name: action.name,
-                    notes: action.notes,
-                    mark: action.mark,
-                }
+                [action.entry.entry_id]: action.entry,
             },
         }
-    case "REMOVE":
-        return {
+        case "REMOVE": return {
             timestamp,
             entries: {
                 ...state.entries,
-                [timestamp]: undefined,
+                [action.entry_id]: undefined,
             }
         }
-    case "EDIT":
-        return {
+        case "EDIT": return {
             timestamp,
             entries: {
                 ...state.entries,
@@ -75,6 +77,10 @@ function reducer(state = INIT_STATE, action: Actions): State {
                     ...action.entry,
                 }
             }
+        }
+        case "CLEAR": return {
+            timestamp,
+            entries: {},
         }
     }
     return state;
@@ -88,6 +94,7 @@ export const store = createStore(
 
 // @ts-ignore
 export const persistor = persistStore(store);
+
 
 function equalState(left: State, right: State): boolean {
     return left.timestamp === right.timestamp;

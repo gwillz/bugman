@@ -1,10 +1,12 @@
 
 import { useState, useEffect } from 'preact/hooks';
 
-export function useInput(init = "") {
+type InitType = string | (() => string);
+
+export function useInput(init: InitType = "") {
     const [value, set] = useState(init);
     
-    useEffect(() => void set(init), [init]);
+    useEffect(() => void set(init), [init && typeof init === "string"]);
     
     function handle(event: Event) {
         set((event.currentTarget as HTMLInputElement).value || "");

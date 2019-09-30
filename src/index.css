@@ -19,6 +19,10 @@ body, #root {
     max-width: 680px;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .header {
     width: 100%;
     padding: 10px;
@@ -27,9 +31,15 @@ body, #root {
     line-height: 1;
     margin: 0;
 }
+.header .logo {
+    display: inline-block;
+    height: 1em;
+    margin: 0 5px;
+    vertical-align: bottom;
+}
 
 .navbar {
-    padding: 10px;
+    padding: 10px 20px 20px;
     width: 100%;
 }
 
@@ -59,7 +69,7 @@ body, #root {
     color: #777;
     display: inline-block;
     padding-right: 5px;
-    min-width: 65px;
+    min-width: 90px;
 }
 
 .entry-record label::after {
