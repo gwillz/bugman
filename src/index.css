@@ -23,6 +23,9 @@ body, #root {
     text-align: center;
 }
 
+
+/* ======== Header ========  */
+
 .header {
     width: 100%;
     padding: 10px;
@@ -38,14 +41,14 @@ body, #root {
     vertical-align: bottom;
 }
 
+/* ======== Navigation ========  */
+
 .navbar {
     padding: 10px 20px 20px;
     width: 100%;
 }
 
-.button + .button {
-    margin-left: 10px;
-}
+/* ======== Entry Block ========  */
 
 .entry-block {
     margin: 0 10px;
@@ -55,10 +58,6 @@ body, #root {
 
 .entry-group .entry-block + .entry-block {
     margin-top: 10px;
-}
-
-.entry-footer {
-/*     padding: 10px 0 0; */
 }
 
 .entry-record {
@@ -75,6 +74,8 @@ body, #root {
 .entry-record label::after {
     content: ':';
 }
+
+/* ======== Forms ========  */
 
 .form {
     padding: 0 10px;
@@ -99,6 +100,8 @@ body, #root {
     width: 100%;
 }
 
+/* ======== Buttons ========  */
+
 .button {
     background: #061;
     border: none;
@@ -109,4 +112,27 @@ body, #root {
     font-size: 16px;
     padding: 5px 10px;
     text-decoration: none;
+}
+
+.button + .button {
+    margin-left: 10px;
+}
+
+/* ======== Footer ========  */
+
+.footer {
+    color: #aaa;
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 30px 20px 10px;
+    width: 100%;
+}
+
+.footer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
 }

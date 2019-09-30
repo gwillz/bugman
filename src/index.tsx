@@ -12,6 +12,7 @@ import { EditView } from './EditView';
 import { DeleteView } from './DeleteView';
 import { ClearView } from './ClearView';
 import { ExportView } from './ExportView';
+import { Footer } from './Footer';
 
 Settings.defaultLocale = "en-AU";
 
@@ -52,6 +53,7 @@ function App() {
                     <DeleteView/>
                 </Route>
             </Switch>
+            <Footer/>
         </BrowserRouter>
         </Provider>
         </PersistGate>
