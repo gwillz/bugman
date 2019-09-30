@@ -111,6 +111,8 @@ export function EditView() {
                     <input
                         type="text"
                         name="voucher"
+                        autoComplete="off"
+                        autoCorrect="off"
                         value={voucher}
                         onChange={onVoucher}
                         required
@@ -163,6 +165,7 @@ export function EditView() {
                         name="specimen_count"
                         value={specimen_count}
                         onChange={onSpecimenCount}
+                        step="1"
                     />
                 </div>
                 <div className="form-field">
