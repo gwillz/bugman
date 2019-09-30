@@ -24,4 +24,3 @@ firebase deploy
 ### TODO
 - rich text notes
 - button colours?
-- footer (w/ repo link)
