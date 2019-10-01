@@ -1,6 +1,16 @@
 # Bugman
 ## Field Assistant
 
+### Tech
+- Typescript
+- Preact X
+- React-Router
+- Redux
+- Redux Persist
+- React Redux
+- Workbox
+- Luxon
+
 
 ### Build
 ```sh
@@ -23,5 +33,4 @@ firebase deploy
 
 ### TODO
 - rich text notes
-- fancy entry tabs
 - fonts
