@@ -163,17 +163,29 @@ body {
 
 .entry-record {
     padding: 0 0 10px;
+    display: flex;
 }
 
-.entry-record label {
+.entry-record-block {
+    padding: 0 0 10px;
+    display: block;
+}
+
+.entry-record label,
+.entry-record-block label {
     color: #777;
     display: inline-block;
     padding-right: 5px;
     min-width: 90px;
 }
 
-.entry-record label::after {
+.entry-record label::after,
+.entry-record-block label::after {
     content: ':';
+}
+
+.entry-record :not(label) {
+    flex: 1 1 0px;
 }
 
 /* ======== Forms ========  */
@@ -209,6 +221,10 @@ body {
 .form-field input::placeholder,
 .form-field textarea::placeholder {
     color: var(--color-brick);
+}
+
+.form-field textarea {
+    min-height: 200px;
 }
 
 /* ======== Buttons ========  */

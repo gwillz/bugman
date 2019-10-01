@@ -84,7 +84,7 @@ export function EntryBlock(props: Props) {
                         <label>Flower Type</label>
                         <span>{entry.flower_type}</span>
                     </div>
-                    <div className="entry-record">
+                    <div className="entry-record-block">
                         <label>Notes</label>
                         <div dangerouslySetInnerHTML={{
                             __html: entry.notes 
