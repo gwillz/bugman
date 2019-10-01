@@ -127,6 +127,22 @@ body {
     max-height: 1000px;
 }
 
+
+.entry-block:first-child {
+    box-shadow: 0px -6px 4px -3px rgba(0,0,0,0.04);
+}
+
+.entry-block:first-child .entry-tab {
+    box-shadow: 3px -3px 4px 0px rgba(0,0,0,0.04);
+}
+
+.entry-block.entry-open + .entry-block {
+    box-shadow: 0px -6px 4px -3px rgba(0,0,0,0.08);
+}
+.entry-block.entry-open + .entry-block .entry-tab {
+    box-shadow: 3px -3px 4px 0px rgba(0,0,0,0.08);
+}
+
 .entry-block.entry-open .entry-tab {
     background: var(--color-cloud);
 }
@@ -178,9 +194,9 @@ body {
 
 .entry-record label,
 .entry-record-block label {
-    color: #777;
     display: inline-block;
     padding-right: 5px;
+    font-style: italic;
     min-width: 90px;
 }
 
