@@ -9,6 +9,7 @@ import { DispatchFn } from './store';
 import { useGetEntry, positionToString } from './entry';
 import { useInput } from './useInput';
 import { useGeo, sleep } from './useGeo';
+import { ValidVoucherInput } from './ValidVoucherInput';
 import { css } from './css';
 
 type Params = {
@@ -22,8 +23,11 @@ export function EditView() {
     
     const dispatch = useDispatch<DispatchFn>();
     
+    // Note, this refreshes on every render.
     const timestamp = +new Date();
     
+    // The datetime string is from either the creation timestamp (above)
+    // or the entry timestamp being edited.
     const datetime = useMemo(() => {
         const date = DateTime.fromMillis(entry
                 ? entry.entry_id
@@ -51,6 +55,7 @@ export function EditView() {
         // @todo Can this actually update here?
         if (!position) return;
         
+        // create
         if (!entry) {
             dispatch({
                 type: "ADD",
@@ -69,6 +74,7 @@ export function EditView() {
             });
             setRedirect('/');
         }
+        // edit
         else {
             dispatch({
                 type: "EDIT",
@@ -88,10 +94,13 @@ export function EditView() {
         }
     }
     
+    // Not found.
     if (entry_id && !entry) return <div>Not found</div>;
     
+    // Created/updated redirect.
     if (redirect) return <Redirect to={redirect} />
     
+    // highlight the 'create' button when valid (only for new entries).
     const highlight = !entry && form.current && form.current.checkValidity();
     
     return (
@@ -112,11 +121,12 @@ export function EditView() {
             <div className="form">
                 <div className="form-field">
                     <label>Voucher *</label>
-                    <input
+                    <ValidVoucherInput
                         type="text"
                         name="voucher"
                         autoComplete="off"
                         autoCorrect="off"
+                        autoCapitalize="off"
                         value={voucher}
                         onChange={onVoucher}
                         placeholder="XX--XX---"
