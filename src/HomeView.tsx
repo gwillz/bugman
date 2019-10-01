@@ -1,12 +1,19 @@
 
 import { h } from 'preact';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useGetEntries } from './entry';
 import { EntryBlock } from './EntryBlock';
 import { css } from './css';
 
+type Params = {
+    entry_id?: string;
+}
+
 export function HomeView() {
     const entries = useGetEntries();
+    
+    const params = useParams<Params>();
+    const entry_id = parseInt(params.entry_id || "");
     
     const disabled = entries.length === 0;
     const highlight = entries.length === 0;
@@ -38,6 +45,7 @@ export function HomeView() {
                     <EntryBlock
                         key={entry.entry_id}
                         entry={entry}
+                        open={entry.entry_id === entry_id}
                     />
                 ))}
             </div>

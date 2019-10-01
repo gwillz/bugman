@@ -29,7 +29,7 @@ export function EntryView() {
                 </Link>
             </nav>
             
-            <EntryBlock entry={entry} detailed />
+            <EntryBlock entry={entry} open />
             
         </div>
     )

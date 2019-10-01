@@ -102,26 +102,61 @@ body {
 
 /* ======== Entry Block ========  */
 
+.entry-group {
+    padding-top: 40px;
+}
+
 .entry-block {
     background: var(--color-putty);
     border-radius: 4px;
     box-shadow: 0px -6px 4px -3px rgba(0,0,0,0.05);
-    padding: 10px;
+    padding:  20px 20px 60px;
+    position: relative;
+    margin-bottom: -30px;
 }
 
 a.entry-block {
     display: block;
     text-decoration: none;
     color: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.entry-block:last-child {
+    margin-bottom: 0;
+    padding-bottom: 20px;
+}
+
+.entry-tab {
+    background: var(--color-putty);
+    border-radius: 4px;
+    box-shadow: 3px -3px 4px 0px rgba(0,0,0,0.05);
+    display: inline-block;
+    font-weight: 600;
+    margin-left: -20px;
+    min-width: 100px;
+    padding: 10px 20px;
+    position: absolute;
+    top: -35px;
+}
+
+.entry-brief {
+    padding: 0 0 20px;
+}
+
+.entry-brief > span {
+    display: inline-block;
+    padding-right: 10px;
+}
+.entry-brief > span:not(:last-child):after {
+    content: "/";
+    padding-left: 10px;
 }
 
 .entry .button {
     background: var(--color-stone);
     color: var(--color-cloud);
-}
-
-.entry-group .entry-block + .entry-block {
-    margin-top: 10px;
 }
 
 .entry-record {
@@ -186,8 +221,9 @@ a.entry-block {
     font: inherit;
     font-size: var(--size-form);
     font-weight: 600; /* bold */
-    min-width: 100px;
-    padding: 10px 20px;
+    margin-bottom: 10px;
+    min-width: 90px;
+    padding: 10px 15px;
     text-align: center;
     text-decoration: none;
 }
@@ -199,6 +235,7 @@ a.entry-block {
     border: 2px solid var(--color-brick);
     color: var(--color-brick);
     cursor: not-allowed;
+    padding: 8px 13px;
 }
 
 .button.highlight {
@@ -206,7 +243,7 @@ a.entry-block {
 }
 
 .button + .button {
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 /* ======== Footer ========  */

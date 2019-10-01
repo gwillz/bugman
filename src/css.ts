@@ -7,7 +7,6 @@ export function css(...values: CSSValue[]): string {
     let i = values.length;
     while (i--) {
         let value = values[i];
-        console.log(i, value);
         
         if (typeof value === "string") {
             out.push(value);

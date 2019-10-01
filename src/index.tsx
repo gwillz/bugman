@@ -48,7 +48,7 @@ function App() {
                     <ExportView/>
                 </Route>
                 <Route exact path="/:entry_id">
-                    <EntryView/>
+                    <HomeView/>
                 </Route>
                 <Route path="/:entry_id/edit">
                     <EditView/>
