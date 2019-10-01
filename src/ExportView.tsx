@@ -9,7 +9,7 @@ import { useInput } from './useInput';
 
 declare global {
     interface WebShare {
-        files?: Blob[];
+        files?: File[];
         url?: string;
         text?: string;
         title?: string;
@@ -30,7 +30,7 @@ export function ExportView() {
         DateTime.local().toFormat("yyyy-MM-dd_HH-mm")
     ))
     
-    function onExport() {
+    async function onExport() {
         const csv = buildCSV();
         if (navigator.share && navigator.canShare) {
             const file = new File(
@@ -41,14 +41,16 @@ export function ExportView() {
             
             const data: WebShare = {
                 files: [ file ],
+                title: filename + ".csv",
             };
             
-            if (navigator.canShare(data)) {
-                navigator.share(data)
-                .then(() => void 0)
-                .catch(err => {
-                    console.log(err, err.message);
-                })
+            try {
+                if (navigator.canShare(data)) {
+                    await navigator.share(data)
+                }
+            }
+            catch (error) {
+                console.log(error, error.message);
             }
         }
         else if (ref.current) {
