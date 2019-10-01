@@ -31,6 +31,8 @@ function copy() {
 }
 
 function watch() {
+    copy();
+    
     console.log("Watching: ./src");
     
     let timer = 0;
