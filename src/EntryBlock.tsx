@@ -15,11 +15,10 @@ export function EntryBlock(props: Props) {
     const {entry_id} = entry;
     
     return (
-        <Link to={`/${entry_id}`}
-            className={css("entry-block", {"entry-open": props.open })}>
-            <div className="entry-tab">
+        <div className={css("entry-block", {"entry-open": props.open })}>
+            <Link to={props.open ? "/" : `/${entry_id}`} className="entry-tab">
                 {entry.voucher}
-            </div>
+            </Link>
             {!props.open ? (
                 <Fragment>
                     <div className="entry-brief">
@@ -103,6 +102,6 @@ export function EntryBlock(props: Props) {
                     </div>
                 </Fragment>
             )}
-        </Link>
+        </div>
     )
 }
