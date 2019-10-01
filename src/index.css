@@ -252,8 +252,9 @@ body {
     background: transparent !important;
     border: 2px solid var(--color-brick);
     color: var(--color-brick);
-    cursor: not-allowed;
     padding: 8px 13px;
+    pointer-events: none;
+    touch-actions: none;
 }
 
 .button.highlight {
