@@ -5,11 +5,14 @@ type CSVCell = number | string | DateTime;
 export class CSVBuilder {
     
     private headers: string[];
-    private data: CSVCell[][];
+    private rows: CSVCell[][];
+    
+    private url: string;
     
     constructor() {
         this.headers = [];
-        this.data = [];
+        this.rows = [];
+        this.url = "";
     }
     
     public setHeaders(...names: string[]) {
@@ -18,25 +21,34 @@ export class CSVBuilder {
     }
     
     public add(...data: CSVCell[]) {
-        this.data.push(data);
+        this.rows.push(data);
         return this;
     }
     
-    public build() {
+    public build(): string {
         let csv = "";
-        csv += this.headers
-            .map(field => `"${field}"`)
-            .join(",");
         
-        csv += "\n";
+        const data = [this.headers, ...this.rows];
         
-        for (let row of this.data) {
+        for (let row of data) {
             csv += row.map(field => {
+                // DateTime.
                 if (DateTime.isDateTime(field)) {
                     return field.toISO();
                 }
                 else if (typeof field === "string") {
-                    return `"${field}"`;
+                    // Dirty strings.
+                    if (/[ \r\n]/g.test(field)) {
+                        const str = field
+                            .replace(/"+/g, "\\\"")
+                            .replace(/[\r\n]+/g, "\\n")
+                            .trim();
+                        return `"${str}"`;
+                    }
+                    // Clean strings.
+                    else {
+                        return field;
+                    }
                 }
                 // integer
                 else if (field % 1 == 0) {
@@ -54,5 +66,26 @@ export class CSVBuilder {
         }
         
         return csv;
+    }
+    
+    public buildFile(filename: string): File {
+        const csv = this.build();
+        
+        if (!filename.endsWith(".csv")) {
+            filename += ".csv";
+        }
+        
+        return new File([csv], filename, { type: "text/csv" });
+    }
+    
+    public buildFileUrl(filename: string): [string, string] {
+        const file = this.buildFile(filename);
+        
+        if (this.url) {
+            URL.revokeObjectURL(this.url);
+        }
+        
+        this.url = URL.createObjectURL(file);
+        return [this.url, file.name];
     }
 }

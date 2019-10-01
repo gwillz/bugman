@@ -249,7 +249,7 @@ body {
 .button:disabled,
 .button.disabled,
 .button[disabled='disabled'] {
-    background: transparent;
+    background: transparent !important;
     border: 2px solid var(--color-brick);
     color: var(--color-brick);
     cursor: not-allowed;
