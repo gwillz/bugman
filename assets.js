@@ -19,15 +19,40 @@ function filter(file) {
     return !INCLUDE.includes(m[1]);
 }
 
-function main() {
+function copy() {
     const files = fs.readdirSync(r("src"));
     
-    for (let file of files) {
-        if (filter(file)) continue;
+    for (let filename of files) {
+        if (filter(filename)) continue;
         
-        console.log("Copying:", file);
-        fs.copyFileSync(r("src", file), r("public", file));
+        console.log("Copying:", filename);
+        fs.copyFileSync(r("src", filename), r("public", filename));
+    }
+}
+
+function watch() {
+    console.log("Watching: ./src");
+    
+    let timer = 0;
+    fs.watch(r("src"), {}, (event, filename) => {
+        if (filter(filename)) return;
+        
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            console.log("Copying:", filename);
+            fs.copyFileSync(r("src", filename), r("public", filename));
+        }, 250);
+    });
+}
+
+function main() {
+    if (process.argv.includes("watch")) {
+        watch();
+    }
+    else {
+        copy();
     }
 }
 
 if (require.main === module) main();
+
