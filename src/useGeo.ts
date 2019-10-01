@@ -23,10 +23,11 @@ async function getGeo(options?: PositionOptions) {
     return new Promise<EntryPosition>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(geo => {
             const { latitude, longitude, altitude } = geo.coords;
+            const elevation = parseInt(altitude ? altitude.toFixed(0) : "0");
             resolve({
                 latitude,
                 longitude,
-                elevation: parseInt(altitude ? altitude.toFixed(0) : "0"),
+                elevation,
             });
         }, reject, options);
     });

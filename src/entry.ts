@@ -23,7 +23,7 @@ export interface Entry {
 }
 
 export function positionToString(position: EntryPosition) {
-    return `${position.latitude}, ${position.longitude} @ ${position.elevation}m`;
+    return `${position.latitude.toFixed(5)}, ${position.longitude.toFixed(5)} @ ${position.elevation}m`;
 }
 
 

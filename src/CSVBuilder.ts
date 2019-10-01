@@ -44,7 +44,8 @@ export class CSVBuilder {
                 }
                 // float
                 else {
-                    return field.toFixed(12);
+                    // '7' appears to be the highest precision.
+                    return field.toFixed(7);
                 }
             })
             .join(",");
