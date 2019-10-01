@@ -14,7 +14,7 @@ export function EntryBlock(props: Props) {
     const {entry_id} = entry;
     
     return (
-        <div className="entry-block">
+        <Link to={`/${entry_id}`} className="entry-block">
             <div className="entry-record">
                 <label>Voucher</label>
                 <span>
@@ -72,19 +72,6 @@ export function EntryBlock(props: Props) {
                     </div>
                 </Fragment>
             )}
-            {!props.detailed && (
-                <div className="entry-footer">
-                    <Link className="button" to={`/${entry_id}`}>
-                        View
-                    </Link>
-                    <Link className="button" to={`/${entry_id}/edit`}>
-                        Edit
-                    </Link>
-                    <Link className="button" to={`/${entry_id}/delete`}>
-                        Delete
-                    </Link>
-                </div>
-            )}
-        </div>
+        </Link>
     )
 }

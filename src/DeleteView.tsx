@@ -33,11 +33,14 @@ export function DeleteView() {
     
     return (
         <div>
-            <div className="form">
-                <h3>Deleting "{entry.voucher}" - are you sure?</h3>
-                
+            <div className="text-message">
+                Deleting entry: {entry.voucher}
+                <br/>
+                Are you sure?
+            </div>
+            <div className="navbar">
                 <button type="button"
-                    className="button"
+                    className="button highlight"
                     onClick={onRemove}>
                     Yes, delete it
                 </button>

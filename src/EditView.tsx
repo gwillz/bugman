@@ -1,6 +1,6 @@
 
 import { h } from 'preact';
-import { useState, useMemo } from 'preact/hooks';
+import { useState, useMemo, useRef } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ import { DispatchFn } from './store';
 import { useGetEntry, positionToString } from './entry';
 import { useInput } from './useInput';
 import { useGeo, sleep } from './useGeo';
+import { css } from './css';
 
 type Params = {
     entry_id?: string;
@@ -31,6 +32,7 @@ export function EditView() {
             date.toLocaleString(DateTime.TIME_24_SIMPLE);
     }, [entry && entry.entry_id, timestamp]);
     
+    const form = useRef<HTMLFormElement | null>(null);
     const [voucher, onVoucher] = useInput(entry && entry.voucher);
     const [collector, onCollector] = useInput(entry && entry.collector);
     const [specimen_type, onSpecimenType] = useInput(entry && entry.specimen_type);
@@ -90,8 +92,10 @@ export function EditView() {
     
     if (redirect) return <Redirect to={redirect} />
     
+    const highlight = !entry && form.current && form.current.checkValidity();
+    
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} ref={form}>
             <nav className="navbar">
                 <Link className="button" to="/">
                     Home
@@ -101,13 +105,13 @@ export function EditView() {
                         View
                     </Link>
                 )}
-                <button className="button" type="submit">
+                <button className={css("button", { highlight })} type="submit">
                     {entry ? "Save" : "Create"}
                 </button>
             </nav>
             <div className="form">
                 <div className="form-field">
-                    <label>Voucher*</label>
+                    <label>Voucher *</label>
                     <input
                         type="text"
                         name="voucher"
@@ -115,11 +119,12 @@ export function EditView() {
                         autoCorrect="off"
                         value={voucher}
                         onChange={onVoucher}
+                        placeholder="XX--XX---"
                         required
                     />
                 </div>
                 <div className="form-field">
-                    <label>Date/Time*</label>
+                    <label>Date &amp; Time *</label>
                     <input
                         type="text"
                         name="datetime"
@@ -128,7 +133,7 @@ export function EditView() {
                     />
                 </div>
                 <div className="form-field">
-                    <label>Position*</label>
+                    <label>Position *</label>
                     <input
                         type="text"
                         name="position"
@@ -139,22 +144,24 @@ export function EditView() {
                     />
                 </div>
                 <div className="form-field">
-                    <label>Collector*</label>
+                    <label>Collector *</label>
                     <input
                         type="text"
                         name="collector"
                         value={collector}
                         onChange={onCollector}
+                        placeholder="Nigel Thornberry"
                         required
                     />
                 </div>
                 <div className="form-field">
-                    <label>Specimen Type*</label>
+                    <label>Specimen Type *</label>
                     <input
                         type="text"
                         name="collector"
                         value={specimen_type}
                         onChange={onSpecimenType}
+                        placeholder="Wasps"
                         required
                     />
                 </div>
@@ -165,6 +172,7 @@ export function EditView() {
                         name="specimen_count"
                         value={specimen_count}
                         onChange={onSpecimenCount}
+                        placeholder="2"
                         step="1"
                     />
                 </div>
@@ -175,6 +183,7 @@ export function EditView() {
                         name="location"
                         value={location}
                         onChange={onLocation}
+                        placeholder="Woop Woop"
                     />
                 </div>
                 <div className="form-field">
@@ -184,6 +193,7 @@ export function EditView() {
                         name="method"
                         value={method}
                         onChange={onMethod}
+                        placeholder="Sweep"
                     />
                 </div>
                 <div className="form-field">
@@ -193,6 +203,7 @@ export function EditView() {
                         name="flower_type"
                         value={flower_type}
                         onChange={onFlowerType}
+                        placeholder="Antigonon Leptopus"
                     />
                 </div>
                 <div className="form-field">
@@ -201,9 +212,10 @@ export function EditView() {
                         name="notes"
                         value={notes}
                         onChange={onNotes}
+                        placeholder="..."
                     />
                 </div>
-                <button className="button" type="submit">
+                <button className={css("button", { highlight })} type="submit">
                     {entry ? "Save" : "Create"}
                 </button>
             </div>

@@ -1,8 +1,22 @@
 
+:root {
+    --color-stone: #dcd3c9;
+    --color-putty: #f1efe9;
+    --color-cloud: #f9f7f2;
+    --color-brick: #c6bdb6;
+    --color-bee:   #d8a619;
+    --color-text:  #335259;
+    --size-body: 18px;   /* 14pt */
+    --size-form: 16px;   /* 13pt */
+    --size-bigger: 22px; /* 18pt */
+    --size-header: 40px; /* 30pt */
+    --size-footer: 12px; /* 9pt */
+}
+
 html {
     box-sizing: border-box;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: var(--size-body);
     min-width: 320px;
     height: 100%;
     width: 100%;
@@ -12,48 +26,98 @@ html {
     box-sizing: inherit;
 }
 
-body, #root {
+body {
+    background: var(--color-stone);
+    color: var(--color-text);
+    margin: 0 auto;
     height: 100%;
     width: 100%;
-    margin: 0 auto;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
     max-width: 680px;
+    height: 100%;
+    width: 100%;
+}
+
+#root > * {
+    flex: 1;
 }
 
 .text-center {
     text-align: center;
 }
 
+.text-bold {
+    font-weight: 600;
+}
+
+.text-bigger {
+    font-size: var(--size-bigger);
+}
+
+.text-message {
+    text-align: center;
+    font-weight: 600;
+    font-size: var(--size-bigger);
+    line-height: 1.4;
+    padding: 50px 40px 30px;
+}
+
 
 /* ======== Header ========  */
 
 .header {
+    flex: 0 !important;
+    padding: 40px 0 20px;
+    text-align: center;
     width: 100%;
-    padding: 10px;
 }
 .header h1 {
+    color: var(--color-bee);
+    font-size: var(--size-header);
     line-height: 1;
     margin: 0;
 }
 .header .logo {
     display: inline-block;
-    height: 1em;
-    margin: 0 5px;
-    vertical-align: bottom;
+    height: 0.9em;
+    margin: 0 13px;
+    vertical-align: -0.1em;
+}
+.header .logo.flip {
+    transform: scaleX(-1);
 }
 
 /* ======== Navigation ========  */
 
 .navbar {
-    padding: 10px 20px 20px;
+    padding: 10px 0 20px;
+    text-align: center;
     width: 100%;
 }
 
 /* ======== Entry Block ========  */
 
 .entry-block {
-    margin: 0 10px;
+    background: var(--color-putty);
+    border-radius: 4px;
+    box-shadow: 0px -6px 4px -3px rgba(0,0,0,0.05);
     padding: 10px;
-    border: 1px solid #ccc;
+}
+
+a.entry-block {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.entry .button {
+    background: var(--color-stone);
+    color: var(--color-cloud);
 }
 
 .entry-group .entry-block + .entry-block {
@@ -88,43 +152,71 @@ body, #root {
 .form-field label {
     vertical-align: top;
     display: block;
+    margin-left: 30px;
+    padding: 5px 0;
 }
 
 .form-field textarea,
 .form-field input {
-    border: 1px solid #ccc;
-    border-radius: 0;
+    background: var(--color-putty);
+    border: none;
+    border-radius: 6px;
+    color: inherit;
     font: inherit;
-    font-size: 16px;
-    padding: 5px;
+    font-size: var(--size-form);
+    padding: 13px;
+    padding-left: 30px;
     width: 100%;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+    color: var(--color-brick);
 }
 
 /* ======== Buttons ========  */
 
 .button {
-    background: #061;
+    background: var(--color-brick);
     border: none;
-    color: #fff;
+    border-radius: 8px;
+    color: var(--color-putty);
     cursor: pointer;
     display: inline-block;
     font: inherit;
-    font-size: 16px;
-    padding: 5px 10px;
+    font-size: var(--size-form);
+    font-weight: 600; /* bold */
+    min-width: 100px;
+    padding: 10px 20px;
+    text-align: center;
     text-decoration: none;
 }
 
+.button:disabled,
+.button.disabled,
+.button[disabled='disabled'] {
+    background: transparent;
+    border: 2px solid var(--color-brick);
+    color: var(--color-brick);
+    cursor: not-allowed;
+}
+
+.button.highlight {
+    background: var(--color-bee);
+}
+
 .button + .button {
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 /* ======== Footer ========  */
 
 .footer {
-    color: #aaa;
-    font-size: 12px;
+    flex: 0 !important;
+    color: var(--color-brick);
+    font-size: var(--size-footer);
     line-height: 1.6;
-    padding: 30px 20px 10px;
+    padding: 30px 0 10px;
     width: 100%;
 }
 

@@ -25,11 +25,14 @@ export function ClearView() {
     
     return (
         <div>
-            <div className="form">
-                <h3>Deleting <em>everything</em> - are you sure?</h3>
-                
+            <div className="text-message">
+                Deleting <em>everything</em>.
+                <br/>
+                Are you sure?
+            </div>
+            <div className="navbar">
                 <button type="button"
-                    className="button"
+                    className="button highlight"
                     onClick={onRemove}>
                     Yes, delete it all.
                 </button>

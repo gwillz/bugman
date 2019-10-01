@@ -106,21 +106,11 @@ export function ExportView() {
         <div>
             <a ref={ref} style={{display: 'none'}} />
             
-            <div className="navbar">
-                <Link to="/" className="button">
-                    Home
-                </Link>
-                <button type="button"
-                    className="button"
-                    onClick={onExport}
-                    disabled={entries.length == 0}>
-                    Export
-                </button>
+            <div className="text-message">
+                Exporting {entries.length} entries.
             </div>
             
             <div className="form">
-                <h3>Exporting {entries.length} entries.</h3>
-                
                 <div className="form-field">
                     <label>File name</label>
                     <input
@@ -132,6 +122,19 @@ export function ExportView() {
                     />
                 </div>
             </div>
+            <br/>
+            <div className="navbar">
+                <Link to="/" className="button">
+                    Home
+                </Link>
+                <button type="button"
+                    className="button highlight"
+                    onClick={onExport}
+                    disabled={entries.length == 0}>
+                    Export
+                </button>
+            </div>
+            
         </div>
     )
 }

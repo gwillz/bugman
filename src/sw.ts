@@ -26,7 +26,7 @@ registerRoute(
 
 // Cache images
 registerRoute(
-    /\.(?:png|ico)$/,
+    /\.(?:png|ico|svg)$/,
     new CacheFirst({
         cacheName: 'images',
         plugins: [

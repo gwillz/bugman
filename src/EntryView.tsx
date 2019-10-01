@@ -24,7 +24,7 @@ export function EntryView() {
                 <Link className="button" to={`/${entry_id}/edit`}>
                     Edit
                 </Link>
-                <Link className="button" to={`/${entry_id}/remove`}>
+                <Link className="button" to={`/${entry_id}/delete`}>
                     Delete
                 </Link>
             </nav>

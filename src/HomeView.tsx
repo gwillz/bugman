@@ -1,24 +1,35 @@
 
 import { h } from 'preact';
-import { useRef } from 'preact/hooks';
 import { Link } from 'react-router-dom';
 import { useGetEntries } from './entry';
 import { EntryBlock } from './EntryBlock';
+import { css } from './css';
 
 export function HomeView() {
     const entries = useGetEntries();
-    const ref = useRef<HTMLAnchorElement | null>(null);
+    
+    const disabled = entries.length === 0;
+    const highlight = entries.length === 0;
     
     return (
         <div>
+            {entries.length == 0 && (
+                <div className="text-message">
+                    Hi there!
+                    <br/>
+                    Bugman looks after your field notes.
+                    Go ahead and add one.
+                </div>
+            )}
+            
             <nav className="navbar">
-                <Link className="button" to="/new">
+                <Link  to="/new" className={css("button", { highlight })}>
                     Add Entry
                 </Link>
-                <Link className="button" to="/export">
+                <Link  to="/export" className={css("button", { disabled })}>
                     Export
                 </Link>
-                <Link to="/clear" className="button">
+                <Link to="/clear" className={css("button", { disabled } )}>
                     Delete All
                 </Link>
             </nav>
@@ -30,15 +41,6 @@ export function HomeView() {
                     />
                 ))}
             </div>
-            {entries.length == 0 && (
-                <div className="text-center">
-                    Hi there!
-                    <br/>
-                    There are no entries yet.
-                    <br/>
-                    Go ahead and add one.
-                </div>
-            )}
         </div>
     )
 }

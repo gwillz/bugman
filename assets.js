@@ -10,6 +10,7 @@ const INCLUDE = [
     ".webmanifest",
     ".png",
     ".ico",
+    ".svg",
 ]
 
 function filter(file) {

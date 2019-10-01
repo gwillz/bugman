@@ -24,10 +24,14 @@ function App() {
             <header className="header">
                 <h1>
                     <img
-                        src="/apple-touch-icon.png"
+                        src="/bugman_logo.svg"
                         className="logo"
                     />
                     <span>Bugman</span>
+                    <img
+                        src="/bugman_logo.svg"
+                        className="logo flip"
+                    />
                 </h1>
             </header>
             <Switch>

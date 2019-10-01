@@ -23,4 +23,5 @@ firebase deploy
 
 ### TODO
 - rich text notes
-- button colours?
+- fancy entry tabs
+- fonts
