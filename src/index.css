@@ -117,13 +117,18 @@ body {
     transition: max-height 0.8s ease-out;
 }
 
-.entry-block.entry-open {
-    max-height: 1000px;
-}
-
 .entry-block:last-child {
     margin-bottom: 0;
     padding-bottom: 20px;
+}
+
+.entry-block.entry-open {
+    background: var(--color-cloud);
+    max-height: 1000px;
+}
+
+.entry-block.entry-open .entry-tab {
+    background: var(--color-cloud);
 }
 
 .entry-tab {
