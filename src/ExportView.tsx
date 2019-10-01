@@ -88,7 +88,6 @@ export function ExportView() {
                 entry.voucher,
                 date.toLocaleString(DateTime.DATE_SHORT),
                 date.toLocaleString(DateTime.TIME_24_SIMPLE),
-                entry.voucher,
                 entry.specimen_count || "",
                 entry.specimen_type || "",
                 entry.position.latitude,
