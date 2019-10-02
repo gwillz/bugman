@@ -16,9 +16,11 @@ export function ValidVoucherInput(props: Props) {
             const found = entries.find(entry => (
                 entry.voucher.toLowerCase() === ref.current!.value.toLowerCase())
             );
-            if (found) {
-                ref.current.setCustomValidity(`"${found.voucher}" already exists.`);
-            }
+            ref.current.setCustomValidity(
+                !!found
+                ? `"${found.voucher}" already exists.`
+                : ""
+            );
         }
         
         // Forward.
