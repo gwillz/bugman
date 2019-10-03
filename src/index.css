@@ -9,7 +9,7 @@
     --size-body: 18px;   /* 14pt */
     --size-form: 16px;   /* 13pt */
     --size-bigger: 22px; /* 18pt */
-    --size-header: 40px; /* 30pt */
+    --size-header: 32px; /* 24pt */
     --size-footer: 12px; /* 9pt */
 }
 
@@ -29,7 +29,7 @@ html {
 body {
     background: var(--color-stone);
     color: var(--color-text);
-    margin: 0 auto;
+    margin: 0;
     height: 100%;
     width: 100%;
 }
@@ -38,6 +38,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0 20px;
+    margin: 0 auto;
     max-width: 680px;
     height: 100%;
     width: 100%;
@@ -82,14 +83,23 @@ body {
     line-height: 1;
     margin: 0;
 }
+.header h1 > * {
+    vertical-align: bottom;
+}
+
 .header .logo {
     display: inline-block;
-    height: 0.9em;
-    margin: 0 13px;
-    vertical-align: -0.1em;
+    height: 1.2em;
+    margin: 0 5px;
 }
 .header .logo.flip {
     transform: scaleX(-1);
+}
+
+@media (max-width: 370px) {
+    .header h1 {
+        font-size: 26px;
+    }
 }
 
 /* ======== Navigation ========  */
