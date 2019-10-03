@@ -27,7 +27,7 @@ function App() {
                         src="/bugman_logo.svg"
                         className="logo"
                     />
-                    <span>Bugman</span>
+                    <span>Field Assistant</span>
                     <img
                         src="/bugman_logo.svg"
                         className="logo flip"

@@ -1,7 +1,7 @@
 {
   "name": "bugman",
   "version": "1.0.0",
-  "description": "Bugman",
+  "description": "Field Assistant",
   "main": "index.js",
   "scripts": {
     "start": "node serve.js",

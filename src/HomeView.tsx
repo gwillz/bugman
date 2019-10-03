@@ -24,7 +24,7 @@ export function HomeView() {
                 <div className="text-message">
                     Hi there!
                     <br/>
-                    Bugman looks after your field notes.
+                    Field Assistant looks after your field notes.
                     Go ahead and add one.
                 </div>
             )}

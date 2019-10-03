@@ -1,5 +1,5 @@
-# Bugman
-## Field Assistant
+# Field Assistant
+## aka. Bugman
 
 ### Tech
 - Typescript
