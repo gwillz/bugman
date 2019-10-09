@@ -41,9 +41,10 @@ export function EditView() {
     const [collector, onCollector] = useInput(entry && entry.collector);
     const [specimen_type, onSpecimenType] = useInput(entry && entry.specimen_type);
     const [specimen_count, onSpecimenCount] = useInput(entry && (entry.specimen_count + ""));
+    const [state, onState] = useInput(entry && entry.state);
     const [location, onLocation] = useInput(entry && entry.location);
     const [method, onMethod] = useInput(entry && entry.method);
-    const [flower_type, onFlowerType] = useInput(entry && entry.flower_type);
+    const [host_plant, onHostPlant] = useInput(entry && entry.host_plant);
     const [notes, onNotes] = useInput(entry && entry.notes);
     const position = useGeo(entry && entry.position);
     
@@ -66,7 +67,8 @@ export function EditView() {
                     collector,
                     specimen_type,
                     specimen_count: parseInt(specimen_count) || 1,
-                    flower_type,
+                    host_plant,
+                    state,
                     location,
                     method,
                     notes,
@@ -84,7 +86,8 @@ export function EditView() {
                     collector,
                     specimen_type,
                     specimen_count: parseInt(specimen_count) || 1,
-                    flower_type,
+                    host_plant,
+                    state,
                     location,
                     method,
                     notes,
@@ -165,14 +168,13 @@ export function EditView() {
                     />
                 </div>
                 <div className="form-field">
-                    <label>Specimen Type *</label>
+                    <label>Specimen Type</label>
                     <input
                         type="text"
                         name="collector"
                         value={specimen_type}
                         onChange={onSpecimenType}
                         placeholder="Wasps"
-                        required
                     />
                 </div>
                 <div className="form-field">
@@ -184,6 +186,16 @@ export function EditView() {
                         onChange={onSpecimenCount}
                         placeholder="2"
                         step="1"
+                    />
+                </div>
+                <div className="form-field">
+                    <label>State/Territory</label>
+                    <input
+                        type="text"
+                        name="state"
+                        value={state}
+                        onChange={onState}
+                        placeholder="WA"
                     />
                 </div>
                 <div className="form-field">
@@ -207,12 +219,12 @@ export function EditView() {
                     />
                 </div>
                 <div className="form-field">
-                    <label>Flower Type</label>
+                    <label>Flower/Host Plant</label>
                     <input
                         type="text"
                         name="flower_type"
-                        value={flower_type}
-                        onChange={onFlowerType}
+                        value={host_plant}
+                        onChange={onHostPlant}
                         placeholder="Antigonon Leptopus"
                     />
                 </div>

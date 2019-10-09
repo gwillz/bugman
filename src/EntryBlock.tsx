@@ -81,8 +81,8 @@ export function EntryBlock(props: Props) {
                         <span>{entry.method}</span>
                     </div>
                     <div className="entry-record">
-                        <label>Flower Type</label>
-                        <span>{entry.flower_type}</span>
+                        <label>Flower/Host Plant</label>
+                        <span>{entry.host_plant}</span>
                     </div>
                     <div className="entry-record-block">
                         <label>Notes</label>

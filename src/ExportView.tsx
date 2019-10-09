@@ -77,7 +77,8 @@ export function ExportView() {
             "Elevation (m)",
             "Collector",
             "Method",
-            "Flower type",
+            "Flower/Host plant",
+            "State",
             "Location",
             "Notes",
         );
@@ -95,7 +96,8 @@ export function ExportView() {
                 entry.position.elevation,
                 entry.collector || "",
                 entry.method || "",
-                entry.flower_type || "",
+                entry.host_plant || "",
+                entry.state || "",
                 entry.location || "",
                 entry.notes || "",
             );

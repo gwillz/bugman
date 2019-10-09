@@ -14,11 +14,12 @@ export interface Entry {
     position: EntryPosition;
     voucher: string;
     collector: string;
-    specimen_type: string;
+    specimen_type?: string;
     specimen_count?: number;
+    state?: string;
     location?: string;
     method?: string;
-    flower_type?: string;
+    host_plant?: string;
     notes?: string;
 }
 
