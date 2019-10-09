@@ -19,8 +19,18 @@ export function Footer() {
             </a>
             <div>
                 <a href="//gwilyn.com" target="_blank">
-                    Gwillz &copy; {build_year}
+                    Gwillz
                 </a>
+                &nbsp;&&nbsp;
+                <a href="//lourobinson.co" target="_blank">
+                    Lou Design
+                </a>
+                <span>
+                    &nbsp;
+                    &copy;
+                    &nbsp;
+                    {build_year}
+                </span>
             </div>
         </footer>
     )
