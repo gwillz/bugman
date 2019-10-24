@@ -163,7 +163,7 @@ export function EditView() {
                         name="collector"
                         value={collector}
                         onChange={onCollector}
-                        placeholder="Nigel Thornberry"
+                        placeholder="N. A. Thornberry"
                         required
                     />
                 </div>
@@ -205,7 +205,7 @@ export function EditView() {
                         name="location"
                         value={location}
                         onChange={onLocation}
-                        placeholder="Woop Woop"
+                        placeholder="5km N of Woop Woop"
                     />
                 </div>
                 <div className="form-field">
@@ -215,7 +215,7 @@ export function EditView() {
                         name="method"
                         value={method}
                         onChange={onMethod}
-                        placeholder="Sweep"
+                        placeholder="General sweep/malaise trap"
                     />
                 </div>
                 <div className="form-field">
@@ -225,7 +225,7 @@ export function EditView() {
                         name="flower_type"
                         value={host_plant}
                         onChange={onHostPlant}
-                        placeholder="Antigonon Leptopus"
+                        placeholder="Eucalyptus leucoxylon"
                     />
                 </div>
                 <div className="form-field">

@@ -35,3 +35,6 @@ firebase deploy
 ### TODO
 - rich text notes
 - fonts
+- custom fields
+  - still mandatory: voucher, date, location, collector, geo
+- images
