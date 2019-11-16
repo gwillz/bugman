@@ -3,8 +3,8 @@ import { Configuration } from '../Configuration';
 
 const template: Configuration = {
     name: "Rocks",
+    contributor: "Gwillz, Adelaide",
     description: "Tester template.",
-    created: 1573867557361, // Nov 16 2019.
     fields: [
         {
             type: "string",

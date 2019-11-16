@@ -3,12 +3,12 @@ import { createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { Entry } from './Entry';
-import { Configuration, templates } from './Configuration';
+import { ConfigField } from './Configuration';
 
 export interface State {
     timestamp: number;
     entries: Record<number, Entry | undefined>;
-    config: Configuration | null;
+    fields: ConfigField[] | null;
 }
 
 export type Actions = ({
@@ -23,6 +23,9 @@ export type Actions = ({
     entry: Partial<Entry>;
 } | {
     type: "CLEAR";
+} | {
+    type: "CONFIG";
+    fields: ConfigField[];
 })
 
 export type DispatchFn = (action: Actions) => void;
@@ -30,7 +33,7 @@ export type DispatchFn = (action: Actions) => void;
 const INIT_STATE: State = {
     timestamp: 0,
     entries: {},
-    config: null,
+    fields: null,
 }
 
 function reducer(state = INIT_STATE, action: Actions): State {
@@ -68,6 +71,10 @@ function reducer(state = INIT_STATE, action: Actions): State {
             ...state,
             timestamp,
             entries: {},
+        }
+        case "CONFIG": return {
+            ...state,
+            fields: action.fields,
         }
     }
     return state;

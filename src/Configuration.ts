@@ -12,17 +12,17 @@ export const STANDARD_FIELDS = [
 export interface ConfigField {
     type: "string" | "text" | "number" | "image";
     name: string;
-    label: string;
-    placeholder: string;
+    label?: string;
+    placeholder?: string;
 }
 
 export interface Configuration {
     name: string;
     description: string;
-    created: number;
+    contributor: string;
     fields: ConfigField[];
 }
 
-export function useGetConfig() {
-    return useSelector((state: State) => state.config, shallowEqual);
+export function useGetFields() {
+    return useSelector((state: State) => state.fields, shallowEqual);
 }

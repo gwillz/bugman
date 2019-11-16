@@ -2,9 +2,9 @@
 import { Configuration } from '../Configuration';
 
 const template: Configuration = {
-    name: "Bugman",
-    description: "Wasp and bug collection. Adelaide, Australia.",
-    created: 1573867557361, // Nov 16 2019.
+    name: "Wasp/Bugs",
+    contributor: "Bugman, Adelaide",
+    description: "Wasp and bug collection",
     fields: [
         {
             type: "string",

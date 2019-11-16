@@ -13,6 +13,7 @@ import { ClearView } from './ClearView';
 import { ExportView } from './ExportView';
 import { Footer } from './Footer';
 import { ConfigView } from './ConfigView';
+import { ConfigEditView } from './ConfigEditView';
 
 Settings.defaultLocale = "en-AU";
 
@@ -40,6 +41,15 @@ function App() {
                 </Route>
                 <Route exact path="/config">
                     <ConfigView/>
+                </Route>
+                <Route path="/config/edit">
+                    <ConfigEditView editing />
+                </Route>
+                <Route path="/config/new/:index">
+                    <ConfigEditView/>
+                </Route>
+                <Route path="/config/new">
+                    <ConfigEditView/>
                 </Route>
                 <Route exact path="/new">
                     <EditView/>
