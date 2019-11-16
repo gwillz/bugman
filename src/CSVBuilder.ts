@@ -15,8 +15,8 @@ export class CSVBuilder {
         this.url = "";
     }
     
-    public setHeaders(...names: string[]) {
-        this.headers = names;
+    public addHeaders(...names: string[]) {
+        this.headers.push(...names);
         return this;
     }
     

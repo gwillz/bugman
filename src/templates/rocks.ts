@@ -7,13 +7,7 @@ const template: Configuration = {
     description: "Tester template.",
     fields: [
         {
-            type: "string",
-            name: "rock_type",
-            label: "Rock Type",
-            placeholder: "Granite",
-        },
-        {
-            type: "number",
+            type: "decimal",
             name: "size",
             label: "Diameter Size",
             placeholder: "5",

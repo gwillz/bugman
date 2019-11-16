@@ -3,6 +3,8 @@ import { h, Fragment } from 'preact';
 import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
 import { Entry, positionToString } from './Entry';
+import { EntryRecord } from './EntryRecord';
+import { useGetFields } from './Configuration';
 import { css } from './css';
 
 type Props = {
@@ -11,8 +13,10 @@ type Props = {
 }
 
 export function EntryBlock(props: Props) {
-    const {entry} = props;
-    const {entry_id} = entry;
+    const { entry } = props;
+    const { entry_id } = entry;
+    
+    const fields = useGetFields();
     
     return (
         <div className={css("entry-block", {"entry-open": props.open })}>
@@ -27,7 +31,7 @@ export function EntryBlock(props: Props) {
                                 .toLocaleString(DateTime.DATE_MED)}
                         </span>
                         <span>
-                            {entry.specimen_type}
+                            {entry.type}
                         </span>
                         <span>
                             {entry.collector}
@@ -55,7 +59,7 @@ export function EntryBlock(props: Props) {
                     <div className="entry-record">
                         <label>Type</label>
                         <span>
-                            {entry.specimen_type}
+                            {entry.type}
                         </span>
                     </div>
                     <div className="entry-record">
@@ -68,30 +72,13 @@ export function EntryBlock(props: Props) {
                         <label>Position</label>
                         <span>{positionToString(entry.position)}</span>
                     </div>
-                    <div className="entry-record">
-                        <label>Specimen Count</label>
-                        <span>{entry.specimen_count}</span>
-                    </div>
-                    <div className="entry-record">
-                        <label>Location</label>
-                        <span>{entry.location}</span>
-                    </div>
-                    <div className="entry-record">
-                        <label>Method</label>
-                        <span>{entry.method}</span>
-                    </div>
-                    <div className="entry-record">
-                        <label>Flower/Host Plant</label>
-                        <span>{entry.host_plant}</span>
-                    </div>
-                    <div className="entry-record-block">
-                        <label>Notes</label>
-                        <div dangerouslySetInnerHTML={{
-                            __html: entry.notes 
-                                ? entry.notes.replace(/[\r\n]+/, "<br/>")
-                                : '',
-                        }}/>
-                    </div>
+                    {fields?.map(field => (
+                        <EntryRecord
+                            key={field.name}
+                            field={field}
+                            value={entry.data[field.name]}
+                        />
+                    ))}
                     <div className="navbar">
                         <Link className="button" to={`/${entry_id}/edit`}>
                             Edit

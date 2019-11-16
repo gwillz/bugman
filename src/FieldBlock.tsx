@@ -1,9 +1,6 @@
 
 import { h } from 'preact';
-import { ConfigField } from './Configuration';
-
-type FieldTypes = ConfigField['type'];
-const TYPES: FieldTypes[] = ["string", "text", "number", "image"];
+import { ConfigField, TYPES } from './Configuration';
 
 type Props = {
     index: number;

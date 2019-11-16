@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { DateTime } from 'luxon';
 import { DispatchFn } from './store';
-import { useGetEntry, positionToString } from './Entry';
+import { useGetEntry, positionToString, EntryData } from './Entry';
+import { useGetFields } from './Configuration';
 import { useInput } from './useInput';
 import { useGeo, sleep } from './useGeo';
 import { ValidVoucherInput } from './ValidVoucherInput';
+import { EditRecord } from './EditRecord';
 import { css } from './css';
 
 type Params = {
@@ -17,14 +19,15 @@ type Params = {
 }
 
 export function EditView() {
-    const { entry_id } = useParams<Params>();
-    const entry = useGetEntry(entry_id);
-    const [redirect, setRedirect] = useState("");
-    
-    const dispatch = useDispatch<DispatchFn>();
     
     // Note, this refreshes on every render.
     const timestamp = +new Date();
+    
+    const { entry_id } = useParams<Params>();
+    
+    const dispatch = useDispatch<DispatchFn>();
+    const entry = useGetEntry(entry_id);
+    const fields = useGetFields();
     
     // The datetime string is from either the creation timestamp (above)
     // or the entry timestamp being edited.
@@ -36,6 +39,8 @@ export function EditView() {
             date.toLocaleString(DateTime.TIME_24_SIMPLE);
     }, [entry && entry.entry_id, timestamp]);
     
+    const [redirect, setRedirect] = useState("");
+    
     // highlight the 'create' button when valid (only for new entries).
     const [highlight, setHighlight] = useState(false);
     
@@ -44,16 +49,18 @@ export function EditView() {
     });
     
     const form = useRef<HTMLFormElement | null>(null);
-    const [voucher, onVoucher] = useInput(entry && entry.voucher);
-    const [collector, onCollector] = useInput(entry && entry.collector);
-    const [specimen_type, onSpecimenType] = useInput(entry && entry.specimen_type);
-    const [specimen_count, onSpecimenCount] = useInput(entry && (entry.specimen_count + ""));
-    const [state, onState] = useInput(entry && entry.state);
-    const [location, onLocation] = useInput(entry && entry.location);
-    const [method, onMethod] = useInput(entry && entry.method);
-    const [host_plant, onHostPlant] = useInput(entry && entry.host_plant);
-    const [notes, onNotes] = useInput(entry && entry.notes);
-    const position = useGeo(entry && entry.position);
+    const [voucher, onVoucher] = useInput(entry?.voucher);
+    const [collector, onCollector] = useInput(entry?.collector);
+    const [type, onType] = useInput(entry?.type);
+    const position = useGeo(entry?.position);
+    
+    const [data, setData] = useState<EntryData>(() => entry?.data ?? {});
+    
+    function onUpdateData(key: string, value: string) {
+        const copy = {...data};
+        copy[key] = value;
+        setData(copy);
+    }
     
     async function onSubmit(event: Event) {
         event.preventDefault();
@@ -72,13 +79,8 @@ export function EditView() {
                     voucher,
                     position,
                     collector,
-                    specimen_type,
-                    specimen_count: parseInt(specimen_count) || 1,
-                    host_plant,
-                    state,
-                    location,
-                    method,
-                    notes,
+                    type,
+                    data,
                 },
             });
             setRedirect('/');
@@ -91,13 +93,8 @@ export function EditView() {
                 entry: {
                     voucher,
                     collector,
-                    specimen_type,
-                    specimen_count: parseInt(specimen_count) || 1,
-                    host_plant,
-                    state,
-                    location,
-                    method,
-                    notes,
+                    type,
+                    data,
                 },
             });
             setRedirect(`/${entry.entry_id}`);
@@ -172,75 +169,26 @@ export function EditView() {
                     />
                 </div>
                 <div className="form-field">
-                    <label>Specimen Type</label>
+                    <label>Specimen Type*</label>
                     <input
                         type="text"
-                        name="specimen_type"
-                        value={specimen_type}
-                        onChange={onSpecimenType}
-                        placeholder="Wasps"
+                        name="type"
+                        value={type}
+                        onChange={onType}
+                        placeholder="Specimen"
+                        required
                     />
                 </div>
-                <div className="form-field">
-                    <label>Specimen Count</label>
-                    <input
-                        type="number"
-                        name="specimen_count"
-                        value={specimen_count}
-                        onChange={onSpecimenCount}
-                        placeholder="2"
-                        step="1"
+                
+                {fields?.map(field => (
+                    <EditRecord
+                        key={field.name}
+                        field={field}
+                        onUpdate={onUpdateData}
+                        value={data[field.name]}
                     />
-                </div>
-                <div className="form-field">
-                    <label>State/Territory</label>
-                    <input
-                        type="text"
-                        name="state"
-                        value={state}
-                        onChange={onState}
-                        placeholder="WA"
-                    />
-                </div>
-                <div className="form-field">
-                    <label>Location</label>
-                    <input
-                        type="text"
-                        name="location"
-                        value={location}
-                        onChange={onLocation}
-                        placeholder="5km N of Woop Woop"
-                    />
-                </div>
-                <div className="form-field">
-                    <label>Method</label>
-                    <input
-                        type="text"
-                        name="method"
-                        value={method}
-                        onChange={onMethod}
-                        placeholder="General sweep/malaise trap"
-                    />
-                </div>
-                <div className="form-field">
-                    <label>Flower/Host Plant</label>
-                    <input
-                        type="text"
-                        name="flower_type"
-                        value={host_plant}
-                        onChange={onHostPlant}
-                        placeholder="Eucalyptus leucoxylon"
-                    />
-                </div>
-                <div className="form-field">
-                    <label>Notes</label>
-                    <textarea
-                        name="notes"
-                        value={notes}
-                        onChange={onNotes}
-                        placeholder="..."
-                    />
-                </div>
+                ))}
+                
                 <button className={css("button", { highlight })} type="submit">
                     {entry ? "Save" : "Create"}
                 </button>
@@ -249,4 +197,4 @@ export function EditView() {
         
     )
 }
-    
+

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useRef } from 'preact/hooks';
 import { DateTime } from 'luxon';
 import { useGetEntries } from './Entry';
+import { useGetFields } from './Configuration';
 import { CSVBuilder } from './CSVBuilder';
 import { useInput } from './useInput';
 import { css } from './css';
@@ -25,6 +26,7 @@ declare global {
 
 export function ExportView() {
     const entries = useGetEntries();
+    const fields = useGetFields();
     
     const ref = useRef<HTMLAnchorElement | null>(null);
     const [filename, onFilename] = useInput(() => (
@@ -66,40 +68,37 @@ export function ExportView() {
     function buildCSV() {
         const builder = new CSVBuilder();
         
-        builder.setHeaders(
+        builder.addHeaders(
             "Voucher",
             "Date",
             "Time",
-            "# of specimens",
             "Type",
             "Latitude",
             "Longitude",
             "Elevation (m)",
             "Collector",
-            "Method",
-            "Flower/Host plant",
-            "State",
-            "Location",
-            "Notes",
         );
+        
+        if (fields) {
+            for (let field of fields) {
+                builder.addHeaders(field.label || field.name);
+            }
+        }
         
         for (let entry of entries) {
             const date = DateTime.fromMillis(entry.entry_id);
+            const data = fields?.map(field => entry.data[field.name]);
+            
             builder.add(
                 entry.voucher,
                 date.toLocaleString(DateTime.DATE_SHORT),
                 date.toLocaleString(DateTime.TIME_24_SIMPLE),
-                entry.specimen_count || "",
-                entry.specimen_type || "",
+                entry.type || "",
                 entry.position.latitude,
                 entry.position.longitude,
                 entry.position.elevation,
                 entry.collector || "",
-                entry.method || "",
-                entry.host_plant || "",
-                entry.state || "",
-                entry.location || "",
-                entry.notes || "",
+                ...data,
             );
         }
         

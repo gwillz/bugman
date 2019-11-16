@@ -7,13 +7,7 @@ const template: Configuration = {
     description: "Wasp and bug collection",
     fields: [
         {
-            type: "string",
-            name: "specimen_type",
-            label: "Specimen Type",
-            placeholder: "Wasps",
-        },
-        {
-            type: "number",
+            type: "integer",
             name: "specimen_count",
             label: "Specimen Count",
             placeholder: "2",

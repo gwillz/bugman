@@ -7,30 +7,25 @@ export interface EntryPosition {
     latitude: number;
     longitude: number;
     elevation: number;
-};
+}
+
+export type EntryData = Record<string, string | number>;
 
 export interface Entry {
     entry_id: number; // timestamp
     position: EntryPosition;
     voucher: string;
     collector: string;
-    specimen_type?: string;
-    specimen_count?: number;
-    state?: string;
-    location?: string;
-    method?: string;
-    host_plant?: string;
-    notes?: string;
+    type: string;
+    data: EntryData;
 }
 
 export function positionToString(position: EntryPosition) {
     return `${position.latitude.toFixed(5)}, ${position.longitude.toFixed(5)} @ ${position.elevation}m`;
 }
 
-
 export function useGetEntry(entry_id?: string | number) {
     const id = entry_id ? parseInt(entry_id + "") : -1;
-    
     return useSelector((state: State) => state.entries[id], shallowEqual);
 }
 
