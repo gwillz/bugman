@@ -262,9 +262,16 @@ body {
 
 .form-group {
     align-items: center;
-    display: grid;
-    grid-auto-flow: column;
-    grid-column-gap: 10px;
+    display: flex;
+}
+
+.form-group > .form-field {
+    margin-right: 10px;
+    flex: 1 1 0%;
+}
+
+.form-group > .form-field:last-child {
+    margin-right: 0;
 }
 
 
