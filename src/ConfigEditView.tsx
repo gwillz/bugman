@@ -4,36 +4,67 @@ import { useState } from 'preact/hooks';
 import { useDispatch } from 'react-redux';
 import { useParams, Redirect } from 'react-router';
 import { DispatchFn } from './store';
-import { useGetFields, ConfigField } from './Configuration';
+import { useGetFields, ConfigField, Configuration } from './Configuration';
 import { Link } from 'react-router-dom';
 import { FieldBlock } from './FieldBlock';
 
-import TEMPLATES from './templates';
+import { TEMPLATES } from './templates';
 
 const EMPTY_FIELDS: ConfigField[] = [{
     name: "",
     type: "string",
 }]
 
-type Params = {
-    index?: string;
+export function ConfigNewView() {
+    return (
+        <ConfigFormView
+            back_path="/settings"
+            fields={EMPTY_FIELDS}
+        />
+    )
 }
+
+export function ConfigEditView() {
+    const fields = useGetFields();
+    
+    if (!fields) {
+        return <Redirect to="/config/new" />
+    }
+    
+    return (
+        <ConfigFormView
+            back_path="/settings"
+            fields={fields}
+        />
+    )
+}
+
+type Params = {
+    index: string;
+}
+
+export function TemplateEditView() {
+    const { index } = useParams<Params>();
+    const config = TEMPLATES[+index - 1];
+    
+    return (
+        <ConfigFormView
+            back_path="/templates"
+            fields={config.fields}
+            config={config}
+        />
+    )
+}
+
 
 type Props = {
-    editing?: boolean;
+    back_path: string;
+    fields: ConfigField[];
+    config?: Configuration;
 }
 
-export function ConfigEditView(props: Props) {
-    
-    const { index } = useParams<Params>();
-    const config = index ? TEMPLATES[+index - 1] : null;
-    const stored_fields = useGetFields();
-    const [fields, setFields] = useState(() => (
-        props.editing
-        ? stored_fields ?? []
-        : config?.fields ?? EMPTY_FIELDS
-    ));
-    
+function ConfigFormView(props: Props) {
+    const [fields, setFields] = useState(props.fields);
     const [redirect, setRedirect] = useState("");
     const dispatch = useDispatch<DispatchFn>();
     
@@ -59,7 +90,7 @@ export function ConfigEditView(props: Props) {
     function onSubmit(event: Event) {
         event.preventDefault();
         dispatch({ type: "CONFIG", fields });
-        setRedirect("/config");
+        setRedirect("/");
     }
     
     if (redirect) {
@@ -68,22 +99,22 @@ export function ConfigEditView(props: Props) {
     
     return (
         <form onSubmit={onSubmit}>
-            {config ? (
+            {props.config ? (
             <Fragment>
                 <div className="text-message">
-                    Applying template: {config.name}
+                    Applying template: {props.config.name}
                 </div>
                 <div>
-                    {config.description}
+                    {props.config.description}
                     <br/>
-                    By {config.contributor}.
+                    By {props.config.contributor}.
                 </div>
                 <br/>
             </Fragment>
             ) : (
-                <div className="text-message">
-                    Edit Fields
-                </div>
+            <div className="text-message">
+                Edit Fields
+            </div>
             )}
             <div className="form">
                 {fields.map((field, index) => (
@@ -100,7 +131,7 @@ export function ConfigEditView(props: Props) {
                 )}
             </div>
             <nav className="navbar">
-                <Link to="/config"
+                <Link to={props.back_path}
                     className="button">
                     Back
                 </Link>
@@ -111,7 +142,7 @@ export function ConfigEditView(props: Props) {
                 </button>
                 <button type="submit"
                     className="button highlight">
-                    {props.editing ? "Save" : "Apply"}
+                    Save
                 </button>
             </nav>
         </form>

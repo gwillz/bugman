@@ -6,14 +6,16 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Settings } from 'luxon';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store';
+import { Footer } from './Footer';
+
 import { HomeView } from './HomeView';
 import { EditView } from './EditView';
 import { DeleteView } from './DeleteView';
 import { ClearView } from './ClearView';
 import { ExportView } from './ExportView';
-import { Footer } from './Footer';
-import { ConfigView } from './ConfigView';
-import { ConfigEditView } from './ConfigEditView';
+import { ConfigNewView, ConfigEditView, TemplateEditView } from './ConfigEditView';
+import { SettingsView } from './SettingsView';
+import { TemplatesView } from './TemplatesView';
 
 Settings.defaultLocale = "en-AU";
 
@@ -39,17 +41,20 @@ function App() {
                 <Route exact path="/">
                     <HomeView/>
                 </Route>
-                <Route exact path="/config">
-                    <ConfigView/>
+                <Route exact path="/settings">
+                    <SettingsView/>
                 </Route>
                 <Route path="/config/edit">
-                    <ConfigEditView editing />
-                </Route>
-                <Route path="/config/new/:index">
-                    <ConfigEditView/>
+                    <ConfigEditView />
                 </Route>
                 <Route path="/config/new">
-                    <ConfigEditView/>
+                    <ConfigNewView/>
+                </Route>
+                <Route exact path="/templates">
+                    <TemplatesView/>
+                </Route>
+                <Route path="/templates/:index">
+                    <TemplateEditView />
                 </Route>
                 <Route exact path="/new">
                     <EditView/>

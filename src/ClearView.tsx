@@ -36,7 +36,7 @@ export function ClearView() {
                     onClick={onRemove}>
                     Yes, delete it all.
                 </button>
-                <Link to="/" className="button">
+                <Link to="/settings" className="button">
                     Oh shit.
                 </Link>
             </div>

@@ -13,7 +13,7 @@ export function ConfigBlock(props: Props) {
     
     return (
         <div className="entry-block">
-            <Link to={"/config/new/" + index}
+            <Link to={"/templates/" + index}
                 className="entry-tab">
                 {config.name}
             </Link>
