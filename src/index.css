@@ -48,6 +48,10 @@ body {
     flex: 1;
 }
 
+a {
+    color: inherit;
+}
+
 .text-center {
     text-align: center;
 }

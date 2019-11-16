@@ -22,6 +22,15 @@ export function TemplatesView() {
                     />
                 ))}
             </div>
+            <div>
+                <br/>
+                If you have a set of fields you always use, feel free to send
+                them through and they can be included here.
+                <br/>
+                <a href="mailto:bugman@gwilyn.com">
+                    bugman@gwilyn.com
+                </a>
+            </div>
         </div>
     )
 }
