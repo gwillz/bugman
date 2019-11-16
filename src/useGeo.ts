@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'preact/hooks';
-import { EntryPosition } from './entry';
+import { EntryPosition } from './Entry';
 
 export function useGeo(mark?: EntryPosition) {
     const [state, set] = useState(mark);

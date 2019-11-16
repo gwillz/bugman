@@ -2,7 +2,7 @@
 import { h, Fragment } from 'preact';
 import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
-import { Entry, positionToString } from './entry';
+import { Entry, positionToString } from './Entry';
 import { css } from './css';
 
 type Props = {

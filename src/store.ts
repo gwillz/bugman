@@ -2,7 +2,7 @@
 import { createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { Entry } from './entry';
+import { Entry } from './Entry';
 
 export interface State {
     timestamp: number;

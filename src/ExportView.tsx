@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { Link } from 'react-router-dom';
 import { useRef } from 'preact/hooks';
 import { DateTime } from 'luxon';
-import { useGetEntries } from './entry';
+import { useGetEntries } from './Entry';
 import { CSVBuilder } from './CSVBuilder';
 import { useInput } from './useInput';
 import { css } from './css';

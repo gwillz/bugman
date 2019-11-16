@@ -1,7 +1,7 @@
 
 import { h } from 'preact';
 import { Link, useParams } from 'react-router-dom';
-import { useGetEntries } from './entry';
+import { useGetEntries } from './Entry';
 import { EntryBlock } from './EntryBlock';
 import { css } from './css';
 

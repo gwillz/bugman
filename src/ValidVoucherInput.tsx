@@ -1,7 +1,7 @@
 
 import { h } from 'preact';
 import { useRef } from 'preact/hooks';
-import { useGetEntries } from './entry';
+import { useGetEntries } from './Entry';
 
 type Props = h.JSX.HTMLAttributes & {
     autoCapitalize?: string;

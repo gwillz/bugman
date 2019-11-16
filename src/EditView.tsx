@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { DateTime } from 'luxon';
 import { DispatchFn } from './store';
-import { useGetEntry, positionToString } from './entry';
+import { useGetEntry, positionToString } from './Entry';
 import { useInput } from './useInput';
 import { useGeo, sleep } from './useGeo';
 import { ValidVoucherInput } from './ValidVoucherInput';

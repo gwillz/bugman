@@ -4,7 +4,7 @@ import { useState } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useGetEntry } from './entry';
+import { useGetEntry } from './Entry';
 import { DispatchFn } from './store';
 import { sleep } from './useGeo';
 
