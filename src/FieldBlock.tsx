@@ -1,5 +1,5 @@
 
-import { h } from 'preact';
+import { h, JSX } from 'preact';
 import { ConfigField, TYPES } from './Configuration';
 
 type Props = {
@@ -13,8 +13,8 @@ export function FieldBlock(props: Props) {
     const { index } = props;
     const { name, type } = props.field;
     
-    function onChange(event: Event) {
-        const { name, value } = (event.currentTarget as HTMLInputElement);
+    function onChange(event: JSX.TargetedEvent<HTMLSelectElement | HTMLInputElement>) {
+        const { name, value } = event.currentTarget;
         
         props.onUpdate(index, {
             ...props.field,

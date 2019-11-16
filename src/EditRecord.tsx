@@ -1,5 +1,5 @@
 
-import { h } from 'preact';
+import { h, JSX } from 'preact';
 import { ConfigField } from './Configuration';
 
 type Props = {
@@ -25,8 +25,8 @@ export function EditRecord(props: Props) {
 function AreaRecord(props: Props) {
     const { field, value } = props;
     
-    function onChange(event: Event) {
-        const { value } = event.currentTarget as HTMLTextAreaElement;
+    function onChange(event: JSX.TargetedEvent<HTMLTextAreaElement>) {
+        const { value } = event.currentTarget;
         props.onUpdate(field.name, value);
     }
     
@@ -47,8 +47,8 @@ function NumberRecord(props: Props) {
     const { field, value } = props;
     const step = field.type === "integer" ? 1 : undefined;
     
-    function onChange(event: Event) {
-        const { value } = event.currentTarget as HTMLInputElement;
+    function onChange(event: JSX.TargetedEvent<HTMLInputElement>) {
+        const { value } = event.currentTarget;
         props.onUpdate(field.name, value);
     }
     
@@ -70,8 +70,8 @@ function NumberRecord(props: Props) {
 function StringRecord(props: Props) {
     const { field, value } = props;
     
-    function onChange(event: Event) {
-        const { value } = event.currentTarget as HTMLInputElement;
+    function onChange(event: JSX.TargetedEvent<HTMLInputElement>) {
+        const { value } = event.currentTarget;
         props.onUpdate(field.name, value);
     }
     
