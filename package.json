@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "luxon": "^1.19.3",
-    "preact": "^10.0.0-rc.3",
+    "preact": "^10.0.5",
     "react-redux": "^7.1.1",
     "react-router": "^5.1.1",
     "react-router-dom": "^5.1.1",
@@ -36,7 +36,7 @@
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "serviceworker-webpack-plugin": "^1.0.1",
     "ts-loader": "^6.1.2",
-    "typescript": "^3.6.3",
+    "typescript": "^3.7.2",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   }
