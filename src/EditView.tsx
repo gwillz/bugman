@@ -1,6 +1,6 @@
 
 import { h } from 'preact';
-import { useState, useMemo, useRef } from 'preact/hooks';
+import { useState, useMemo, useRef, useEffect } from 'preact/hooks';
 import { useParams, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -35,6 +35,13 @@ export function EditView() {
         return date.toLocaleString(DateTime.DATE_SHORT) + " " +
             date.toLocaleString(DateTime.TIME_24_SIMPLE);
     }, [entry && entry.entry_id, timestamp]);
+    
+    // highlight the 'create' button when valid (only for new entries).
+    const [highlight, setHighlight] = useState(false);
+    
+    useEffect(() => {
+        setHighlight(!entry && !!form.current && form.current.checkValidity());
+    });
     
     const form = useRef<HTMLFormElement | null>(null);
     const [voucher, onVoucher] = useInput(entry && entry.voucher);
@@ -102,9 +109,6 @@ export function EditView() {
     
     // Created/updated redirect.
     if (redirect) return <Redirect to={redirect} />
-    
-    // highlight the 'create' button when valid (only for new entries).
-    const highlight = !entry && form.current && form.current.checkValidity();
     
     return (
         <form onSubmit={onSubmit} ref={form}>
@@ -245,3 +249,4 @@ export function EditView() {
         
     )
 }
+    
