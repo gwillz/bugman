@@ -38,7 +38,8 @@ export function HomeView() {
             <nav className="navbar">
                 <Link to="/new"
                     className={css("button", {
-                        highlight: entries.length === 0,
+                        highlight: fields !== null && entries.length === 0,
+                        disabled: fields === null,
                     })}>
                     Add Entry
                 </Link>
