@@ -15,7 +15,7 @@ const INCLUDE = [
 
 function filter(file) {
     const m = /(\.\w+)$/.exec(file);
-    if (!m) return false;
+    if (!m) return true;
     return !INCLUDE.includes(m[1]);
 }
 
