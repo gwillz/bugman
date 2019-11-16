@@ -175,7 +175,7 @@ export function EditView() {
                     <label>Specimen Type</label>
                     <input
                         type="text"
-                        name="collector"
+                        name="specimen_type"
                         value={specimen_type}
                         onChange={onSpecimenType}
                         placeholder="Wasps"

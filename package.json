@@ -13,6 +13,7 @@
   "author": "Gwilyn Saunders",
   "license": "MIT",
   "dependencies": {
+    "hash-sum": "^2.0.0",
     "luxon": "^1.19.3",
     "preact": "^10.0.5",
     "react-redux": "^7.1.1",

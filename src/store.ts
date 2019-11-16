@@ -3,10 +3,12 @@ import { createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { Entry } from './Entry';
+import { Configuration, templates } from './Configuration';
 
 export interface State {
     timestamp: number;
     entries: Record<number, Entry | undefined>;
+    config: Configuration | null;
 }
 
 export type Actions = ({
@@ -28,6 +30,7 @@ export type DispatchFn = (action: Actions) => void;
 const INIT_STATE: State = {
     timestamp: 0,
     entries: {},
+    config: null,
 }
 
 function reducer(state = INIT_STATE, action: Actions): State {
@@ -35,6 +38,7 @@ function reducer(state = INIT_STATE, action: Actions): State {
     
     switch (action.type) {
         case "ADD": return {
+            ...state,
             timestamp,
             entries: {
                 ...state.entries,
@@ -42,6 +46,7 @@ function reducer(state = INIT_STATE, action: Actions): State {
             },
         }
         case "REMOVE": return {
+            ...state,
             timestamp,
             entries: {
                 ...state.entries,
@@ -49,6 +54,7 @@ function reducer(state = INIT_STATE, action: Actions): State {
             }
         }
         case "EDIT": return {
+            ...state,
             timestamp,
             entries: {
                 ...state.entries,
@@ -59,6 +65,7 @@ function reducer(state = INIT_STATE, action: Actions): State {
             }
         }
         case "CLEAR": return {
+            ...state,
             timestamp,
             entries: {},
         }

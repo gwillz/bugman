@@ -7,12 +7,12 @@ import { Settings } from 'luxon';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store';
 import { HomeView } from './HomeView';
-import { EntryView } from './EntryView';
 import { EditView } from './EditView';
 import { DeleteView } from './DeleteView';
 import { ClearView } from './ClearView';
 import { ExportView } from './ExportView';
 import { Footer } from './Footer';
+import { ConfigView } from './ConfigView';
 
 Settings.defaultLocale = "en-AU";
 
@@ -37,6 +37,9 @@ function App() {
             <Switch>
                 <Route exact path="/">
                     <HomeView/>
+                </Route>
+                <Route exact path="/config">
+                    <ConfigView/>
                 </Route>
                 <Route exact path="/new">
                     <EditView/>
