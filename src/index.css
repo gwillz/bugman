@@ -290,6 +290,13 @@ a {
     border-radius: 5px;
     box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.05);
     padding: 10px 20px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.field-block.dragging {
+    opacity: 0.5;
 }
 
 

@@ -1,14 +1,19 @@
 
-import { h, Fragment } from 'preact';
+import { h, JSX, Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 import { useDispatch } from 'react-redux';
 import { useParams, Redirect } from 'react-router';
-import { DispatchFn } from './store';
-import { useGetFields, ConfigField, Configuration } from './Configuration';
 import { Link } from 'react-router-dom';
+import { DndProvider } from 'react-dnd';
+import TouchBackend from 'react-dnd-touch-backend';
+import { useGetFields, ConfigField, Configuration } from './Configuration';
+import { DispatchFn } from './store';
 import { FieldBlock } from './FieldBlock';
 
 import { TEMPLATES } from './templates';
+
+// The typings are kinda broken here, but it still works.
+const HackDndProvider = DndProvider as (props: any) => JSX.Element;
 
 const EMPTY_FIELDS: ConfigField[] = [{
     name: "",
@@ -87,6 +92,13 @@ function ConfigFormView(props: Props) {
         setFields(copy);
     }
     
+    function moveField(from: number, to: number) {
+        const copy = [ ...fields ];
+        const [item] = copy.splice(from, 1);
+        copy.splice(to, 0, item);
+        setFields(copy);
+    }
+    
     function onSubmit(event: Event) {
         event.preventDefault();
         dispatch({ type: "CONFIG", fields });
@@ -117,15 +129,20 @@ function ConfigFormView(props: Props) {
             </div>
             )}
             <div className="form">
+                <HackDndProvider backend={TouchBackend} options={{
+                    delay: 350,
+                }}>
                 {fields.map((field, index) => (
                     <FieldBlock
-                        key={index}
+                        key={field.name}
                         index={index}
                         field={field}
                         onUpdate={updateField}
                         onRemove={removeField}
+                        onMove={moveField}
                     />
                 ))}
+                </HackDndProvider>
                 {fields.length == 0 && (
                     <span>No fields.</span>
                 )}
