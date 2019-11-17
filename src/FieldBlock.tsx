@@ -27,12 +27,12 @@ export function FieldBlock(props: Props) {
     }
     
     return (
-        <div className="form-group">
+        <div className="form-group field-block">
             <div className="form-field">
                 <input
                     type="text"
                     name="name"
-                    placeholder="Field"
+                    placeholder="Field Name"
                     value={name}
                     onChange={onChange}
                     required
@@ -50,13 +50,11 @@ export function FieldBlock(props: Props) {
                     ))}
                 </select>
             </div>
-            <div>
-                <button type="button"
-                    className="button icon"
-                    onClick={onRemove}>
-                    X
-                </button>
-            </div>
+            <button type="button"
+                className="button icon"
+                onClick={onRemove}>
+                X
+            </button>
         </div>
     )
 }

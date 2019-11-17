@@ -20,14 +20,14 @@ export function HomeView() {
     return (
         <div>
             {fields == null ? (
-                <div className="text-message">
+                <div className="text-title">
                     Hi there!
                     <br/>
                     Field Assistant looks after your field notes.
                     Start by creating your data format <Link to="/settings">here</Link>.
                 </div>
             ) : entries.length === 0 && (
-                <div className="text-message">
+                <div className="text-title">
                     Hi there!
                     <br/>
                     You're ready to go.

@@ -64,12 +64,17 @@ a {
     font-size: var(--size-bigger);
 }
 
-.text-message {
+.text-title {
     text-align: center;
     font-weight: 600;
     font-size: var(--size-bigger);
     line-height: 1.4;
     padding: 50px 40px 30px;
+}
+
+.text-message {
+    text-align: left;
+    margin: 10px 0;
 }
 
 
@@ -265,17 +270,26 @@ a {
 }
 
 .form-group {
-    align-items: center;
+    align-items: baseline;
     display: flex;
+    margin: 0 0 10px;
 }
 
 .form-group > .form-field {
-    margin-right: 10px;
     flex: 1 1 0%;
+    margin-right: 10px;
+    padding: 0;
 }
 
 .form-group > .form-field:last-child {
     margin-right: 0;
+}
+
+.field-block {
+    background: var(--color-cloud);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.05);
+    padding: 10px 20px;
 }
 
 

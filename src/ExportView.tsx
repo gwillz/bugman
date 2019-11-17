@@ -109,7 +109,7 @@ export function ExportView() {
         <div>
             <a ref={ref} style={{display: 'none'}} />
             
-            <div className="text-message">
+            <div className="text-title">
                 Exporting {entries.length} entries.
             </div>
             

@@ -101,7 +101,7 @@ function ConfigFormView(props: Props) {
         <form onSubmit={onSubmit}>
             {props.config ? (
             <Fragment>
-                <div className="text-message">
+                <div className="text-title">
                     Applying template: {props.config.name}
                 </div>
                 <div>
@@ -112,7 +112,7 @@ function ConfigFormView(props: Props) {
                 <br/>
             </Fragment>
             ) : (
-            <div className="text-message">
+            <div className="text-title">
                 Edit Fields
             </div>
             )}

@@ -25,7 +25,7 @@ export function ClearView() {
     
     return (
         <div>
-            <div className="text-message">
+            <div className="text-title">
                 Deleting <em>everything</em>.
                 <br/>
                 Are you sure?

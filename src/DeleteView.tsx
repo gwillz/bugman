@@ -33,7 +33,7 @@ export function DeleteView() {
     
     return (
         <div>
-            <div className="text-message">
+            <div className="text-title">
                 Deleting entry: {entry.voucher}
                 <br/>
                 Are you sure?

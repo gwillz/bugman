@@ -12,39 +12,42 @@ export function SettingsView() {
     
     return (
         <div>
-            <div className="text-message">
+            <div className="text-title">
                 Settings
+            </div>
+            <div className="text-message">
+                Choose a format template
+            </div>
+            <Link to="/templates"
+                className="button highlight">
+                Templates
+            </Link>
+            <div className="text-message">
+                {fields === null
+                    ? "Create a custom format"
+                    : "Edit current format"
+                }
+            </div>
+            <Link to={fields === null ? "/config/new" : "/config/edit"}
+                className="button highlight">
+                {fields === null ? "Create" : "Edit"}
+            </Link>
+            <div className="text-message">
+                Clear all data
+            </div>
+            <Link to="/clear"
+                className={css("button", {
+                    disabled: entries.length === 0,
+                    highlight: entries.length !== 0,
+                })}>
+                Delete All
+            </Link>
+            <div className="text-message">
+                View Entries
             </div>
             <Link className="button" to="/">
                 Home
             </Link>
-            <div>
-                Choose a format template
-                <br/>
-                <Link to="/templates"
-                    className="button highlight">
-                    Templates
-                </Link>
-            </div>
-            <div>
-                Create a custom format
-                <br/>
-                <Link to="/config/new"
-                    className="button highlight">
-                    Create
-                </Link>
-            </div>
-            <div>
-                Clear all data
-                <br/>
-                <Link to="/clear"
-                    className={css("button", {
-                        disabled: entries.length === 0,
-                        highlight: entries.length !== 0,
-                    })}>
-                    Delete All
-                </Link>
-            </div>
             {/* @todo Space estimates. */}
         </div>
     )
