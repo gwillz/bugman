@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-type CSVCell = number | string | DateTime;
+type CSVCell = number | string | DateTime | undefined;
 
 export class CSVBuilder {
     
@@ -50,14 +50,20 @@ export class CSVBuilder {
                         return field;
                     }
                 }
-                // integer
-                else if (field % 1 == 0) {
-                    return field.toFixed(0);
+                else if (typeof field === "number") {
+                    // integer
+                    if (field % 1 == 0) {
+                        return field.toFixed(0);
+                    }
+                    // float
+                    else {
+                        // '7' appears to be the highest precision for GPS.
+                        return field.toFixed(7);
+                    }
                 }
-                // float
+                // undefined.. somehow?
                 else {
-                    // '7' appears to be the highest precision.
-                    return field.toFixed(7);
+                    return "";
                 }
             })
             .join(",");
