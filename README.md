@@ -4,10 +4,11 @@
 ### Tech
 - Typescript
 - Preact X
-- React-Router
 - Redux
-- Redux Persist
-- React Redux
+- Redux-Persist
+- React-Redux
+- React-Router
+- React-DnD
 - Workbox
 - Luxon
 
@@ -35,6 +36,6 @@ firebase deploy
 ### TODO
 - rich text notes
 - fonts
-- custom fields
-  - still mandatory: voucher, date, location, collector, geo
 - images
+  - new storage backend (localForage/IndexedDB)
+  - some sort of migration..?
