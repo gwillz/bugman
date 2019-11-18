@@ -1,6 +1,7 @@
 
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
+import { getGeo } from './useGeo';
 
 type Quota = {
     usage: number;
@@ -29,13 +30,13 @@ export function StatsBlock() {
             setQuota(null);
         }
         
-        const persist = await navigator.storage?.persisted?.();
+        const persist = await navigator.storage?.persisted();
         setPersist(!!persist);
         
         const worker = await navigator.serviceWorker?.getRegistration();
         setWorker(worker || null);
         
-        const geo = await navigator.permissions?.query?.({ name: "geolocation" });
+        const geo = await navigator.permissions?.query({ name: "geolocation" });
         setGeo(geo?.state === "granted");
     }
     
@@ -54,6 +55,26 @@ export function StatsBlock() {
     function workerEvent() {
         if (worker) {
             setReady(!!worker.active);
+        }
+    }
+    
+    async  function fixPersist() {
+        if (!persist) {
+            // This is a Chrome thing.
+            const res = await window.Notification?.requestPermission();
+            setPersist(res === "granted");
+        }
+    }
+    
+    async function fixGeo() {
+        if (!geo) {
+            try {
+                await getGeo();
+                setGeo(true);
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
     }
     
@@ -86,6 +107,22 @@ export function StatsBlock() {
                 }
                 &nbsp;
                 MiB
+            </div>
+            <br/>
+            <div>
+                <button type="button"
+                    className="button"
+                    onClick={fixPersist}
+                    disabled={persist}>
+                    Fix Persistence
+                </button>
+                <br/>
+                <button type="button"
+                    className="button"
+                    onClick={fixGeo}
+                    disabled={geo}>
+                    Fix Geolocation
+                </button>
             </div>
         </div>
     )

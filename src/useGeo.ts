@@ -27,7 +27,7 @@ export async function sleep(timeout: number) {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-async function getGeo(options?: PositionOptions) {
+export async function getGeo(options?: PositionOptions) {
     return new Promise<EntryPosition>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(geo => {
             const { latitude, longitude, altitude } = geo.coords;
