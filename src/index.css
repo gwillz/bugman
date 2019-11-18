@@ -37,7 +37,7 @@ body {
 #root {
     display: flex;
     flex-direction: column;
-    padding: 0 20px;
+    padding: 85px 20px 0;
     margin: 0 auto;
     max-width: 680px;
     height: 100%;
@@ -69,7 +69,7 @@ a {
     font-weight: 600;
     font-size: var(--size-bigger);
     line-height: 1.4;
-    padding: 50px 40px 30px;
+    padding: 0 20px 20px;
 }
 
 .text-message {
@@ -81,28 +81,41 @@ a {
 /* ======== Header ========  */
 
 .header {
-    flex: 0 !important;
-    padding: 40px 0 20px;
-    text-align: center;
+    background: var(--color-putty);
+    box-shadow: 0 2px 2px 1px rgba(0,0,0,0.05);
+    padding: 20px;
+    position: fixed;
     width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
+
+.header > div {
+    display: flex;
+    margin: 0 auto;
+    max-width: 680px;
+}
+
 .header h1 {
     color: var(--color-bee);
     font-size: var(--size-header);
     line-height: 1;
-    margin: 0;
-}
-.header h1 > * {
-    vertical-align: bottom;
+    margin: 0 auto 0 0;
 }
 
 .header .logo {
     display: inline-block;
-    height: 1.2em;
-    margin: 0 5px;
+    height: 40px;
+    margin: -5px 5px -10px;
 }
-.header .logo.flip {
-    transform: scaleX(-1);
+
+.header .button {
+    margin: 0 auto 0 0;
+    min-width: 0;
+    padding: 5px 10px;
+    line-height: 1.4;
 }
 
 @media (max-width: 370px) {

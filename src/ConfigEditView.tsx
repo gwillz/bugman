@@ -11,6 +11,7 @@ import { DispatchFn } from './store';
 import { ConfigEditFieldBlock, EditConfigField } from './ConfigEditFieldBlock';
 
 import { TEMPLATES } from './templates';
+import { useBackPath } from './Header';
 
 // The typings are kinda broken here, but it still works.
 const HackDndProvider = DndProvider as (props: any) => JSX.Element;
@@ -21,9 +22,11 @@ const EMPTY_FIELDS: ConfigField[] = [{
 }]
 
 export function ConfigNewView() {
+    
+    useBackPath("/settings");
+    
     return (
         <ConfigFormView
-            back_path="/settings"
             fields={EMPTY_FIELDS}
         />
     )
@@ -32,13 +35,14 @@ export function ConfigNewView() {
 export function ConfigEditView() {
     const fields = useGetFields();
     
+    useBackPath("/settings");
+    
     if (!fields) {
         return <Redirect to="/config/new" />
     }
     
     return (
         <ConfigFormView
-            back_path="/settings"
             fields={fields}
         />
     )
@@ -52,9 +56,10 @@ export function TemplateEditView() {
     const { index } = useParams<Params>();
     const config = TEMPLATES[+index - 1];
     
+    useBackPath("/templates");
+    
     return (
         <ConfigFormView
-            back_path="/templates"
             fields={config.fields}
             config={config}
         />
@@ -63,7 +68,6 @@ export function TemplateEditView() {
 
 
 type Props = {
-    back_path: string;
     fields: ConfigField[];
     config?: Configuration;
 }
@@ -160,10 +164,6 @@ function ConfigFormView(props: Props) {
                 )}
             </div>
             <nav className="navbar">
-                <Link to={props.back_path}
-                    className="button">
-                    Back
-                </Link>
                 <button type="button"
                     className="button highlight"
                     onClick={addField}>

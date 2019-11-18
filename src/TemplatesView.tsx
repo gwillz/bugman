@@ -2,17 +2,19 @@
 import { h } from 'preact';
 import { Link } from 'react-router-dom';
 import { ConfigBlock } from './ConfigBlock';
+import { useBackPath } from './Header';
 
 import { TEMPLATES } from './templates';
 
 export function TemplatesView() {
+    
+    useBackPath("/settings");
+    
     return (
         <div>
-            <nav className="navbar">
-                <Link to="/settings" className="button">
-                    Back
-                </Link>
-            </nav>
+            <div className="text-title">
+                Templates
+            </div>
             <div className="">
                 {TEMPLATES.map((config, i) => (
                     <ConfigBlock

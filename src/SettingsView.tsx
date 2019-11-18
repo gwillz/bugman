@@ -5,11 +5,14 @@ import { useGetEntries } from './Entry';
 import { useGetFields } from './Configuration';
 import { StatsBlock } from './StatsBlock';
 import { css } from './css';
+import { useBackPath } from './Header';
 
 export function SettingsView() {
 
     const entries = useGetEntries();
     const fields = useGetFields();
+    
+    useBackPath("/");
     
     return (
         <div>
@@ -42,12 +45,6 @@ export function SettingsView() {
                     highlight: entries.length !== 0,
                 })}>
                 Delete All
-            </Link>
-            <div className="text-message">
-                View Entries
-            </div>
-            <Link className="button" to="/">
-                Home
             </Link>
             <br />
             <StatsBlock/>

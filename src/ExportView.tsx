@@ -8,6 +8,7 @@ import { useGetFields } from './Configuration';
 import { CSVBuilder } from './CSVBuilder';
 import { useInput } from './useInput';
 import { css } from './css';
+import { useBackPath } from './Header';
 
 declare global {
     interface WebShare {
@@ -25,6 +26,9 @@ declare global {
 
 
 export function ExportView() {
+    
+    useBackPath("/");
+    
     const entries = useGetEntries();
     const fields = useGetFields();
     

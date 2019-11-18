@@ -13,6 +13,7 @@ import { useGeo, sleep } from './useGeo';
 import { ValidVoucherInput } from './ValidVoucherInput';
 import { EntryEditField } from './EntryEditField';
 import { css } from './css';
+import { useBackPath } from './Header';
 
 type Params = {
     entry_id?: string;
@@ -28,6 +29,8 @@ export function EntryEditView() {
     const dispatch = useDispatch<DispatchFn>();
     const entry = useGetEntry(entry_id);
     const fields = useGetFields();
+    
+    useBackPath("/");
     
     // The datetime string is from either the creation timestamp (above)
     // or the entry timestamp being edited.
@@ -109,19 +112,6 @@ export function EntryEditView() {
     
     return (
         <form onSubmit={onSubmit} ref={form}>
-            <nav className="navbar">
-                <Link className="button" to="/">
-                    Home
-                </Link>
-                {entry && (
-                    <Link className="button" to={`/${entry.entry_id}`}>
-                        View
-                    </Link>
-                )}
-                <button className={css("button", { highlight })} type="submit">
-                    {entry ? "Save" : "Create"}
-                </button>
-            </nav>
             <div className="form">
                 <div className="form-field">
                     <label>Voucher *</label>
@@ -202,6 +192,11 @@ export function EntryEditView() {
                 <button className={css("button", { highlight })} type="submit">
                     {entry ? "Save" : "Create"}
                 </button>
+                {entry && (
+                    <Link className="button" to={`/${entry.entry_id}`}>
+                        View
+                    </Link>
+                )}
             </div>
         </form>
         

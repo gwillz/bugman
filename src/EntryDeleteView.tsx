@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useGetEntry } from './Entry';
 import { DispatchFn } from './store';
 import { sleep } from './useGeo';
+import { useBackPath } from './Header';
 
 type Params = {
     entry_id: string;
@@ -17,6 +18,8 @@ export function EntryDeleteView() {
     const entry = useGetEntry(entry_id);
     const dispatch = useDispatch<DispatchFn>();
     const [redirect, setRedirect] = useState("");
+    
+    useBackPath("/" + entry_id);
     
     async function onRemove() {
         dispatch({

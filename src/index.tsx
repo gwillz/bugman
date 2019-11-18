@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Settings } from 'luxon';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store';
+import { Header, HeaderProvider } from './Header';
 import { Footer } from './Footer';
 
 import { HomeView } from './HomeView';
@@ -20,23 +21,13 @@ import { TemplatesView } from './TemplatesView';
 Settings.defaultLocale = "en-AU";
 
 function App() {
+    
     return (
         <PersistGate persistor={persistor}>
         <Provider store={store}>
+        <HeaderProvider>
         <BrowserRouter>
-            <header className="header">
-                <h1>
-                    <img
-                        src="/bugman_logo.svg"
-                        className="logo"
-                    />
-                    <span>Field Assistant</span>
-                    <img
-                        src="/bugman_logo.svg"
-                        className="logo flip"
-                    />
-                </h1>
-            </header>
+            <Header/>
             <Switch>
                 <Route exact path="/">
                     <HomeView/>
@@ -77,6 +68,7 @@ function App() {
             </Switch>
             <Footer/>
         </BrowserRouter>
+        </HeaderProvider>
         </Provider>
         </PersistGate>
     )

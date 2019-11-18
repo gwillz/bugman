@@ -6,14 +6,13 @@ import { useDispatch } from 'react-redux';
 import { DispatchFn } from './store';
 import { sleep } from './useGeo';
 import { Link } from 'react-router-dom';
-
-type Params = {
-    entry_id: string;
-}
+import { useBackPath } from './Header';
 
 export function ClearView() {
     const dispatch = useDispatch<DispatchFn>();
     const [redirect, setRedirect] = useState("");
+    
+    useBackPath("/settings");
     
     async function onRemove() {
         dispatch({ type: "CLEAR" });

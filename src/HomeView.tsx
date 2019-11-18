@@ -19,19 +19,22 @@ export function HomeView() {
     
     return (
         <div>
-            {fields == null ? (
+            {(fields === null || entries.length === 0) && (
                 <div className="text-title">
                     Hi there!
                     <br/>
                     Field Assistant looks after your field notes.
-                    Start by creating your data format <Link to="/settings">here</Link>.
+                </div>
+            )}
+            {fields === null ? (
+                <div className="text-message">
+                    Start by creating your data format&nbsp;
+                    <Link to="/settings">here</Link>.
                 </div>
             ) : entries.length === 0 && (
-                <div className="text-title">
-                    Hi there!
-                    <br/>
-                    You're ready to go.
-                    Time to add a new entry.
+                <div className="text-message">
+                    Create your first entry&nbsp;
+                    <Link to="/new">here</Link>.
                 </div>
             )}
             
