@@ -3,10 +3,11 @@ import { h } from 'preact';
 import { Link } from 'react-router-dom';
 import { useGetEntries } from './Entry';
 import { useGetFields } from './Configuration';
+import { StatsBlock } from './StatsBlock';
 import { css } from './css';
 
 export function SettingsView() {
-    
+
     const entries = useGetEntries();
     const fields = useGetFields();
     
@@ -48,7 +49,8 @@ export function SettingsView() {
             <Link className="button" to="/">
                 Home
             </Link>
-            {/* @todo Space estimates. */}
+            <br />
+            <StatsBlock/>
         </div>
     )
 }

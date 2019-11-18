@@ -84,6 +84,8 @@ function App() {
 
 if (process.env.NODE_ENV === "production") {
     if ('serviceWorker' in navigator) runtime.register();
+    
+    navigator.storage?.persist?.();
 }
 
 render(<App/>, document.getElementById('root') as HTMLElement);
