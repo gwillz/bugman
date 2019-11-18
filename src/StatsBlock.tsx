@@ -13,6 +13,7 @@ export function StatsBlock() {
     const [quota, setQuota] = useState<Quota | null>(null);
     const [ready, setReady] = useState(false);
     const [persist, setPersist] = useState(false);
+    const [geo, setGeo] = useState(false);
     
     useEffect(() => void init(), []);
     
@@ -33,6 +34,9 @@ export function StatsBlock() {
         
         const worker = await navigator.serviceWorker?.getRegistration();
         setWorker(worker || null);
+        
+        const geo = await navigator.permissions?.query?.({ name: "geolocation" });
+        setGeo(geo?.state === "granted");
     }
     
     useEffect(() => {
@@ -68,13 +72,16 @@ export function StatsBlock() {
                 Currently Offline: {navigator.onLine ? "No" : "Yes"}
             </div>
             <div>
-                Storage Persistent: {persist ? "Yes" : "Not guaranteed"}
+                Has Geolocation: {geo ? "Yes" : "No"}
+            </div>
+            <div>
+                Has Persistent Storage: {persist ? "Yes" : "No (not guaranteed)"}
             </div>
             <div>
                 Storage Quota:
                 &nbsp;
                 {quota
-                    ? `${quota.usage.toFixed(1)}/${quota.total.toFixed(0)}`
+                    ? `${format(quota.usage, 1)}/${format(quota.total, 0)}`
                     : "??/??"
                 }
                 &nbsp;
@@ -82,4 +89,11 @@ export function StatsBlock() {
             </div>
         </div>
     )
+}
+
+
+const formatter = new Intl.NumberFormat();
+
+function format(value: number, precision: number) {
+    return formatter.format(+value.toFixed(precision))
 }

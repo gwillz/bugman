@@ -52,7 +52,7 @@ export function EntryEditView() {
     const [voucher, onVoucher] = useInput(entry?.voucher);
     const [collector, onCollector] = useInput(entry?.collector);
     const [type, onType] = useInput(entry?.type);
-    const position = useGeo(entry?.position);
+    const [position, geo_busy, getGeo] = useGeo(entry?.position);
     
     const [data, setData] = useState<EntryData>(() => entry?.data ?? {});
     
@@ -148,14 +148,24 @@ export function EntryEditView() {
                 </div>
                 <div className="form-field">
                     <label>Position *</label>
-                    <input
-                        type="text"
-                        name="position"
-                        value={position
-                            ? positionToString(position)
-                            : '...'}
-                        readOnly
-                    />
+                    <div className="form-group">
+                        <div className="form-field">
+                            <input
+                                type="text"
+                                name="position"
+                                value={position
+                                    ? positionToString(position)
+                                    : '...'}
+                                readOnly
+                            />
+                        </div>
+                        <button type="button"
+                            className="button icon"
+                            disabled={geo_busy}
+                            onClick={getGeo}>
+                            <img src="/gmd-refresh.svg" />
+                        </button>
+                    </div>
                 </div>
                 <div className="form-field">
                     <label>Collector *</label>

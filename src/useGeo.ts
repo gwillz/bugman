@@ -4,15 +4,23 @@ import { EntryPosition } from './Entry';
 
 export function useGeo(mark?: EntryPosition) {
     const [state, set] = useState(mark);
+    const [busy, setBusy] = useState(false);
     
     useEffect(() => void get(), [mark]);
     
     async function get() {
+        setBusy(true);
         await sleep(200);
-        set(mark || await getGeo({ enableHighAccuracy: true }));
+        try {
+            set(mark || await getGeo({ enableHighAccuracy: true }));
+        }
+        catch (error) {
+            console.log(error);
+        }
+        setBusy(false);
     }
     
-    return state;
+    return [state, busy, get] as [typeof state, typeof busy, typeof get];
 }
 
 export async function sleep(timeout: number) {
