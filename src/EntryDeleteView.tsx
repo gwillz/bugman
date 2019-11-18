@@ -12,7 +12,7 @@ type Params = {
     entry_id: string;
 }
 
-export function DeleteView() {
+export function EntryDeleteView() {
     const { entry_id } = useParams<Params>();
     const entry = useGetEntry(entry_id);
     const dispatch = useDispatch<DispatchFn>();

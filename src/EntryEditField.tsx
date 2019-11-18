@@ -8,21 +8,21 @@ type Props = {
     onUpdate: (key: string, value: string) => void;
 }
 
-export function EditRecord(props: Props) {
+export function EntryEditField(props: Props) {
     const { type } = props.field;
     
     if (type === "text") {
-       return <AreaRecord {...props} />
+       return <AreaField {...props} />
     }
     else if (type === "integer" || type === "decimal") {
-        return <NumberRecord {...props} />
+        return <NumberField {...props} />
     }
     else {
-        return <StringRecord {...props} />
+        return <StringField {...props} />
     }
 }
 
-function AreaRecord(props: Props) {
+function AreaField(props: Props) {
     const { field, value } = props;
     
     function onChange(event: JSX.TargetedEvent<HTMLTextAreaElement>) {
@@ -42,7 +42,7 @@ function AreaRecord(props: Props) {
     )
 }
 
-function NumberRecord(props: Props) {
+function NumberField(props: Props) {
     const { field, value } = props;
     const step = field.type === "integer" ? 1 : undefined;
     
@@ -65,7 +65,7 @@ function NumberRecord(props: Props) {
     )
 }
 
-function StringRecord(props: Props) {
+function StringField(props: Props) {
     const { field, value } = props;
     
     function onChange(event: JSX.TargetedEvent<HTMLInputElement>) {

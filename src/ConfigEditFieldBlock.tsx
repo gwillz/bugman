@@ -23,7 +23,7 @@ type Props = {
     onMove: (from: number, to: number) => void;
 }
 
-export function EditFieldBlock(props: Props) {
+export function ConfigEditFieldBlock(props: Props) {
     const { index } = props;
     const { name, type } = props.field;
     

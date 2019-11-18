@@ -13,7 +13,7 @@ export function TemplatesView() {
                     Back
                 </Link>
             </nav>
-            <div className="entry-group">
+            <div className="">
                 {TEMPLATES.map((config, i) => (
                     <ConfigBlock
                         key={i}

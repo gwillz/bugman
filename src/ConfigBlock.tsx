@@ -12,21 +12,16 @@ export function ConfigBlock(props: Props) {
     const { config, index } = props;
     
     return (
-        <div className="entry-block">
-            <Link to={"/templates/" + index}
-                className="entry-tab">
+        <Link to={"/templates/" + index} className="config-block">
+            <div className="text-bold">
                 {config.name}
-            </Link>
-            <div className="entry-brief">
-                <span>
-                    {config.contributor}
-                </span>
-                <span>
-                    {config.fields.length + STANDARD_FIELDS.length}
-                    &nbsp;
-                    fields
-                </span>
             </div>
-        </div>
+            <div>
+                {config.contributor}{" / "}
+                {config.fields.length + STANDARD_FIELDS.length}
+                &nbsp;
+                fields
+            </div>
+        </Link>
     )
 }

@@ -11,14 +11,14 @@ import { useGetFields } from './Configuration';
 import { useInput } from './useInput';
 import { useGeo, sleep } from './useGeo';
 import { ValidVoucherInput } from './ValidVoucherInput';
-import { EditRecord } from './EditRecord';
+import { EntryEditField } from './EntryEditField';
 import { css } from './css';
 
 type Params = {
     entry_id?: string;
 }
 
-export function EditView() {
+export function EntryEditView() {
     
     // Note, this refreshes on every render.
     const timestamp = +new Date();
@@ -181,7 +181,7 @@ export function EditView() {
                 </div>
                 
                 {fields?.map(field => (
-                    <EditRecord
+                    <EntryEditField
                         key={field.name}
                         field={field}
                         onUpdate={onUpdateData}

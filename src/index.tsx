@@ -9,8 +9,8 @@ import { persistor, store } from './store';
 import { Footer } from './Footer';
 
 import { HomeView } from './HomeView';
-import { EditView } from './EditView';
-import { DeleteView } from './DeleteView';
+import { EntryEditView } from './EntryEditView';
+import { EntryDeleteView } from './EntryDeleteView';
 import { ClearView } from './ClearView';
 import { ExportView } from './ExportView';
 import { ConfigNewView, ConfigEditView, TemplateEditView } from './ConfigEditView';
@@ -57,7 +57,7 @@ function App() {
                     <TemplateEditView />
                 </Route>
                 <Route exact path="/new">
-                    <EditView/>
+                    <EntryEditView/>
                 </Route>
                 <Route exact path="/clear">
                     <ClearView/>
@@ -69,10 +69,10 @@ function App() {
                     <HomeView/>
                 </Route>
                 <Route path="/:entry_id/edit">
-                    <EditView/>
+                    <EntryEditView/>
                 </Route>
                 <Route path="/:entry_id/delete">
-                    <DeleteView/>
+                    <EntryDeleteView/>
                 </Route>
             </Switch>
             <Footer/>

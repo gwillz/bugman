@@ -8,7 +8,7 @@ import { DndProvider } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import { useGetFields, ConfigField, Configuration } from './Configuration';
 import { DispatchFn } from './store';
-import { EditFieldBlock, EditConfigField } from './EditFieldBlock';
+import { ConfigEditFieldBlock, EditConfigField } from './ConfigEditFieldBlock';
 
 import { TEMPLATES } from './templates';
 
@@ -145,7 +145,7 @@ function ConfigFormView(props: Props) {
                     delay: 350,
                 }}>
                 {fields.map((field, index) => (
-                    <EditFieldBlock
+                    <ConfigEditFieldBlock
                         key={field._timestamp}
                         index={index}
                         field={field}

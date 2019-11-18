@@ -239,7 +239,6 @@ a {
 }
 
 .form-field label {
-    vertical-align: top;
     display: block;
     margin-left: 30px;
     padding: 5px 0;
@@ -297,6 +296,16 @@ a {
 
 .field-block.dragging {
     opacity: 0.5;
+}
+
+.config-block {
+    background: var(--color-cloud);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.05);
+    display: block;
+    margin: 0 0 10px;
+    padding: 10px 20px;
+    text-decoration: none;
 }
 
 
