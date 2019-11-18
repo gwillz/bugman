@@ -47,7 +47,7 @@ export function EntryDeleteView() {
                     onClick={onRemove}>
                     Yes, delete it
                 </button>
-                <Link to="/"
+                <Link to={"/" + entry_id}
                     className="button">
                     Wait no!
                 </Link>

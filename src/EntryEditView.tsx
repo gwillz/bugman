@@ -30,7 +30,7 @@ export function EntryEditView() {
     const entry = useGetEntry(entry_id);
     const fields = useGetFields();
     
-    useBackPath("/");
+    useBackPath(entry_id ? "/" + entry_id : "/");
     
     // The datetime string is from either the creation timestamp (above)
     // or the entry timestamp being edited.

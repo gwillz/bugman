@@ -131,9 +131,6 @@ export function ExportView() {
             </div>
             <br/>
             <div className="navbar">
-                <Link to="/" className="button">
-                    Home
-                </Link>
                 <button type="button"
                     className={css("button", {highlight: !navigator.share})}
                     onClick={onSave}
