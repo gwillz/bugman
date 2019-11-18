@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "bugman-834"
+    "default": "bugman-834",
+    "staging": "bugman-staging"
   }
 }
