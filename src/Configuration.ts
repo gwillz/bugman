@@ -14,7 +14,6 @@ export const STANDARD_FIELDS = [
 export interface ConfigField {
     type: "string" | "text" | "integer" | "decimal";
     name: string;
-    label?: string;
     placeholder?: string;
 }
 

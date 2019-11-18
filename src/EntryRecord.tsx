@@ -10,13 +10,12 @@ type Props = {
 export function EntryRecord(props: Props) {
     
     const { value } = props;
-    const { type } = props.field;
-    const label = props.field.label || props.field.name;
+    const { name, type } = props.field;
     
     if (type === "text" && typeof value === "string") {
         return (
             <div className="entry-record-block">
-                <label>{label}</label>
+                <label>{name}</label>
                 <div dangerouslySetInnerHTML={{
                     __html: value.replace(/[\r\n]+/, "<br/>"),
                 }}/>
@@ -26,7 +25,7 @@ export function EntryRecord(props: Props) {
     else {
         return (
             <div className="entry-record">
-                <label>{label}</label>
+                <label>{name}</label>
                 <span>{value}</span>
             </div>
         )

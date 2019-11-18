@@ -8,7 +8,7 @@ import { DndProvider } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import { useGetFields, ConfigField, Configuration } from './Configuration';
 import { DispatchFn } from './store';
-import { FieldBlock } from './FieldBlock';
+import { EditFieldBlock, EditConfigField } from './EditFieldBlock';
 
 import { TEMPLATES } from './templates';
 
@@ -68,32 +68,44 @@ type Props = {
     config?: Configuration;
 }
 
+
 function ConfigFormView(props: Props) {
-    const [fields, setFields] = useState(props.fields);
+    const [fields, setFields] = useState<EditConfigField[]>(() => (
+        props.fields.map(field => ({
+            ...field,
+            _timestamp: Math.floor(Math.random() * +new Date()),
+        }))
+    ));
+    
     const [redirect, setRedirect] = useState("");
     const dispatch = useDispatch<DispatchFn>();
     
     function addField() {
         setFields([ ...fields, {
+            _timestamp: +new Date(),
             name: "",
             type: "string",
         }]);
     }
     
-    function updateField(index: number, field: ConfigField) {
-        const copy = [ ...fields ];
-        copy.splice(index, 1, field);
+    function updateField(index: number, field: EditConfigField) {
+        const copy: EditConfigField[] = [ ...fields ];
+        // Always remove placeholder if present.
+        copy.splice(index, 1, {
+            ...field, 
+            placeholder: undefined,
+        });
         setFields(copy);
     }
     
     function removeField(index: number) {
-        const copy = [ ...fields ];
+        const copy: EditConfigField[] = [ ...fields ];
         copy.splice(index, 1);
         setFields(copy);
     }
     
     function moveField(from: number, to: number) {
-        const copy = [ ...fields ];
+        const copy: EditConfigField[] = [ ...fields ];
         const [item] = copy.splice(from, 1);
         copy.splice(to, 0, item);
         setFields(copy);
@@ -133,8 +145,8 @@ function ConfigFormView(props: Props) {
                     delay: 350,
                 }}>
                 {fields.map((field, index) => (
-                    <FieldBlock
-                        key={field.name}
+                    <EditFieldBlock
+                        key={field._timestamp}
                         index={index}
                         field={field}
                         onUpdate={updateField}

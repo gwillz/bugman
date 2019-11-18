@@ -8,20 +8,17 @@ const template: Configuration = {
     fields: [
         {
             type: "decimal",
-            name: "size",
-            label: "Diameter Size",
+            name: "Diameter Size",
             placeholder: "5",
         },
         {
             type: "string",
-            name: "roughness",
-            label: "Roughness",
+            name: "Roughness",
             placeholder: "Very",
         },
         {
             type: "text",
-            name: "notes",
-            label: "Notes",
+            name: "Notes",
             placeholder: "...",
         },
     ],

@@ -11,15 +11,19 @@ interface DragItem {
     type: string;
 }
 
+export interface EditConfigField extends ConfigField {
+    _timestamp: number;
+}
+
 type Props = {
     index: number;
-    field: ConfigField;
-    onUpdate: (index: number, field: ConfigField) => void;
+    field: EditConfigField;
+    onUpdate: (index: number, field: EditConfigField) => void;
     onRemove: (index: number) => void;
     onMove: (from: number, to: number) => void;
 }
 
-export function FieldBlock(props: Props) {
+export function EditFieldBlock(props: Props) {
     const { index } = props;
     const { name, type } = props.field;
     

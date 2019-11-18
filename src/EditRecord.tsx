@@ -32,9 +32,8 @@ function AreaRecord(props: Props) {
     
     return (
         <div className="form-field">
-            <label>{field.label || field.name}</label>
+            <label>{field.name}</label>
             <textarea
-                name={field.name}
                 value={value}
                 onChange={onChange}
                 placeholder={field.placeholder || "..."}
@@ -54,10 +53,9 @@ function NumberRecord(props: Props) {
     
     return (
         <div className="form-field">
-            <label>{field.label || field.name}</label>
+            <label>{field.name}</label>
             <input
                 type="number"
-                name={field.name}
                 value={value}
                 onChange={onChange}
                 placeholder={field.placeholder}
@@ -77,10 +75,9 @@ function StringRecord(props: Props) {
     
     return (
         <div className="form-field">
-            <label>{field.label || field.name}</label>
+            <label>{field.name}</label>
             <input
                 type="text"
-                name={field.name}
                 value={value}
                 onChange={onChange}
                 placeholder={field.placeholder}

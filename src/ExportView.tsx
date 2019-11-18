@@ -81,7 +81,7 @@ export function ExportView() {
         
         if (fields) {
             for (let field of fields) {
-                builder.addHeaders(field.label || field.name);
+                builder.addHeaders(field.name);
             }
         }
         
