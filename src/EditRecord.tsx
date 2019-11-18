@@ -36,7 +36,7 @@ function AreaRecord(props: Props) {
             <textarea
                 value={value}
                 onChange={onChange}
-                placeholder={field.placeholder || "..."}
+                placeholder={field.placeholder || field.name}
             />
         </div>
     )
@@ -58,7 +58,7 @@ function NumberRecord(props: Props) {
                 type="number"
                 value={value}
                 onChange={onChange}
-                placeholder={field.placeholder}
+                placeholder={field.placeholder || field.name}
                 step={step}
             />
         </div>
@@ -80,7 +80,7 @@ function StringRecord(props: Props) {
                 type="text"
                 value={value}
                 onChange={onChange}
-                placeholder={field.placeholder}
+                placeholder={field.placeholder || field.name}
             />
         </div>
     )
