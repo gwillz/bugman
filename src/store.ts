@@ -81,7 +81,11 @@ function reducer(state = INIT_STATE, action: Actions): State {
 }
 
 export const store = createStore(
-    persistReducer( {key: 'entries', storage }, reducer ),
+    persistReducer({
+        storage, 
+        key: 'entries',
+        version: 2,
+    }, reducer ),
     // @ts-ignore
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );

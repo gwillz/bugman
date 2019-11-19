@@ -1,7 +1,7 @@
 
 import { h } from 'preact';
 import { Link } from 'react-router-dom';
-import { Configuration, STANDARD_FIELDS } from './Configuration';
+import { Configuration } from './Configuration';
 
 type Props = {
     index: number;
@@ -18,9 +18,7 @@ export function ConfigBlock(props: Props) {
             </div>
             <div>
                 {config.contributor}{" / "}
-                {config.fields.length + STANDARD_FIELDS.length}
-                &nbsp;
-                fields
+                {config.fields.length} fields
             </div>
         </Link>
     )

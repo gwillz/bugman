@@ -4,7 +4,7 @@ import { useState } from 'preact/hooks';
 import { useDispatch } from 'react-redux';
 import { useParams, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { DndProvider } from 'react-dnd';
+import { DndProvider, DndProviderProps } from 'react-dnd';
 import TouchBackend from 'react-dnd-touch-backend';
 import { useGetFields, ConfigField, Configuration } from './Configuration';
 import { DispatchFn } from './store';
@@ -146,6 +146,7 @@ function ConfigFormView(props: Props) {
             )}
             <div className="form">
                 <HackDndProvider backend={TouchBackend} options={{
+                    ignoreContextMenu: true,
                     delay: 350,
                 }}>
                 {fields.map((field, index) => (
@@ -159,10 +160,16 @@ function ConfigFormView(props: Props) {
                     />
                 ))}
                 </HackDndProvider>
-                {fields.length == 0 && (
+                {fields.length === 0 && (
                     <span>No fields.</span>
                 )}
             </div>
+            {fields.length > 0 && (
+                <div className="text-message">
+                    <br/>
+                    Hold &amp; drag to re-order fields.
+                </div>
+            )}
             <nav className="navbar">
                 <button type="button"
                     className="button highlight"

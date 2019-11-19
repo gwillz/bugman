@@ -2,15 +2,6 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { State } from './store';
 
-// These are the keys in Entry.
-export const STANDARD_FIELDS = [
-    "voucher",
-    "datetime",
-    "position",
-    "collector",
-    "type",
-];
-
 export interface ConfigField {
     type: "string" | "text" | "integer" | "decimal";
     name: string;
