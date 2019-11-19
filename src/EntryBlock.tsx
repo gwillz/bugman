@@ -31,7 +31,8 @@ export function EntryBlock(props: Props) {
                                 .toLocaleString(DateTime.DATE_MED)}
                         </span>
                         <span>
-                            {entry.type}
+                        {DateTime.fromMillis(entry.entry_id)
+                                .toLocaleString(DateTime.TIME_24_SIMPLE)}
                         </span>
                         <span>
                             {entry.collector}
@@ -54,12 +55,6 @@ export function EntryBlock(props: Props) {
                             &nbsp;-&nbsp;
                             {DateTime.fromMillis(entry.entry_id)
                             .toLocaleString(DateTime.TIME_24_SIMPLE)}
-                        </span>
-                    </div>
-                    <div className="entry-record">
-                        <label>Type</label>
-                        <span>
-                            {entry.type}
                         </span>
                     </div>
                     <div className="entry-record">

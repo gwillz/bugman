@@ -8,6 +8,11 @@ const template: Configuration = {
     fields: [
         {
             type: "string",
+            name: "Specimen Type",
+            placeholder: "Wasp",
+        },
+        {
+            type: "string",
             name: "Specimen Count",
             placeholder: "2",
         },

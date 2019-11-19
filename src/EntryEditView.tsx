@@ -54,7 +54,6 @@ export function EntryEditView() {
     const form = useRef<HTMLFormElement | null>(null);
     const [voucher, onVoucher] = useInput(entry?.voucher);
     const [collector, onCollector] = useInput(entry?.collector);
-    const [type, onType] = useInput(entry?.type);
     const [position, geo_busy, getGeo] = useGeo(entry?.position);
     
     const [data, setData] = useState<EntryData>(() => entry?.data ?? {});
@@ -82,7 +81,6 @@ export function EntryEditView() {
                     voucher,
                     position,
                     collector,
-                    type,
                     data,
                 },
             });
@@ -96,7 +94,6 @@ export function EntryEditView() {
                 entry: {
                     voucher,
                     collector,
-                    type,
                     data,
                 },
             });
@@ -112,6 +109,9 @@ export function EntryEditView() {
     
     return (
         <form onSubmit={onSubmit} ref={form}>
+            <div className="text-title">
+                {entry_id ? "Edit Entry" : "Create Entry"}
+            </div>
             <div className="form">
                 <div className="form-field">
                     <label>Voucher *</label>
@@ -165,17 +165,6 @@ export function EntryEditView() {
                         value={collector}
                         onChange={onCollector}
                         placeholder="N. A. Thornberry"
-                        required
-                    />
-                </div>
-                <div className="form-field">
-                    <label>Specimen Type*</label>
-                    <input
-                        type="text"
-                        name="type"
-                        value={type}
-                        onChange={onType}
-                        placeholder="Specimen"
                         required
                     />
                 </div>

@@ -16,7 +16,6 @@ export interface Entry {
     position: EntryPosition;
     voucher: string;
     collector: string;
-    type: string;
     data: EntryData;
 }
 
