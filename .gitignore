@@ -1,0 +1,5 @@
+*.autosave
+*.exe
+*.dll
+*.pro.user*
+build/
