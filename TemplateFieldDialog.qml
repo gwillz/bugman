@@ -9,6 +9,16 @@ Dialog {
     parent: Overlay.overlay
     anchors.centerIn: Overlay.overlay
     
+    property Navigation nav
+    
+    onNavChanged: {
+        nav.onCloseDialog.connect(dialog.reject)
+    }
+    
+    onVisibleChanged: {
+        if (nav) nav.hasDialog = dialog.visible
+    }
+    
     implicitWidth: Math.max(
         header.implicitWidth,
         leftPadding + contentItem.implicitWidth + rightPadding,

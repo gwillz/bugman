@@ -18,6 +18,16 @@ Item {
     signal accepted()
     signal rejected()
     
+    property Navigation nav
+    
+    onNavChanged: {
+        nav.onCloseDialog.connect(root.close)
+    }
+    
+    onEnabledChanged: {
+        if (root.nav) nav.hasDialog = root.enabled
+    }
+    
     property int offset: flick.height
     
     function open() {
@@ -37,7 +47,7 @@ Item {
             easing.type: Easing.OutCirc
             duration: 200
             
-            onStopped: {
+            onFinished: {
                 if (!root.enabled) {
                     root.visible = false
                 }

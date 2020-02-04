@@ -14,10 +14,8 @@ ApplicationWindow {
     property var nav: Navigation {}
     
     onClosing: {
-        if (!nav.isHome) {
-            close.accepted = false;
-            nav.navigate(Views.home);
-        }
+        close.accepted = nav.isExitReady;
+        nav.goBack();
     }
     
     ColumnLayout {

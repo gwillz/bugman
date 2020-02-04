@@ -229,6 +229,7 @@ Frame {
     
     DeleteDialog {
         id: deleteDialog
+        nav: root.nav
         
         onAccepted: console.log("Hurrah")
         onRejected: console.log("Oh no")

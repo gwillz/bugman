@@ -16,7 +16,9 @@ Item {
         spacing: 10
         
         Text {
-            text: "Edit set"
+            text: nav.data.name
+                  ? qsTr("Edit: %1").arg(nav.data.name)
+                  : qsTr("New Set")
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
             font.pointSize: Fonts.subtitle
@@ -96,7 +98,7 @@ Item {
     
     DelegateModel {
        id: visualModel
-       model: TemplateFieldModel {}
+       model: nav.data.fields
        delegate: dragDelegate
     }
     
@@ -136,8 +138,9 @@ Item {
                 
                 highlighted: dragArea.held
                 hovered: dragArea.containsMouse
-                fieldName: name
-                fieldType: type
+                
+                text: name
+                subtext: type
                 
                 states: [
                     State {
@@ -171,15 +174,17 @@ Item {
     
     TemplateFieldDialog {
         id: fieldDialog
+        nav: root.nav
     }
     
     TemplatesDialog {
         id: templatesDialog
+        nav: root.nav
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:900;width:520}
+    D{i:0;autoSize:true;height:480;width:640}
 }
 ##^##*/

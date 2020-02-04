@@ -6,8 +6,8 @@ import QtQml.Models 2.14
 Rectangle {
     id: root
     
-    property string fieldName: "thing"
-    property string fieldType: "type"
+    property string text: "thing"
+    property string subtext: "type"
     property bool highlighted: false
     property bool hovered: false
     
@@ -41,11 +41,11 @@ Rectangle {
             
             
             Text {
-                text: root.fieldName
+                text: root.text
                 font.pointSize: Fonts.body
             }
             Text {
-                text: root.fieldType
+                text: root.subtext
                 font.pointSize: Fonts.small
             }
         }

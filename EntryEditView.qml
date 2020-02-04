@@ -9,13 +9,7 @@ Item {
     implicitHeight: 720
     implicitWidth: 420
     
-    property Navigation nav
-    
-    onNavChanged: {
-        if (nav.index !== Views.entryEdit) {
-            imageDialog.close()
-        }
-    }
+    property Navigation nav: Navigation {}
     
     PositionSource {
         id: gps
@@ -29,7 +23,9 @@ Item {
         
         Text {
             id: title
-            text: nav.data.voucher ? qsTr("Edit %1").arg(nav.data.voucher) : qsTr("Create Entry")
+            text: nav.data.voucher
+                  ? qsTr("Edit %1").arg(nav.data.voucher) 
+                  : qsTr("New Entry")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
             padding: 10
@@ -180,6 +176,7 @@ Item {
     
     ImagePicker {
         id: imageDialog
+        nav: root.nav
     }
 }
 
