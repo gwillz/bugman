@@ -3,44 +3,60 @@ import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 
 Item {
-    id: header
-    //            height: 60
-    Layout.fillWidth: true
-    Layout.minimumHeight: 60
+    id: root
+    implicitHeight: 80
+    implicitWidth: 520
+    
+    signal nav(int index)
+    property bool isHome: true
     
     Rectangle {
         id: headerBg
-        color: "#f9f7f2"
+        color: Colors.cloud
         anchors.fill: parent
     }
     
     Button {
         id: backButton
-        width: 40
         text: qsTr("Back")
+        padding: 15
+        enabled: !isHome
+        opacity: enabled ? 1 : 0.3
         anchors.top: parent.top
-        anchors.topMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: -40
         anchors.left: parent.left
-        anchors.leftMargin: 0
         flat: true
         display: AbstractButton.IconOnly
         icon.source: "icons/back.svg"
-        
+        icon.height: parent.height
+        icon.width: parent.height
+        width: parent.height
+        onClicked: root.nav(Views.home)
     }
     
-    Image {
-        id: logo
-        sourceSize.height: 40
+    Text {
+        text: qsTr("Field Assistant")
+        anchors.centerIn: parent
+        font.pointSize: Fonts.title
+    }
+    
+    Button {
+        id: logoButton
+        flat: true
+        display: AbstractButton.IconOnly
         anchors.right: parent.right
-        anchors.rightMargin: 0
-        fillMode: Image.PreserveAspectFit
         anchors.top: parent.top
-        anchors.topMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        source: "icons/bugman_logo.svg"
+        icon.source: "icons/bugman_logo.svg"
+        icon.color: Colors.bee
+        icon.height: parent.height
+        icon.width: parent.height
+        onClicked: root.nav(Views.about)
     }
-    
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:80;width:520}
+}
+##^##*/

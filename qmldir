@@ -1,5 +1,4 @@
-import QtQuick 2.0
 
-Item {
-    
-}
+singleton Colors 1.0 Colors.qml
+singleton Views 1.0 Views.qml
+singleton Fonts 1.0 Fonts.qml

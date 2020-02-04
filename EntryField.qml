@@ -2,34 +2,44 @@ import QtQuick 2.12
 import QtQuick.Controls 2.13
 
 Item {
-    id: element
-    width: 200
-    height: 200
+    id: root
+    implicitHeight: labelText.height + textField.height + 5
+    implicitWidth: 200
     
-    Column {
-        id: column1
-        spacing: 5
-        anchors.fill: parent
-        
-        
-        Text {
-            text: qsTr("Voucher*")
-            anchors.left: parent.left
-            anchors.leftMargin: 28
-            font.pixelSize: 18
-        }
-        
-        TextField {
-            id: textField
-            text: qsTr("")
-            placeholderText: "X--X--"
-            leftPadding: 28
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            font.pointSize: 15
-        }
+    property string label: ""
+    property string placeholder: ""
+    property alias text: textField.text
+    property alias readOnly: textField.readOnly
+    
+    Text {
+        id: labelText
+        text: root.label || "Label*"
+        anchors.right: parent.right
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        font.pointSize: Fonts.body
     }
     
+    TextField {
+        id: textField
+        text: ""
+        anchors.top: labelText.bottom
+        anchors.topMargin: 5
+        anchors.right: parent.right
+        anchors.left: parent.left
+        placeholderText: placeholder || "..."
+        leftPadding: 30
+        font.pointSize: Fonts.body
+        
+        background: Rectangle {
+            radius: 5
+            color: Colors.cloud
+        }
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:100;width:200}
+}
+##^##*/
