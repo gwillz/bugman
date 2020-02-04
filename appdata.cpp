@@ -14,7 +14,9 @@ AppData::AppData(QObject *parent)
     
     appPath = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last();
     dbPath = appPath + "/db.json";
+    
     loadDb();
+    loadTemplates();
     
     imagePaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
     
@@ -46,28 +48,20 @@ QStringList AppData::getImages() {
 }
 
 void AppData::loadDb() {
-    entries.clear();
+    db.clear();
     
-    qDebug() << "Load:" << dbPath;
+    qDebug() << "DB:" << dbPath;
     
     QFile dbFile(dbPath);
     if (!dbFile.open(QIODevice::ReadOnly)) return;
     
     QByteArray data = dbFile.readAll();
-    QJsonDocument db = QJsonDocument::fromJson(data);
+    QJsonDocument doc = QJsonDocument::fromJson(data);
     
-    QJsonObject doc = db.object();
+    db.read(doc.object());
     
-    if (doc.contains("data") && doc["data"].isArray()) {
-        for (QJsonValue value : doc["data"].toArray()) {
-            if (value.isObject()) {
-                EntrySet set;
-                set.read(value.toObject());
-                sets.append(set);
-                entries.append(set.entries);
-            }
-        }
-    }
+    qDebug() << "Sets:" << db.sets.size();
+    qDebug() << "Entries:" << db.entries.size();
 }
 
 void AppData::saveDb() const {
@@ -78,30 +72,41 @@ void AppData::saveDb() const {
         return;
     }
     
-    QJsonArray data;
+    QJsonObject object;
+    db.write(object);
     
-    for (EntrySet set : sets) {
-        QJsonObject object;
-        set.write(object);
-        data.append(object);
-    }
-    
-    {
-        QJsonObject object;
-        object["data"] = data;
-        
-        QJsonDocument doc(object);
-        dbFile.write(doc.toJson());
-    }
+    QJsonDocument doc(object);
+    dbFile.write(doc.toJson());
 }
 
+void AppData::loadTemplates() {
+    QDir dir(":templates");
+    
+    for (QString path : dir.entryList(QDir::Files)) {
+        qDebug() << "Template:" << path;
+        
+        QFile file(dir.absoluteFilePath(path));
+        if (!file.open(QIODevice::ReadOnly)) continue;
+        
+        QByteArray data = file.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject root = doc.object();
+        
+        EntryTemplate entryTemplate;
+        entryTemplate.read(root);
+        templates.append(entryTemplate);
+    }
+    
+    qDebug() << "Templates:" << templates.size();
+}
+
+
 QList<EntrySet> AppData::getData() const {
-    qDebug() << sets[0].set_id;
-    return sets;
+    return db.sets;
 }
 
 void AppData::setEntry(const Entry &entry) {
-    for (Entry e : entries) {
+    for (Entry e : db.entries) {
         if (e.entry_id == entry.entry_id) {
             e = entry;
             break;
@@ -113,7 +118,7 @@ void AppData::setEntry(const Entry &entry) {
 }
 
 void AppData::setSet(const EntrySet &set) {
-    for (EntrySet s : sets) {
+    for (EntrySet s : db.sets) {
         if (s.set_id == set.set_id) {
             s = set;
             break;

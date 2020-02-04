@@ -8,6 +8,7 @@ Item {
     
     property string label: ""
     property string placeholder: ""
+    property string type: "string"
     property alias text: textField.text
     property alias readOnly: textField.readOnly
     

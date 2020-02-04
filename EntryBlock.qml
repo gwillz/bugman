@@ -7,7 +7,7 @@ import "EntryModel.js" as EntryModel
 
 Frame {
     id: root
-    signal nav(int index)
+    property Navigation nav
     
     // debug
     implicitWidth: 520
@@ -209,7 +209,7 @@ Frame {
                     text: qsTr("Edit")
                     flat: true
                     display: AbstractButton.IconOnly
-                    onClicked: root.nav(Views.entryEdit)
+                    onClicked: nav.navigate(Views.entryEdit, entry)
                     icon.source: "icons/pencil.svg"
                     width: height
                 }

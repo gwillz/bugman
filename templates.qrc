@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/bugman.json</file>
+        <file>templates/rocks.json</file>
+    </qresource>
+</RCC>

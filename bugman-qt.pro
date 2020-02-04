@@ -1,4 +1,4 @@
-QT += quick svg
+QT += quick svg location
 
 #QTPLUGIN += qtaudio_coreaudio
 #QTPLUGIN += qtmedia_audioengine
@@ -23,7 +23,8 @@ SOURCES += \
         dataentry.cpp \
         main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    templates.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -47,7 +48,9 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/values/libs.xml \
+    templates/bugman.json \
+    templates/rocks.json
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

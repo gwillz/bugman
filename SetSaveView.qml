@@ -5,7 +5,7 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    signal nav(int index)
+    property Navigation nav
     
     Text {
         text: "Export"

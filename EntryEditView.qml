@@ -2,22 +2,26 @@ import QtQuick 2.12
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.0
-import Qt.labs.platform 1.0
+import QtPositioning 5.12
 
 Item {
-    id: element
+    id: root
     implicitHeight: 720
     implicitWidth: 420
     
-    signal nav(int index)
+    property Navigation nav
     
-    property int navIndex
-    
-    onNavIndexChanged: {
-        if (navIndex !== Views.entryEdit) {
-            fileDialog.close()
+    onNavChanged: {
+        if (nav.index !== Views.entryEdit) {
+            imageDialog.close()
         }
     }
+    
+    PositionSource {
+        id: gps
+    }
+    
+    readonly property var location: nav.data.position || gps.position.coordinate
     
     ColumnLayout {
         spacing: 10
@@ -25,7 +29,7 @@ Item {
         
         Text {
             id: title
-            text: qsTr("Create Entry")
+            text: nav.data.voucher ? qsTr("Edit %1").arg(nav.data.voucher) : qsTr("Create Entry")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
             padding: 10
@@ -52,6 +56,7 @@ Item {
                     anchors.left: parent.left
                     label: qsTr("Voucher *")
                     placeholder: "NAT01R001"
+                    text: nav.data.voucher || nav.data.next_voucher || ""
                 }
                 
                 EntryField {
@@ -59,8 +64,11 @@ Item {
                     anchors.right: parent.right
                     anchors.left: parent.left
                     label: qsTr("Date & Time *")
-                    text: Qt.formatDateTime(new Date(), "dd/MM/yyyy HH:mm")
                     readOnly: true
+                    text: Qt.formatDateTime(nav.data.timestamp
+                                            ? new Date(nav.data.timestamp)
+                                            : new Date(),
+                                            "dd/MM/yyyy HH:mm")
                 }
                 
                 EntryField {
@@ -69,6 +77,10 @@ Item {
                     anchors.left: parent.left
                     label: qsTr("Position *")
                     readOnly: true
+                    text: qsTr("%1, %2 @ %3m")
+                        .arg(location.latitude)
+                        .arg(location.longitude)
+                        .arg(location.altitude)
                 }
                 
                 EntryField {
@@ -77,19 +89,32 @@ Item {
                     anchors.left: parent.left
                     label: qsTr("Collector *")
                     placeholder: qsTr("N. A. Thornberry")
+                    text: nav.data.collector || ""
                 }
                 
                 Rectangle {
                     color: "transparent"
                     anchors.right: parent.right
                     anchors.left: parent.left
-                    height: 15
+                    height: 1
                 }
+            }
+            
+            model: nav.data.data || nav.data.fields || ([])
+            
+            delegate: EntryField {
+                anchors.right: parent.right
+                anchors.left: parent.left
+                label: modelData.name || "???"
+                text: modelData.value || ""
+                type: modelData.type || "string"
             }
             
             footer: Column {
                 id: footer
                 spacing: 10
+                anchors.left: parent.left
+                anchors.right: parent.right
                 
                 Text {
                     text: qsTr("Images")
@@ -99,34 +124,45 @@ Item {
                     font.pointSize: Fonts.body
                 }
                 
-                Row {
-                    id: imageField
+                Grid{
+                    id: grid
                     spacing: 10
+                    columns: 4
                     
-                    LouButton {
-                        id: imagesButton
-                        text: qsTr("Add Images")
-                        onClicked: fileDialog.open()
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    
+                    property int itemWidth: {
+                        var spacing = (grid.columns - 1) * grid.spacing;
+                        return (grid.width - spacing) / grid.columns;
                     }
                     
-                    Text {
-                        id: imagesText
-                        text: "0 Images"
-                        verticalAlignment: Text.AlignVCenter
-                        font.pointSize: Fonts.small
-                        height: imagesButton.height
+                    Button {
+                        id: imageButton
+                        background: Rectangle {
+                            color: Colors.cloud
+                        }
+                        text: "Add"
+                        display: AbstractButton.IconOnly
+                        icon.source: "icons/plus.svg"
+                        icon.color: Colors.brick
+                        width: grid.itemWidth
+                        height: width
+                        icon.width: width / 2
+                        icon.height: width / 2
+                        onClicked: imageDialog.open()
+                    }
+                    
+                    Repeater {
+                        model: nav.data.images
+                        delegate: Rectangle {
+                            color: "#fff"
+                            width: grid.itemWidth
+                            height: width
+                        }
                     }
                 }
             }
-            
-            delegate: EntryField {
-                anchors.right: parent.right
-                anchors.left: parent.left
-                label: name
-                text: value || ""
-            }
-            
-            model: EntryFieldModel {}
         }
         
         RowLayout {
@@ -143,7 +179,7 @@ Item {
     }
     
     ImagePicker {
-        id: fileDialog
+        id: imageDialog
     }
 }
 

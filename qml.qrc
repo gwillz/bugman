@@ -32,5 +32,6 @@
         <file>icons/plus.svg</file>
         <file>ImagePicker.qml</file>
         <file>EntryItem.qml</file>
+        <file>Navigation.qml</file>
     </qresource>
 </RCC>

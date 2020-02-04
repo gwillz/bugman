@@ -5,7 +5,8 @@ import QtQml.Models 2.14
 
 Item {
     id: root
-    signal nav(int index);
+    
+    property Navigation nav
     
     implicitWidth: 520
     implicitHeight: 900

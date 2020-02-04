@@ -1,0 +1,34 @@
+{
+    "name": "Wasps",
+    "author": "Field Assistant",
+    "fields": [
+        {
+            "name": "Specimen Type",
+            "type": "string"
+        },
+        {
+            "name": "Speciment Count",
+            "type": "string"
+        },
+        {
+            "name": "State/Territory",
+            "type": "string"
+        },
+        {
+            "name": "Location",
+            "type": "string"
+        },
+        {
+            "name": "Method",
+            "type": "string"
+        },
+        {
+            "name": "Flower/Host Plant",
+            "type": "string"
+        },
+        {
+            "name": "Notes",
+            "type": "text"
+        }
+    ]
+}

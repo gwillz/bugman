@@ -3,7 +3,7 @@ import QtQuick 2.12
 Item {
     id: element
     
-    signal nav(int index);
+    property Navigation nav
     
     Text {
         text: "About"

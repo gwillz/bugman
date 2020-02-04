@@ -1,0 +1,22 @@
+{
+    "name": "Tester",
+    "author": "Field Assistant",
+    "fields": [
+        {
+            "name": "Rock Type",
+            "type": "string"
+        },
+        {
+            "name": "Diameter",
+            "type": "decimal"
+        },
+        {
+            "name": "Sample Count",
+            "type": "integer"
+        },
+        {
+            "name": "Notes",
+            "type": "text"
+        }
+    ]
+}

@@ -7,8 +7,7 @@ Item {
     implicitHeight: 80
     implicitWidth: 520
     
-    signal nav(int index)
-    property bool isHome: true
+    property Navigation nav
     
     Rectangle {
         id: headerBg
@@ -20,7 +19,7 @@ Item {
         id: backButton
         text: qsTr("Back")
         padding: 15
-        enabled: !isHome
+        enabled: !nav.isHome
         opacity: enabled ? 1 : 0.3
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -31,7 +30,7 @@ Item {
         icon.height: parent.height
         icon.width: parent.height
         width: parent.height
-        onClicked: root.nav(Views.home)
+        onClicked: nav.navigate(Views.home)
     }
     
     Text {
@@ -51,7 +50,7 @@ Item {
         icon.color: Colors.bee
         icon.height: parent.height
         icon.width: parent.height
-        onClicked: root.nav(Views.about)
+        onClicked: nav.navigate(Views.about)
     }
 }
 

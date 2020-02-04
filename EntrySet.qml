@@ -7,7 +7,8 @@ import "EntryModel.js" as EntryModel
 
 Item {
     id: root
-    signal nav(int index)
+    
+    property Navigation nav
     property var entrySet: EntryModel.data[0]
     
     implicitWidth: 520
@@ -45,7 +46,7 @@ Item {
                         flat: true
                         width: height
                         icon.source: "icons/plus.svg"
-                        onClicked: root.nav(Views.entryEdit)
+                        onClicked: nav.navigate(Views.entryEdit, entrySet)
                     }
                     
                     Button {
@@ -53,7 +54,7 @@ Item {
                         flat: true
                         width: height
                         icon.source: "icons/download.svg"
-                        onClicked: root.nav(Views.setSave)
+                        onClicked: nav.navigate(Views.setSave, entrySet)
                     }
                     
                     Button {
@@ -61,7 +62,7 @@ Item {
                         flat: true
                         width: height
                         icon.source: "icons/pencil.svg"
-                        onClicked: root.nav(Views.setEdit)
+                        onClicked: nav.navigate(Views.setEdit, entrySet)
                     }
                 }
             }
@@ -82,7 +83,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.margins: 10
-                onNav: root.nav(index)
+                nav: root.nav
                 entry: modelData
             }
         }

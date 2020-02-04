@@ -11,18 +11,12 @@ ApplicationWindow {
     width: 520
 //    color: palette.window
     
-    function isHome() {
-        return stackLayout.currentIndex === Views.home;
-    }
-    
-    function navigate(index) {
-        stackLayout.currentIndex = index;
-    }
+    property var nav: Navigation {}
     
     onClosing: {
-        if (!isHome()) {
+        if (!nav.isHome) {
             close.accepted = false;
-            root.navigate(Views.home);
+            nav.navigate(Views.home);
         }
     }
     
@@ -35,8 +29,7 @@ ApplicationWindow {
             id: header
             z: 100
             Layout.fillWidth: true
-            isHome: root.isHome()
-            onNav: root.navigate(index)
+            nav: root.nav
         }
         
         StackLayout {
@@ -45,32 +38,31 @@ ApplicationWindow {
             height: 100
             Layout.fillWidth: true
             Layout.margins: 10
-            currentIndex: Views.home
+            currentIndex: nav.index
             
             HomeView {
                 id: homeView
-                onNav: root.navigate(index)
+                nav: root.nav
             }
             
             AboutView {
                 id: aboutView
-                onNav: root.navigate(index)
+                nav: root.nav
             }
             
             EntryEditView {
                 id: entryEditView
-                onNav: root.navigate(index)
-                navIndex: stackLayout.currentIndex
+                nav: root.nav
             }
             
             SetEditView {
                 id: setEditView
-                onNav: root.navigate(index)
+                nav: root.nav
             }
             
             SetSaveView {
                 id: saveSetView
-                onNav: root.navigate(index)
+                nav: root.nav
             }
         }
     }

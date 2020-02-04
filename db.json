@@ -1,0 +1,55 @@
+{
+	"data": [
+		{
+			"set_id": 1234567890,
+			"name": "Set One",
+			"collector": "N. A. Thornberry",
+			"voucher_format": "S001E%03d",
+			"fields": [
+				{
+					"name": "Specimen Type",
+					"type": "string"
+				},
+				{
+					"name": "Specimen Size",
+					"type": "integer"
+				},
+				{
+					"name": "Notes",
+					"type": "text"
+				}
+			],
+			"entries": [
+				{
+					"entry_id": 1123,
+					"timestamp": 1234567890,
+					"voucher": "S001E001",
+					"collector": "N. A. Thornberry",
+					"position": {
+						"latitude": -34.123,
+						"longitude": 138.123,
+						"altitude": 10
+					},
+					"images": [],
+					"data": [
+						{
+							"name": "Specimen Type",
+							"value": "Bee",
+							"type": "string"
+						},
+						{
+							"name": "Specimen Size",
+							"value": "100",
+							"type": "integer"
+						},
+						{
+							"name": "Notes",
+							"value": "Nice.",
+							"type": "text"
+						}
+					]
+				}
+			]
+		}
+	]
+}

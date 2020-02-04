@@ -118,7 +118,7 @@ Item {
         Rectangle {
             id: content
             color: "#fff"
-            implicitHeight: grid.height + 20
+            implicitHeight: grid.height + header.height + 300
             implicitWidth: flick.width
             y: offset
             
@@ -133,7 +133,7 @@ Item {
                 anchors.left: parent.left
                 anchors.margins: 10
                 
-                function itemWidth() {
+                property int itemWidth: {
                     var spacing = (grid.columns - 1) * grid.rowSpacing;
                     return (grid.width - spacing) / grid.columns;
                 }
@@ -141,9 +141,10 @@ Item {
                 VideoOutput {
                     source: camera
                     visible: false
+                    enabled: false
                     clip: true
                     
-                    width: grid.itemWidth()
+                    width: grid.itemWidth
                     height: width
                     fillMode: VideoOutput.PreserveAspectCrop
                     autoOrientation: true
@@ -152,12 +153,21 @@ Item {
                 Repeater {
                     model: AppData.images
                     delegate: Image {
-                        width: grid.itemWidth()
+                        width: grid.itemWidth
                         height: width
                         source: modelData
                         fillMode: Image.PreserveAspectCrop
                     }
                 }
+                
+//                Repeater {
+//                    model: 40
+//                    delegate: Rectangle {
+//                        color: "#000"
+//                        width: grid.itemWidth
+//                        height: width
+//                    }
+//                }
             }
         }
         

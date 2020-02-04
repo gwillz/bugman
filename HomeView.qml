@@ -9,11 +9,7 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    signal nav(int index)
-    
-    Component.onCompleted: {
-        console.log(AppData.sets[0].fields)
-    }
+    property var nav
     
     ColumnLayout {
         id: column
@@ -33,7 +29,7 @@ Item {
                 
                 delegate: EntrySet {
                     entrySet: modelData
-                    onNav: root.nav(index)
+                    nav: root.nav
                 }
             }
             
@@ -43,7 +39,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("Add Set")
                     highlighted: true
-                    onClicked: root.nav(Views.setEdit)
+                    onClicked: nav.navigate(Views.setEdit)
                 }
             }
         }

@@ -9,18 +9,18 @@ class QJsonObject;
 class EntryPosition {
     Q_GADGET;
 public:
+    Q_PROPERTY(qreal latitude MEMBER latitude)
+    Q_PROPERTY(qreal longitude MEMBER longitude)
+    Q_PROPERTY(qreal altitude MEMBER altitude)
+    
     qreal latitude;
     qreal longitude;
-    qreal elevation;
+    qreal altitude;
     
-    inline bool operator==(const EntryPosition &other) const {
-        return latitude == other.latitude &&
-            longitude == other.longitude &&
-            elevation == other.elevation;
-    }
-    
+    void operator=(const EntryPosition &other);
+    bool operator==(const EntryPosition &other) const;
     inline bool operator!=(const EntryPosition &other) const {
-        return !operator==(other);
+        return !(*this == other);
     }
     
     void read(const QJsonObject &json);
@@ -32,58 +32,25 @@ Q_DECLARE_METATYPE(EntryPosition)
 class EntryField {
     Q_GADGET;
 public:
-//    enum EntryFieldType {
-//        String,
-//        Text,
-//        Integer,
-//        Decimal,
-//    };
-    
-//    Q_ENUM(EntryFieldType)
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString type MEMBER type)
-    
-    QString name;
-    QString type;
-    
-    inline bool operator==(const EntryField &other) const {
-        return name == other.name && type == other.type;
-    }
-    
-    inline bool operator!=(const EntryField &other) const {
-        return !operator==(other);
-    }
-    
-    void read(const QJsonObject &json);
-    void write(QJsonObject &json) const;
-    
-//    static EntryFieldType typeFromString(QString type);
-//    static QString typeToString(EntryFieldType type);
-};
-
-Q_DECLARE_METATYPE(EntryField)
-
-class EntryItem {
-    Q_GADGET;
-public:
-    Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString value MEMBER value)
     
     QString name;
+    QString type;
     QString value;
     
-    inline bool operator==(const EntryItem &other) const {
-        return name == other.name && value == other.value;
+    void operator=(const EntryField &other);
+    bool operator==(const EntryField &other) const;
+    inline bool operator!=(const EntryField &other) const {
+        return !(*this == other);
     }
     
-    inline bool operator!=(const EntryItem &other) const {
-        return !operator==(other);
-    }
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
 };
 
-Q_DECLARE_METATYPE(EntryItem)
+Q_DECLARE_METATYPE(EntryField)
 
 class Entry {
     Q_GADGET;
@@ -94,10 +61,7 @@ public:
     Q_PROPERTY(QString collector MEMBER collector)
     Q_PROPERTY(EntryPosition position MEMBER position)
     Q_PROPERTY(QList<QString> images MEMBER images)
-    Q_PROPERTY(QList<EntryItem> data MEMBER data)
-    
-    Q_PROPERTY(QString timestamp_string READ getTimestampString CONSTANT)
-    Q_PROPERTY(QString position_string READ getPositionString CONSTANT)
+    Q_PROPERTY(QList<EntryField> data MEMBER data)
     
     int entry_id;
     int timestamp;
@@ -105,11 +69,13 @@ public:
     QString collector;
     EntryPosition position;
     QList<QString> images;
-    QList<EntryItem> data;
+    QList<EntryField> data;
     
     void operator=(const Entry &other);
     bool operator==(const Entry &other) const;
-    bool operator!=(const Entry &other) const;
+    inline bool operator!=(const Entry &other) const {
+        return !(*this == other);
+    }
     
     Q_INVOKABLE QString getTimestampString() const;
     Q_INVOKABLE QString getPositionString() const;
@@ -132,6 +98,8 @@ public:
     Q_PROPERTY(QList<EntryField> fields MEMBER fields)
     Q_PROPERTY(QList<Entry> entries MEMBER entries)
     
+    Q_PROPERTY(QString next_voucher READ getNextVoucher STORED false)
+    
     int set_id;
     QString name;
     QString collector;
@@ -142,7 +110,9 @@ public:
     
     void operator=(const EntrySet &other);
     bool operator==(const EntrySet &other) const;
-    bool operator!=(const EntrySet &other) const;
+    inline bool operator!=(const EntrySet &other) const {
+        return !(*this == other);
+    }
     
     Q_INVOKABLE QString getNextVoucher() const;
     
@@ -152,5 +122,44 @@ public:
 };
 
 Q_DECLARE_METATYPE(EntrySet)
+
+class EntryDatabase {
+    
+public:
+    QList<EntrySet> sets;
+    QList<Entry> entries;
+    
+    inline void clear() {
+        sets.clear();
+        entries.clear();
+    }
+    
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
+};
+
+
+class EntryTemplate {
+    Q_GADGET;
+public:
+    Q_PROPERTY(QString name MEMBER name)
+    Q_PROPERTY(QString author MEMBER author)
+    Q_PROPERTY(QList<EntryField> fields MEMBER fields)
+    
+    QString name;
+    QString author;
+    QList<EntryField> fields;
+    
+    void operator=(const EntryTemplate &other);
+    bool operator==(const EntryTemplate &other) const;
+    inline bool operator!=(const EntryTemplate &other) const {
+        return !(*this == other);
+    }
+    
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
+};
+
+Q_DECLARE_METATYPE(EntryTemplate)
 
 #endif // DATAENTRY_H

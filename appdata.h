@@ -15,13 +15,16 @@ class AppData : public QObject {
     
     Q_PROPERTY(QStringList images READ getImages NOTIFY imagesChanged)
     Q_PROPERTY(QList<EntrySet> sets READ getData NOTIFY dataChanged)
+    Q_PROPERTY(QList<EntryTemplate> templates MEMBER templates CONSTANT)
     
     QFileSystemWatcher* imageWatcher;
     QStringList imagePaths;
+    
     QString appPath;
     QString dbPath;
-    QList<EntrySet> sets;
-    QList<Entry> entries;
+    
+    EntryDatabase db;
+    QList<EntryTemplate> templates;
     
     explicit AppData(QObject *parent = nullptr);
     
@@ -30,6 +33,7 @@ public:
     
     void loadDb();
     void saveDb() const;
+    void loadTemplates();
     
     QStringList getImages();
     
