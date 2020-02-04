@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/back.svg</file>
+        <file>icons/bugman_logo.svg</file>
+        <file>icons/download.svg</file>
+        <file>icons/pencil.svg</file>
+        <file>icons/plus.svg</file>
+        <file>icons/trash.svg</file>
+    </qresource>
+</RCC>

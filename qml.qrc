@@ -18,18 +18,12 @@
         <file>TemplateFieldDialog.qml</file>
         <file>DeleteDialog.qml</file>
         <file>LouButton.qml</file>
-        <file>icons/back.svg</file>
-        <file>icons/bugman_logo.svg</file>
-        <file>icons/pencil.svg</file>
-        <file>icons/trash.svg</file>
         <file>TemplateField.qml</file>
         <file>Views.qml</file>
         <file>Colors.qml</file>
         <file>EntryFieldModel.qml</file>
         <file>TemplateModel.qml</file>
         <file>EntrySet.qml</file>
-        <file>icons/download.svg</file>
-        <file>icons/plus.svg</file>
         <file>ImagePicker.qml</file>
         <file>EntryItem.qml</file>
         <file>Navigation.qml</file>
