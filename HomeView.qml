@@ -1,7 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.13
-import QtQuick.Window 2.13
 import AppData 1.0
 
 Item {
@@ -9,47 +7,53 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    property var nav
+    property Navigation nav
     
-    ColumnLayout {
-        id: column
+    onNavChanged: {
+        nav.onIndexChanged.connect(() => {
+            if (nav.index === Views.home && nav.data) {
+                swipeView.currentIndex = nav.data.index || 0;
+            }
+        })
+    }
+    
+    SwipeView {
+        id: swipeView
+        clip: true
+        focusPolicy: Qt.NoFocus
         anchors.fill: parent
         
-        SwipeView {
-            id: swipeView
-            focusPolicy: Qt.NoFocus
-            currentIndex: 0
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        Repeater {
+            id: repeater
+            model: AppData.sets
             
-            Repeater {
-                id: repeater
-                model: AppData.sets
-                
-                delegate: EntrySet {
-                    entrySet: modelData
-                    nav: root.nav
-                }
-            }
-            
-            Item {
-                LouButton {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("Add Set")
-                    highlighted: true
-                    onClicked: nav.navigate(Views.setEdit)
-                }
+            delegate: EntrySet {
+                entrySet: modelData
+                nav: root.nav
             }
         }
         
-        PageIndicator {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            Layout.fillWidth: false
-            currentIndex: swipeView.currentIndex
-            count: repeater.count + 1
+        Item {
+            Component.onCompleted: {
+                swipeView.currentIndex = 0
+            }
+            
+            LouButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                text: qsTr("Add Set")
+                focusPolicy: Qt.NoFocus
+                highlighted: true
+                onClicked: nav.navigate(Views.setEdit)
+            }
         }
+    }
+    
+    PageIndicator {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        currentIndex: swipeView.currentIndex
+        count: repeater.count + 1
     }
 }
 

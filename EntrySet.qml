@@ -1,7 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.13
-import QtQuick.Window 2.1
+import AppData 1.0
 
 import "EntryModel.js" as EntryModel
 
@@ -15,9 +15,9 @@ Item {
     implicitHeight: 600
     
     ColumnLayout {
-        spacing: 10
         anchors.fill: parent
-        
+        anchors.topMargin: 10
+        spacing: 10
         
         Item {
             id: headers
@@ -26,10 +26,10 @@ Item {
             
             RowLayout {
                 id: row
-                anchors.rightMargin: 10
-                anchors.leftMargin: 10
                 anchors.left: parent.left
+                anchors.leftMargin: 10
                 anchors.right: parent.right
+                anchors.rightMargin: 10
                 
                 Text {
                     id: title
@@ -64,6 +64,14 @@ Item {
                         icon.source: "icons/pencil.svg"
                         onClicked: nav.navigate(Views.setEdit, entrySet)
                     }
+                    
+                    Button {
+                        id: deleteButton
+                        flat: true
+                        width: height
+                        icon.source: "icons/trash.svg"
+                        onClicked: deleteDialog.open()
+                    }
                 }
             }
             
@@ -87,7 +95,14 @@ Item {
                 entry: modelData
             }
         }
+    }
+    
+    DeleteDialog {
+        id: deleteDialog
         
+        onAccepted: {
+            AppData.removeSet(entrySet.set_id)
+        }
     }
 }
 

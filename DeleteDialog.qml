@@ -12,7 +12,10 @@ Dialog {
     property Navigation nav
     
     onNavChanged: {
-        nav.onCloseDialog.connect(dialog.reject)
+        nav.onCloseDialog.connect(() => {
+            if (dialog.visible) dialog.reject();
+            else dialog.close();
+        })
     }
     
     onVisibleChanged: {

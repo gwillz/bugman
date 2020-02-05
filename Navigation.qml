@@ -18,12 +18,14 @@ Item {
     }
     
     function navigate(index, data) {
-        nav.index = index;
         nav.data = data || ({});
-        nav.hasDialog = false
+        nav.index = index;
+        nav.hasDialog = false;
     }
     
     function goBack() {
+        if (isExitReady) return;
+        
         if (!nav.hasDialog) {
             nav.navigate(Views.home);
         }

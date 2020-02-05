@@ -7,7 +7,7 @@ ApplicationWindow {
     visible: true
     title: qsTr("Bugman")
     
-    height: 900
+    height: 720
     width: 520
 //    color: palette.window
     

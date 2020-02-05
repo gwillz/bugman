@@ -131,7 +131,9 @@ Frame {
         
         Text {
             id: previewBox
-            text: entry.getPreviewString()
+            text: qsTr("%1 / %2")
+                .arg(Qt.formatDateTime(new Date(+entry.timestamp), "dd MMM yyyy / HH:mm"))
+                .arg(entry.collector)
             verticalAlignment: Text.AlignTop
             padding: 10
             anchors.top: parent.top
@@ -177,7 +179,7 @@ Frame {
                 
                 EntryItem {
                     name: "Date"
-                    value: entry.getTimestampString()
+                    value: Qt.formatDateTime(new Date(+entry.timestamp), "dd MMM yyyy - HH:mm")
                 }
                 
                 
@@ -188,7 +190,10 @@ Frame {
                 
                 EntryItem {
                     name: "Position"
-                    value: entry.getPositionString()
+                    value: qsTr("%1, %2 @ %3m")
+                        .arg(entry.position.latitude.toFixed(5))
+                        .arg(entry.position.longitude.toFixed(5))
+                        .arg(entry.position.altitude.toFixed(0))
                 }
                 
                 Repeater {

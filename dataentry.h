@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QMap>
 
 class QJsonObject;
 
@@ -25,6 +26,9 @@ public:
     
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    
+    static EntryPosition fromObject(const QVariantMap &object);
+    
 };
 
 Q_DECLARE_METATYPE(EntryPosition)
@@ -48,6 +52,9 @@ public:
     
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    
+    static EntryField fromObject(const QVariantMap &object);
+    
 };
 
 Q_DECLARE_METATYPE(EntryField)
@@ -56,20 +63,22 @@ class Entry {
     Q_GADGET;
 public:
     Q_PROPERTY(int entry_id MEMBER entry_id)
-    Q_PROPERTY(int timestamp MEMBER timestamp)
+    Q_PROPERTY(int entry_set_id MEMBER entry_set_id)
     Q_PROPERTY(QString voucher MEMBER voucher)
-    Q_PROPERTY(QString collector MEMBER collector)
+    Q_PROPERTY(QString timestamp MEMBER timestamp)
     Q_PROPERTY(EntryPosition position MEMBER position)
+    Q_PROPERTY(QString collector MEMBER collector)
     Q_PROPERTY(QList<QString> images MEMBER images)
-    Q_PROPERTY(QList<EntryField> data MEMBER data)
+    Q_PROPERTY(QList<EntryField> fields MEMBER fields)
     
     int entry_id;
-    int timestamp;
+    int entry_set_id;
     QString voucher;
-    QString collector;
     EntryPosition position;
+    QString timestamp;
+    QString collector;
     QList<QString> images;
-    QList<EntryField> data;
+    QList<EntryField> fields;
     
     void operator=(const Entry &other);
     bool operator==(const Entry &other) const;
@@ -77,12 +86,10 @@ public:
         return !(*this == other);
     }
     
-    Q_INVOKABLE QString getTimestampString() const;
-    Q_INVOKABLE QString getPositionString() const;
-    Q_INVOKABLE QString getPreviewString() const;
-    
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    
+    static Entry fromObject(const QVariantMap &object);
     
 };
 
@@ -96,7 +103,7 @@ public:
     Q_PROPERTY(QString collector MEMBER collector)
     Q_PROPERTY(QString voucher_format MEMBER voucher_format)
     Q_PROPERTY(QList<EntryField> fields MEMBER fields)
-    Q_PROPERTY(QList<Entry> entries MEMBER entries)
+    Q_PROPERTY(QList<Entry> entries READ getEntries)
     
     Q_PROPERTY(QString next_voucher READ getNextVoucher STORED false)
     
@@ -106,7 +113,7 @@ public:
     QString voucher_format;
     
     QList<EntryField> fields;
-    QList<Entry> entries;
+    QMap<int, Entry> entries;
     
     void operator=(const EntrySet &other);
     bool operator==(const EntrySet &other) const;
@@ -114,10 +121,16 @@ public:
         return !(*this == other);
     }
     
+    inline QList<Entry> getEntries() const {
+        return entries.values();
+    }
+    
     Q_INVOKABLE QString getNextVoucher() const;
     
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    
+    static EntrySet fromObject(const QVariantMap &object);
     
 };
 
@@ -126,15 +139,17 @@ Q_DECLARE_METATYPE(EntrySet)
 class EntryDatabase {
     
 public:
-    QList<EntrySet> sets;
-    QList<Entry> entries;
+    QMap<int, EntrySet> sets;
+    int entryCount;
     
     inline void clear() {
         sets.clear();
-        entries.clear();
     }
     
-    void read(const QJsonObject &json);
+    int setEntry(const Entry &entry);
+    int setSet(const EntrySet &set);
+    
+    int read(const QJsonObject &json);
     void write(QJsonObject &json) const;
 };
 

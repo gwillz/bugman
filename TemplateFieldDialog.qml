@@ -9,10 +9,16 @@ Dialog {
     parent: Overlay.overlay
     anchors.centerIn: Overlay.overlay
     
+    property string name: ""
+    property string type: ""
+    
     property Navigation nav
     
     onNavChanged: {
-        nav.onCloseDialog.connect(dialog.reject)
+        nav.onCloseDialog.connect(() => {
+            if (dialog.visible) dialog.reject();
+            else dialog.close();
+        })
     }
     
     onVisibleChanged: {
@@ -35,6 +41,44 @@ Dialog {
         color: Colors.putty
     }
     
+    Column {
+        id: content
+        anchors.right: parent.right
+        anchors.left: parent.left
+        spacing: 15
+        
+        EntryField {
+            id: nameEdit
+            label: qsTr("Name")
+            placeholder: "..."
+            anchors.right: parent.right
+            anchors.left: parent.left
+            text: dialog.name
+            
+            Binding {
+                target: dialog
+                property: "name"
+                value: nameEdit.text
+            }
+        }
+        
+        EntryDropField {
+            id: typeEdit
+            label: qsTr("Type")
+            anchors.right: parent.right
+            anchors.left: parent.left
+            
+            current: dialog.type
+            model: ["string", "integer", "decimal", "text"]
+            
+            Binding {
+                target: dialog
+                property: "type"
+                value: typeEdit.current
+            }
+        }
+    }
+    
     footer: DialogButtonBox {
         id: footer
         background: Rectangle { color: "transparent" }
@@ -46,31 +90,13 @@ Dialog {
             highlighted: true
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
         }
+        
         LouButton {
             text: qsTr("Close")
             DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }
     }
     
-    Column {
-        anchors.right: parent.right
-        anchors.left: parent.left
-        spacing: 15
-        
-        EntryField {
-            label: qsTr("Name")
-            placeholder: "..."
-            anchors.right: parent.right
-            anchors.left: parent.left
-        }
-        
-        EntryField {
-            label: qsTr("Type")
-            placeholder: "string"
-            anchors.right: parent.right
-            anchors.left: parent.left
-        }
-    }
 }
 
 /*##^##

@@ -3,19 +3,44 @@ import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.0
 import QtPositioning 5.12
+import AppData 1.0
 
 Item {
     id: root
     implicitHeight: 720
     implicitWidth: 420
     
-    property Navigation nav: Navigation {}
+    property Navigation nav
+    
+    property int entry_id
+    property int entry_set_id
+    property string voucher
+    property var position: ({})
+    property string timestamp
+    property string collector
+    property var images
+    property var fields
+    
+    onNavChanged: {
+        nav.onIndexChanged.connect(() => {
+            if (nav.index === Views.entryEdit) {
+               root.entry_id = nav.data.entry_id || AppData.nextEntryId()
+               root.entry_set_id = nav.data.entry_set_id || nav.data.set_id || 0;
+               root.voucher = nav.data.getNextVoucher
+                   ? nav.data.getNextVoucher()
+                   : (nav.data.voucher || "")
+               root.timestamp = nav.data.timestamp || +new Date() + ""
+               root.position = nav.data.position || gps.position.coordinate;
+               root.collector = nav.data.collector || "";
+               root.images = nav.data.images || [];
+               root.fields = nav.data.fields || [];
+            }
+        })
+    }
     
     PositionSource {
         id: gps
     }
-    
-    readonly property var location: nav.data.position || gps.position.coordinate
     
     ColumnLayout {
         spacing: 10
@@ -52,7 +77,8 @@ Item {
                     anchors.left: parent.left
                     label: qsTr("Voucher *")
                     placeholder: "NAT01R001"
-                    text: nav.data.voucher || nav.data.next_voucher || ""
+                    text: voucher
+                    onTextChanged: voucher = text
                 }
                 
                 EntryField {
@@ -61,10 +87,7 @@ Item {
                     anchors.left: parent.left
                     label: qsTr("Date & Time *")
                     readOnly: true
-                    text: Qt.formatDateTime(nav.data.timestamp
-                                            ? new Date(nav.data.timestamp)
-                                            : new Date(),
-                                            "dd/MM/yyyy HH:mm")
+                    text: Qt.formatDateTime(new Date(+timestamp), "dd/MM/yyyy HH:mm")
                 }
                 
                 EntryField {
@@ -74,9 +97,9 @@ Item {
                     label: qsTr("Position *")
                     readOnly: true
                     text: qsTr("%1, %2 @ %3m")
-                        .arg(location.latitude)
-                        .arg(location.longitude)
-                        .arg(location.altitude)
+                        .arg(position.latitude.toFixed(5))
+                        .arg(position.longitude.toFixed(5))
+                        .arg(position.altitude.toFixed(0))
                 }
                 
                 EntryField {
@@ -85,7 +108,8 @@ Item {
                     anchors.left: parent.left
                     label: qsTr("Collector *")
                     placeholder: qsTr("N. A. Thornberry")
-                    text: nav.data.collector || ""
+                    text: collector
+                    onTextChanged: collector = text
                 }
                 
                 Rectangle {
@@ -96,14 +120,18 @@ Item {
                 }
             }
             
-            model: nav.data.data || nav.data.fields || ([])
+            model: fields
             
             delegate: EntryField {
                 anchors.right: parent.right
                 anchors.left: parent.left
-                label: modelData.name || "???"
-                text: modelData.value || ""
-                type: modelData.type || "string"
+                label: modelData.name
+                text: modelData.value
+                type: modelData.type
+                
+                onTextChanged: {
+                    fields[index].value = text
+                }
             }
             
             footer: Column {
@@ -150,7 +178,7 @@ Item {
                     }
                     
                     Repeater {
-                        model: nav.data.images
+                        model: images
                         delegate: Rectangle {
                             color: "#fff"
                             width: grid.itemWidth
@@ -170,6 +198,28 @@ Item {
                 id: createButton
                 text: qsTr("Create")
                 highlighted: true
+                
+                onClicked: {
+                    if (entry_set_id === 0) {
+                        console.warn("Missing set_id.");
+                        return;
+                    }
+                    
+                    console.log("save entry", entry_id, entry_set_id)
+                    
+                    AppData.setEntry({
+                        entry_id,
+                        entry_set_id,
+                        voucher,
+                        timestamp,
+                        position,
+                        collector,
+                        images,
+                        fields,
+                    })
+                    
+                    nav.navigate(Views.home)
+                }
             }
         }
     }

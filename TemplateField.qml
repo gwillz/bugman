@@ -6,8 +6,11 @@ import QtQml.Models 2.14
 Rectangle {
     id: root
     
-    property string text: "thing"
-    property string subtext: "type"
+    signal remove()
+    signal edited()
+    
+    property string name: "thing"
+    property string type: "type"
     property bool highlighted: false
     property bool hovered: false
     
@@ -41,12 +44,12 @@ Rectangle {
             
             
             Text {
-                text: root.text
                 font.pointSize: Fonts.body
+                text: root.name
             }
             Text {
-                text: root.subtext
                 font.pointSize: Fonts.small
+                text: root.type
             }
         }
         
@@ -77,10 +80,25 @@ Rectangle {
     
     TemplateFieldDialog {
         id: editDialog
+        
+        name: root.name
+        type: root.type
+        
+        onAccepted: {
+            root.name = name
+            root.type = type
+            root.edited()
+        }
+        
+        onRejected: {
+            name = root.name
+            type = root.type
+        }
     }
     
     DeleteDialog {
         id: deleteDialog
+        onAccepted: root.remove()
     }
 }
 

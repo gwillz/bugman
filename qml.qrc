@@ -27,5 +27,7 @@
         <file>ImagePicker.qml</file>
         <file>EntryItem.qml</file>
         <file>Navigation.qml</file>
+        <file>TemplateItem.qml</file>
+        <file>EntryDropField.qml</file>
     </qresource>
 </RCC>

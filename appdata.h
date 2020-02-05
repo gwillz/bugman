@@ -39,9 +39,21 @@ public:
     
     QList<EntrySet> getData() const;
     
-    Q_INVOKABLE void setEntry(const Entry &entry);
+    Q_INVOKABLE int setEntry(const QVariantMap &entry);
     
-    Q_INVOKABLE void setSet(const EntrySet &set);
+    Q_INVOKABLE int setSet(const QVariantMap &set);
+    
+    Q_INVOKABLE void removeSet(int setId);
+    
+    inline Q_INVOKABLE int nextSetId() const {
+        return db.sets.size() + 1;
+    }
+    
+    inline Q_INVOKABLE int nextEntryId() const {
+        return db.entryCount + 1;
+    }
+    
+    Q_INVOKABLE QString sprintf(const QString format, int number) const;
     
 signals:
     void imagesChanged();

@@ -7,10 +7,11 @@ Item {
     implicitWidth: 200
     
     property string label: ""
-    property string placeholder: ""
+    property string placeholder: "..."
     property string type: "string"
     property alias text: textField.text
     property alias readOnly: textField.readOnly
+    readonly property alias editHeight: textField.implicitHeight
     
     Text {
         id: labelText
@@ -23,12 +24,11 @@ Item {
     
     TextField {
         id: textField
-        text: ""
         anchors.top: labelText.bottom
         anchors.topMargin: 5
         anchors.right: parent.right
         anchors.left: parent.left
-        placeholderText: placeholder || "..."
+        placeholderText: placeholder
         leftPadding: 30
         font.pointSize: Fonts.body
         

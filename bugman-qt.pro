@@ -1,4 +1,8 @@
-QT += quick svg location
+QT += quick svg positioning
+
+android {
+    QT += androidextras
+}
 
 #QTPLUGIN += qtaudio_coreaudio
 #QTPLUGIN += qtmedia_audioengine

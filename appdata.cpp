@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QDateTime>
 
 AppData::AppData(QObject *parent)
         : QObject(parent) {
@@ -53,19 +54,22 @@ void AppData::loadDb() {
     qDebug() << "DB:" << dbPath;
     
     QFile dbFile(dbPath);
-    if (!dbFile.open(QIODevice::ReadOnly)) return;
+    int entryCount;
     
-    QByteArray data = dbFile.readAll();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    
-    db.read(doc.object());
+    if (dbFile.open(QIODevice::ReadOnly)) {
+        QByteArray data = dbFile.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        
+        entryCount = db.read(doc.object());
+    }
     
     qDebug() << "Sets:" << db.sets.size();
-    qDebug() << "Entries:" << db.entries.size();
+    qDebug() << "Entries:" << entryCount;
 }
 
 void AppData::saveDb() const {
     QFile dbFile(dbPath);
+    
     if (!dbFile.open(QIODevice::WriteOnly)) {
         qWarning() << "Couldn't open save file.";
         qWarning() << dbPath;
@@ -77,9 +81,12 @@ void AppData::saveDb() const {
     
     QJsonDocument doc(object);
     dbFile.write(doc.toJson());
+    
+    qDebug() << "DB written.";
 }
 
 void AppData::loadTemplates() {
+    templates.clear();
     QDir dir(":templates");
     
     for (QString path : dir.entryList(QDir::Files)) {
@@ -102,29 +109,51 @@ void AppData::loadTemplates() {
 
 
 QList<EntrySet> AppData::getData() const {
-    return db.sets;
+    return db.sets.values();
 }
 
-void AppData::setEntry(const Entry &entry) {
-    for (Entry e : db.entries) {
-        if (e.entry_id == entry.entry_id) {
-            e = entry;
-            break;
-        }
+int AppData::setEntry(const QVariantMap &object) {
+    
+    Entry entry = Entry::fromObject(object);
+    if (!entry.entry_id || !entry.entry_set_id) return -1;
+    
+    int index = db.setEntry(entry);
+    
+    if (index >= 0) {
+        qDebug() << "Save entry" << entry.entry_id;
+        saveDb();
+        emit dataChanged();
     }
+    else {
+        qDebug() << entry.entry_set_id << "This set doesn't exist.";
+    }
+    return index;
+}
+
+int AppData::setSet(const QVariantMap &object) {
+    
+    EntrySet set = EntrySet::fromObject(object);
+    if (!set.set_id) return -1;
+    
+    int index = db.setSet(set);
+    
+    qDebug() << "Save set" << set.set_id;
+    saveDb();
+    emit dataChanged();
+    
+    return index;
+}
+
+void AppData::removeSet(int setId) {
+    db.sets.remove(setId);
+    qDebug() << "Remove set" << setId;
     
     saveDb();
     emit dataChanged();
 }
 
-void AppData::setSet(const EntrySet &set) {
-    for (EntrySet s : db.sets) {
-        if (s.set_id == set.set_id) {
-            s = set;
-            break;
-        }
-    }
-    
-    saveDb();
-    emit dataChanged();
+QString AppData::sprintf(const QString format, int number) const {
+    QByteArray bytes = format.toUtf8();
+    const char* cformat = bytes.data();
+    return QString::asprintf(cformat, number);
 }
