@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QDebug>
 #include "appdata.h"
+#include "dataentry.h"
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
@@ -10,6 +11,12 @@ void requestAndroidPermissions();
 
 int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    
+//    qmlRegisterType<Entry>("entry", 1, 0, "Entry");
+//    qmlRegisterType<EntrySet>("entry", 1, 0, "EntrySet");
+//    qmlRegisterType<EntryField>("entry", 1, 0, "EntryField");
+//    qmlRegisterType<EntryPosition>("entry", 1, 0, "EntryPosition");
+//    qmlRegisterType<EntryTemplate>("entry", 1, 0, "EntryTemplate");
     
     qmlRegisterSingletonType("AppData", 1, 0, "AppData", AppData::registerType);
     

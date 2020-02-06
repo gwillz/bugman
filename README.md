@@ -15,3 +15,4 @@
 - create/edit buttons
 - empty set view button
 - about view
+- migrate qlist to qmlpropertylist

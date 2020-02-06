@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QMap>
+#include <QDebug>
 
 class QJsonObject;
 
@@ -13,6 +14,8 @@ public:
     Q_PROPERTY(qreal latitude MEMBER latitude)
     Q_PROPERTY(qreal longitude MEMBER longitude)
     Q_PROPERTY(qreal altitude MEMBER altitude)
+    
+    ~EntryPosition() {}
     
     qreal latitude;
     qreal longitude;
@@ -39,6 +42,8 @@ public:
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString type MEMBER type)
     Q_PROPERTY(QString value MEMBER value)
+    
+    ~EntryField() {}
     
     QString name;
     QString type;
@@ -86,6 +91,8 @@ public:
         return !(*this == other);
     }
     
+    QMap<QString, EntryField> getFieldMap() const;
+    
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
     
@@ -107,6 +114,8 @@ public:
     
     Q_PROPERTY(QString next_voucher READ getNextVoucher STORED false)
     
+    ~EntrySet() {}
+    
     int set_id;
     QString name;
     QString collector;
@@ -120,6 +129,8 @@ public:
     inline bool operator!=(const EntrySet &other) const {
         return !(*this == other);
     }
+    
+    QStringList getFieldNames() const;
     
     inline QList<Entry> getEntries() const {
         return entries.values();
@@ -160,6 +171,8 @@ public:
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString author MEMBER author)
     Q_PROPERTY(QList<EntryField> fields MEMBER fields)
+    
+    ~EntryTemplate() {}
     
     QString name;
     QString author;

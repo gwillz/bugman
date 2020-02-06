@@ -11,7 +11,8 @@ Item {
     
     onNavChanged: {
         nav.onIndexChanged.connect(() => {
-            if (nav.index === Views.home && nav.data) {
+            if (nav.index === Views.home &&
+                nav.data.index !== undefined) {
                 swipeView.currentIndex = nav.data.index || 0;
             }
         })

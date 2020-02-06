@@ -50,17 +50,17 @@
 
 #define OBJECT_READ_INT(target, field) \
     if (object.contains(#field)) { \
-        target.field = object[#field].toInt(); \
+        (target).field = object[#field].toInt(); \
     }
 
 #define OBJECT_READ_REAL(target, field) \
     if (object.contains(#field)) { \
-        target.field = object[#field].toReal(); \
+        (target).field = object[#field].toReal(); \
     }
 
 #define OBJECT_READ_STRING(target, field) \
     if (object.contains(#field)) { \
-        target.field = object[#field].toString(); \
+        (target).field = object[#field].toString(); \
     }
 
 #define OBJECT_FOR_LIST(field, value) \
@@ -138,7 +138,6 @@ EntryField EntryField::fromObject(const QVariantMap &object) {
     
     return field;
 }
-
 void Entry::operator=(const Entry &other) {
     entry_id = other.entry_id;
     entry_set_id = other.entry_set_id;
@@ -146,10 +145,8 @@ void Entry::operator=(const Entry &other) {
     voucher = other.voucher;
     collector = other.collector;
     position = other.position;
-    images.clear();
-    images.append(other.images);
-    fields.clear();
-    fields.append(other.fields);
+    images = QStringList(other.images);
+    fields = QList<EntryField>(other.fields);
 }
 
 bool Entry::operator==(const Entry &other) const {
@@ -161,6 +158,16 @@ bool Entry::operator==(const Entry &other) const {
         position == other.position &&
         images == other.images &&
         fields == other.fields;
+}
+
+QMap<QString, EntryField> Entry::getFieldMap() const {
+    QMap<QString, EntryField> map;
+    
+    for (EntryField field : fields) {
+        map[field.name] = field;
+    }
+    
+    return map;
 }
 
 void Entry::read(const QJsonObject &json) {
@@ -186,6 +193,8 @@ void Entry::read(const QJsonObject &json) {
             fields.append(item);
         }
     }
+    
+    qDebug() << "FIELDS" << fields.size();
 }
 
 void Entry::write(QJsonObject &json) const {
@@ -235,7 +244,11 @@ Entry Entry::fromObject(const QVariantMap &object) {
     }
     
     OBJECT_FOR_LIST(fields, item) {
-        entry.fields.append(EntryField::fromObject(item.toMap()));
+        EntryField field = item.canConvert<EntryField>()
+            ? item.value<EntryField>()
+            : EntryField::fromObject(item.toMap());
+        
+        entry.fields.append(field);
     }
     
     return entry;
@@ -254,6 +267,16 @@ bool EntrySet::operator==(const EntrySet &other) const {
         collector == other.collector &&
         fields == other.fields &&
         entries == other.entries;
+}
+
+QStringList EntrySet::getFieldNames() const {
+    QStringList names;
+    
+    for (const EntryField field : fields) {
+        names.append(field.name);
+    }
+    
+    return names;
 }
 
 QString EntrySet::getNextVoucher() const {
@@ -325,12 +348,11 @@ EntrySet EntrySet::fromObject(const QVariantMap &object) {
     OBJECT_READ_STRING(set, voucher_format);
     
     OBJECT_FOR_LIST(fields, item) {
-        if (item.canConvert<EntryField>()) {
-            set.fields.append(item.value<EntryField>());
-        }
-        else {
-            set.fields.append(EntryField::fromObject(item.toMap()));
-        }
+        EntryField field = item.canConvert<EntryField>()
+            ? item.value<EntryField>()
+            : EntryField::fromObject(item.toMap());
+        
+        set.fields.append(field);
     }
     
     return set;

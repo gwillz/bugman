@@ -21,19 +21,21 @@ class AppData : public QObject {
     QStringList imagePaths;
     
     QString appPath;
+    QString csvPath;
     QString dbPath;
     
     EntryDatabase db;
     QList<EntryTemplate> templates;
     
-    explicit AppData(QObject *parent = nullptr);
-    
-public:
-    static QJSValue registerType(QQmlEngine* engine, QJSEngine *script);
-    
     void loadDb();
     void saveDb() const;
     void loadTemplates();
+    void watchImages();
+    
+public:
+    explicit AppData(QObject *parent = nullptr);
+    
+    static QJSValue registerType(QQmlEngine* engine, QJSEngine *script);
     
     QStringList getImages();
     
@@ -44,6 +46,10 @@ public:
     Q_INVOKABLE int setSet(const QVariantMap &set);
     
     Q_INVOKABLE void removeSet(int setId);
+    
+    Q_INVOKABLE void exportSet(const QString &fileName, int setId);
+    
+    QString getExportPath(const QString fileName, int revision = 1) const;
     
     inline Q_INVOKABLE int nextSetId() const {
         return db.sets.size() + 1;
