@@ -3,3 +3,4 @@
 *.dll
 *.pro.user*
 build/
+build*

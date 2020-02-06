@@ -23,9 +23,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        appdata.cpp \
-        dataentry.cpp \
-        main.cpp
+    appdata.cpp \
+    dataentry.cpp \
+    main.cpp \
+    csvbuilder.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc \
@@ -44,7 +45,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     appdata.h \
-    dataentry.h
+    dataentry.h \
+    csvbuilder.h
 
 DISTFILES += \
     android/AndroidManifest.xml \
