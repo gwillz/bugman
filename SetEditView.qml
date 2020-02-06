@@ -21,6 +21,7 @@ Item {
                 root.name = nav.data.name  || ""
                 root.voucher_format = nav.data.voucher_format || "E%03d"
                 root.collector = nav.data.collector || ""
+                
                 visualModel.model = nav.data.fields || []
             }
         })
@@ -44,13 +45,11 @@ Item {
         
         ListView {
             id: dragSpace
+            bottomMargin: 10
             clip: true
             spacing: 10
             Layout.fillHeight: true
             Layout.fillWidth: true
-            
-            model: visualModel
-            delegate: dragDelegate
             
             header: Column {
                 id: header
@@ -114,58 +113,65 @@ Item {
                     }
                 }
                 
-                Text {
-                    id: fieldLabel
-                    anchors.left: parent.left
-                    anchors.leftMargin: 30
-                    anchors.right: parent.right
-                    font.pointSize: Fonts.body
-                    text: qsTr("Fields")
-                    bottomPadding: 10
-                }
-            }
-        }
-        
-        Row {
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            spacing: 10
-            
-            LouButton {
-                id: saveButton
-                highlighted: true
-                text: qsTr("Create")
-                onClicked: {
-                    console.log("save set", set_id)
-                    
-                    const fields = [];
-                    
-                    for (let i = 0; i < visualModel.count; i++) {
-                        let item = visualModel.items.get(i);
-                        fields.push(item.model.modelData);
+                Column {
+                    spacing: 10
+                    Text {
+                        id: fieldLabel
+                        anchors.left: parent.left
+                        anchors.leftMargin: 30
+                        anchors.right: parent.right
+                        font.pointSize: Fonts.body
+                        text: qsTr("Fields")
                     }
                     
-                    var index = AppData.setSet({
-                        set_id,
-                        name,
-                        voucher_format,
-                        collector,
-                        fields,
-                    });
-                    
-                    nav.navigate(Views.home, { index });
+                    Row {
+                        spacing: 10
+                        
+                        LouButton {
+                            id: addButton
+                            text: qsTr("Add")
+                            onClicked: fieldDialog.open()
+                        }
+                        
+                        LouButton {
+                            id: templateButton
+                            text: qsTr("Load")
+                            onClicked: templatesDialog.open()
+                        }
+                    }
                 }
+                
+                Item { height: 1; width: parent.width }
             }
             
-            LouButton {
-                id: addButton
-                text: qsTr("Add Field")
-                onClicked: fieldDialog.open()
-            }
+            model: visualModel
+            delegate: dragDelegate
+        }
+        
+        LouButton {
+            id: saveButton
             
-            LouButton {
-                id: templateButton
-                text: qsTr("Load Template")
-                onClicked: templatesDialog.open()
+            highlighted: true
+            text: nav.data.set_id ? qsTr("Save") : qsTr("Create")
+            onClicked: {
+                console.log("save set", set_id)
+                
+                const fields = [];
+                
+                for (let i = 0; i < visualModel.count; i++) {
+                    let item = visualModel.items.get(i);
+                    fields.push(item.model.modelData);
+                }
+                
+                var index = AppData.setSet({
+                    set_id,
+                    name,
+                    voucher_format,
+                    collector,
+                    fields,
+                });
+                
+                nav.navigate(Views.home, { index });
             }
         }
     }
@@ -261,7 +267,8 @@ Item {
         nav: root.nav
         
         onAccepted: {
-            visualModel.items.create(0, {modelData: {name, type}});
+            visualModel.model = visualModel.model.concat([{name, type}])
+//            visualModel.items.create(0, {modelData: {name, type}});
             name = ""
             type = ""
         }

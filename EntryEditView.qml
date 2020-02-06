@@ -48,7 +48,7 @@ Item {
         
         Text {
             id: title
-            text: nav.data.voucher
+            text: nav.data.entry_id
                   ? qsTr("Edit %1").arg(nav.data.voucher) 
                   : qsTr("New Entry")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -189,37 +189,32 @@ Item {
             }
         }
         
-        RowLayout {
-            id: buttons
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+        LouButton {
+            id: createButton
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            text: nav.data.entry_id ? qsTr("Save") : qsTr("Create")
+            highlighted: true
             
-            LouButton {
-                id: createButton
-                text: qsTr("Create")
-                highlighted: true
-                
-                onClicked: {
-                    if (entry_set_id === 0) {
-                        console.warn("Missing set_id.");
-                        return;
-                    }
-                    
-                    console.log("save entry", entry_id, entry_set_id)
-                    
-                    AppData.setEntry({
-                        entry_id,
-                        entry_set_id,
-                        voucher,
-                        timestamp,
-                        position,
-                        collector,
-                        images,
-                        fields,
-                    })
-                    
-                    nav.navigate(Views.home)
+            onClicked: {
+                if (entry_set_id === 0) {
+                    console.warn("Missing set_id.");
+                    return;
                 }
+                
+                console.log("save entry", entry_id, entry_set_id)
+                
+                AppData.setEntry({
+                    entry_id,
+                    entry_set_id,
+                    voucher,
+                    timestamp,
+                    position,
+                    collector,
+                    images,
+                    fields,
+                })
+                
+                nav.navigate(Views.home)
             }
         }
     }

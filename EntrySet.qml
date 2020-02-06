@@ -90,6 +90,14 @@ Item {
         }
     }
     
+    LouButton {
+        anchors.centerIn: parent
+        visible: entrySet.entries.length === 0
+        text: qsTr("Add Entry")
+        highlighted: true
+        onClicked: nav.navigate(Views.entryEdit, entrySet)
+    }
+    
     DeleteDialog {
         id: deleteDialog
         nav: root.nav
