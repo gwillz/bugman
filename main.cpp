@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QDebug>
 #include "appdata.h"
-#include "dataentry.h"
+#include "entry.h"
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>

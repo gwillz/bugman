@@ -47,7 +47,7 @@ Dialog {
         anchors.left: parent.left
         spacing: 15
         
-        EntryField {
+        LouField {
             id: nameEdit
             label: qsTr("Name")
             placeholder: "..."
@@ -62,7 +62,7 @@ Dialog {
             }
         }
         
-        EntryDropField {
+        LouComboField {
             id: typeEdit
             label: qsTr("Type")
             anchors.right: parent.right

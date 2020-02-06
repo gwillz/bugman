@@ -24,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     appdata.cpp \
-    dataentry.cpp \
+    entry.cpp \
     main.cpp \
     csvbuilder.cpp
 
@@ -45,8 +45,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     appdata.h \
-    dataentry.h \
-    csvbuilder.h
+    csvbuilder.h \
+    entry.h
 
 DISTFILES += \
     android/AndroidManifest.xml \

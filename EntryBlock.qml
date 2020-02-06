@@ -173,23 +173,23 @@ Frame {
                 Layout.fillWidth: true
                 Layout.minimumHeight: 100
                 
-                EntryItem {
+                EntryBlockItem {
                     name: "Voucher"
                     value: entry.voucher
                 }
                 
-                EntryItem {
+                EntryBlockItem {
                     name: "Date"
                     value: Qt.formatDateTime(new Date(+entry.timestamp), "dd MMM yyyy - HH:mm")
                 }
                 
                 
-                EntryItem {
+                EntryBlockItem {
                     name: "Collector"
                     value: entry.collector
                 }
                 
-                EntryItem {
+                EntryBlockItem {
                     name: "Position"
                     value: qsTr("%1, %2 @ %3m")
                         .arg(entry.position.latitude.toFixed(5))
@@ -199,7 +199,7 @@ Frame {
                 
                 Repeater {
                     model: entry.fields
-                    delegate: EntryItem { item: modelData }
+                    delegate: EntryBlockItem { item: modelData }
                 }
             }
             

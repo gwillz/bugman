@@ -26,7 +26,7 @@ Item {
             }
         }
         
-        EntryField {
+        LouField {
             id: fileNameField
             anchors.left: parent.left
             anchors.right: parent.right

@@ -15,8 +15,6 @@ public:
     Q_PROPERTY(qreal longitude MEMBER longitude)
     Q_PROPERTY(qreal altitude MEMBER altitude)
     
-    ~EntryPosition() {}
-    
     qreal latitude;
     qreal longitude;
     qreal altitude;
@@ -42,8 +40,6 @@ public:
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString type MEMBER type)
     Q_PROPERTY(QString value MEMBER value)
-    
-    ~EntryField() {}
     
     QString name;
     QString type;
@@ -114,8 +110,6 @@ public:
     
     Q_PROPERTY(QString next_voucher READ getNextVoucher STORED false)
     
-    ~EntrySet() {}
-    
     int set_id;
     QString name;
     QString collector;
@@ -132,9 +126,7 @@ public:
     
     QStringList getFieldNames() const;
     
-    inline QList<Entry> getEntries() const {
-        return entries.values();
-    }
+    QList<Entry> getEntries() const;
     
     Q_INVOKABLE QString getNextVoucher() const;
     
@@ -171,8 +163,6 @@ public:
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString author MEMBER author)
     Q_PROPERTY(QList<EntryField> fields MEMBER fields)
-    
-    ~EntryTemplate() {}
     
     QString name;
     QString author;

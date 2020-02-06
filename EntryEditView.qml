@@ -71,7 +71,7 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 
-                EntryField {
+                LouField {
                     id: voucherField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -81,7 +81,7 @@ Item {
                     onTextChanged: voucher = text
                 }
                 
-                EntryField {
+                LouField {
                     id: datetimeField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -90,7 +90,7 @@ Item {
                     text: Qt.formatDateTime(new Date(+timestamp), "dd/MM/yyyy HH:mm")
                 }
                 
-                EntryField {
+                LouField {
                     id: positionField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -102,7 +102,7 @@ Item {
                         .arg(position.altitude.toFixed(0))
                 }
                 
-                EntryField {
+                LouField {
                     id: collectorField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -122,7 +122,7 @@ Item {
             
             model: fields
             
-            delegate: EntryField {
+            delegate: LouField {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 label: modelData.name

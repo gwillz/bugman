@@ -1,5 +1,5 @@
 
-#include "dataentry.h"
+#include "entry.h"
 #include <QDebug>
 #include <QDateTime>
 #include <QJsonObject>
@@ -193,12 +193,9 @@ void Entry::read(const QJsonObject &json) {
             fields.append(item);
         }
     }
-    
-    qDebug() << "FIELDS" << fields.size();
 }
 
 void Entry::write(QJsonObject &json) const {
-    qDebug() << "write entry" << entry_id;
     
     JSON_WRITE(entry_id);
     JSON_WRITE(entry_set_id);
@@ -279,6 +276,10 @@ QStringList EntrySet::getFieldNames() const {
     return names;
 }
 
+QList<Entry> EntrySet::getEntries() const {
+    return entries.values();
+}
+
 QString EntrySet::getNextVoucher() const {
     QByteArray format = voucher_format.toUtf8();
     const char *cformat = format.constData();
@@ -312,7 +313,6 @@ void EntrySet::read(const QJsonObject &json) {
 }
 
 void EntrySet::write(QJsonObject &json) const {
-    qDebug() << "write set" << set_id;
     
     JSON_WRITE(set_id);
     JSON_WRITE(name);

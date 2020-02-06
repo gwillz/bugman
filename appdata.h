@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QJsonDocument>
-#include "dataentry.h"
+#include "entry.h"
 
 class QQmlEngine;
 class QJSValue;

@@ -58,7 +58,7 @@ Item {
                 anchors.right: parent.right
                 spacing: 15
                 
-                EntryField {
+                LouField {
                     id: nameEdit
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -73,7 +73,7 @@ Item {
                     }
                 }
                 
-                EntryField {
+                LouField {
                     id: formatEdit
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -99,7 +99,7 @@ Item {
                     }
                 }
                 
-                EntryField {
+                LouField {
                     id: collectorEdit
                     anchors.left: parent.left
                     anchors.right: parent.right
