@@ -12,12 +12,19 @@ Button {
 //    enabled: false
 //    highlighted: true
     
+    contentItem: Text {
+        color: root.enabled ? Colors.cloud : Colors.brick
+        horizontalAlignment: Text.AlignHCenter
+        font: root.font
+        text: root.text
+    }
+    
     background: Rectangle {
         radius: 5
-        color: root.highlighted
-               ? palette.highlight
-               : root.enabled
-               ? palette.button
+        color: root.enabled
+               ? root.highlighted
+                    ? Colors.bee
+                    : Colors.brick
                : "transparent"
         border {
             width: 2

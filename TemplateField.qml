@@ -98,6 +98,8 @@ Rectangle {
     
     DeleteDialog {
         id: deleteDialog
+        type: "Field"
+        target: root.name
         onAccepted: root.remove()
     }
 }

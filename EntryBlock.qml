@@ -236,6 +236,8 @@ Frame {
     DeleteDialog {
         id: deleteDialog
         nav: root.nav
+        type: "Entry"
+        target: entry.voucher
         
         onAccepted: {
             AppData.removeEntry(entry.entry_set_id, entry.entry_id)

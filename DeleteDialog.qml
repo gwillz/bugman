@@ -3,33 +3,38 @@ import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
 
 Dialog {
-    id: dialog
+    id: root
     modal: true
     parent: Overlay.overlay
     anchors.centerIn: Overlay.overlay
     padding: 10
     
     property Navigation nav
+    property string type
+    property var target
     
     onNavChanged: {
         nav.onCloseDialog.connect(() => {
-            if (dialog.visible) dialog.reject();
-            else dialog.close();
+            if (root.visible) root.reject();
+            else root.close();
         })
     }
     
     onVisibleChanged: {
-        if (nav) nav.hasDialog = dialog.visible
+        if (nav) nav.hasDialog = root.visible
+        
+        if (root.visible) {
+            deleteButton.enabled = false
+            timer.start()
+        }
     }
     
-    implicitWidth: Math.max(
-        header.implicitWidth,
-        leftPadding + contentItem.implicitWidth + rightPadding,
-        footer.implicitWidth)
+    implicitWidth: Math.max(header.implicitWidth, 280, footer.implicitWidth)
     
     Timer {
-        interval: 500
-        running: true
+        id: timer
+        interval: 800
+        running: false
         repeat: false
         onTriggered: {
             deleteButton.enabled = true
@@ -37,7 +42,7 @@ Dialog {
     }
     
     header: Text {
-        text: qsTr("Delete Entry")
+        text: qsTr("Delete %1").arg(root.type)
         padding: 10
         font.pointSize: Fonts.subtitle
     }
@@ -57,6 +62,7 @@ Dialog {
             enabled: false
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
         }
+        
         LouButton {
             id: cancelButton
             text: qsTr("Wait no!")
@@ -65,8 +71,10 @@ Dialog {
     }
     
     Text {
-        text: qsTr("Delete X, are you sure?")
+        text: qsTr("Delete \"%1\", are you sure?").arg(root.target)
+        wrapMode: Text.WordWrap
         font.pointSize: Fonts.body
+        anchors.fill: parent
     }
 }
 

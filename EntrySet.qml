@@ -89,8 +89,12 @@ Item {
             entry: modelData
         }
     }
+    
     DeleteDialog {
         id: deleteDialog
+        nav: root.nav
+        type: "Set"
+        target: entrySet.name
         
         onAccepted: {
             AppData.removeSet(entrySet.set_id)
