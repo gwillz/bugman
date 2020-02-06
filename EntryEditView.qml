@@ -40,6 +40,7 @@ Item {
     
     PositionSource {
         id: gps
+        active: true
     }
     
     ColumnLayout {

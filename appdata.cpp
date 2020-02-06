@@ -16,7 +16,7 @@ AppData::AppData(QObject *parent)
         : QObject(parent) {
     
     appPath = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last();
-    csvPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
+    csvPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).last();
     imagePaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
     dbPath = appPath + "/db.json";
     

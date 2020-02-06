@@ -13,9 +13,10 @@
 - about view
 - migrate qlist to qmlpropertylist
 - create csvwriter to replace csvbuilder
-- entry and set ids should be tracked in db.json root
 - images:
     - image picker actions
     - load entry images
     - copy new entry images
     - export images zip
+- different entry fields per 'type'
+- merge colors/fonts into "Theme"

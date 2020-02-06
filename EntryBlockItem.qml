@@ -16,6 +16,7 @@ Row {
     }
     Text {
         text: root.value || "--"
+        wrapMode: Text.WordWrap
         font.letterSpacing: 0.5
         lineHeight: 1.3
         font.pointSize: Fonts.small
