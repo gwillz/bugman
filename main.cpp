@@ -47,15 +47,17 @@ int main(int argc, char *argv[]) {
 typedef QtAndroid::PermissionResult Permission;
 
 void requestAndroidPermissions() {
-    //Request requiered permissions at runtime
     
     const QStringList permissions({
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
     });
     
     QHash<QString, Permission> results =
-            QtAndroid::requestPermissionsSync(permissions);
+        QtAndroid::requestPermissionsSync(permissions);
     
     for (QString permission : results.keys()) {
         auto status = results[permission];
