@@ -117,6 +117,7 @@ public:
     
     QList<EntryField> fields;
     QMap<int, Entry> entries;
+    int entry_count = 0;
     
     void operator=(const EntrySet &other);
     bool operator==(const EntrySet &other) const;
@@ -143,7 +144,8 @@ class EntryDatabase {
     
 public:
     QMap<int, EntrySet> sets;
-    int entryCount;
+    int entry_count = 0;
+    int entry_set_count = 0;
     
     inline void clear() {
         sets.clear();
@@ -151,6 +153,14 @@ public:
     
     int setEntry(const Entry &entry);
     int setSet(const EntrySet &set);
+    
+    inline int nextEntryId() const {
+        return entry_count + 1;
+    }
+    
+    inline int nextSetId() const {
+        return entry_set_count + 1;
+    }
     
     int read(const QJsonObject &json);
     void write(QJsonObject &json) const;

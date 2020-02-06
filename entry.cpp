@@ -284,7 +284,7 @@ QString EntrySet::getNextVoucher() const {
     QByteArray format = voucher_format.toUtf8();
     const char *cformat = format.constData();
     
-    return QString::asprintf(cformat, entries.size() + 1);
+    return QString::asprintf(cformat, entry_count + 1);
 }
 
 void EntrySet::read(const QJsonObject &json) {
@@ -292,6 +292,7 @@ void EntrySet::read(const QJsonObject &json) {
     JSON_READ_STRING(name);
     JSON_READ_STRING(collector);
     JSON_READ_STRING(voucher_format);
+    JSON_READ_INT(entry_count);
     
     fields.clear();
     JSON_FOR_LIST(fields, value) {
@@ -318,6 +319,7 @@ void EntrySet::write(QJsonObject &json) const {
     JSON_WRITE(name);
     JSON_WRITE(collector);
     JSON_WRITE(voucher_format);
+    JSON_WRITE(entry_count);
     
     {
         QJsonArray array;
@@ -362,10 +364,16 @@ int EntryDatabase::setEntry(const Entry &entry) {
     int set_id = entry.entry_set_id;
     
     if (sets.contains(set_id)) {
+        int count = sets[set_id].entries.size();
+        
         sets[set_id].entries.insert(entry.entry_id, entry);
         QList<int> keys = sets[set_id].entries.keys();
         
-        entryCount = keys.size();
+        if (count != sets[set_id].entries.size()) {
+            sets[set_id].entry_count++;
+            entry_count++;
+        }
+        
         return keys.indexOf(entry.entry_id);
     }
     
@@ -373,12 +381,21 @@ int EntryDatabase::setEntry(const Entry &entry) {
 }
 
 int EntryDatabase::setSet(const EntrySet &set) {
+    int count = sets.size();
     sets.insert(set.set_id, set);
+    
+    if (count != sets.size()) {
+        entry_set_count++;
+    }
+    
     return sets.keys().indexOf(set.set_id);
 }
 
 int EntryDatabase::read(const QJsonObject &json) {
-    entryCount = 0;
+    JSON_READ_INT(entry_count);
+    JSON_READ_INT(entry_set_count);
+    
+    int entryCount = 0;
     
     JSON_FOR_LIST(data, value) {
         if (value.isObject()) {
@@ -386,7 +403,7 @@ int EntryDatabase::read(const QJsonObject &json) {
             set.read(value.toObject());
             
             sets.insert(set.set_id, set);
-            entryCount += set.entries.size();
+            entryCount += sets.size();
         }
     }
     
@@ -394,6 +411,10 @@ int EntryDatabase::read(const QJsonObject &json) {
 }
 
 void EntryDatabase::write(QJsonObject &json) const {
+    
+    JSON_WRITE(entry_count);
+    JSON_WRITE(entry_set_count);
+    
     QJsonArray data;
     
     for (EntrySet set : sets) {

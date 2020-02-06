@@ -17,7 +17,7 @@ Item {
     onNavChanged: {
         nav.onIndexChanged.connect(() => {
             if (nav.index === Views.setEdit) {
-                root.set_id = AppData.nextSetId()
+                root.set_id = nav.data.set_id || AppData.nextSetId()
                 root.name = nav.data.name  || ""
                 root.voucher_format = nav.data.voucher_format || "E%03d"
                 root.collector = nav.data.collector || ""

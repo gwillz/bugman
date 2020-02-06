@@ -54,11 +54,11 @@ public:
     QString getExportPath(const QString fileName, int revision = 1) const;
     
     inline Q_INVOKABLE int nextSetId() const {
-        return db.sets.size() + 1;
+        return db.nextSetId();
     }
     
     inline Q_INVOKABLE int nextEntryId() const {
-        return db.entryCount + 1;
+        return db.nextEntryId();
     }
     
     Q_INVOKABLE QString sprintf(const QString format, int number) const;
