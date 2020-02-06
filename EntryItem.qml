@@ -5,8 +5,7 @@ Row {
     spacing: 5
     property var item: ({})
     property string name: item.name || "??"
-    property string value: item.value || "??"
-    
+    property string value: item.value || ""
     
     Text {
         text: root.name + ": "

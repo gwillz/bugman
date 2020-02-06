@@ -142,6 +142,25 @@ int AppData::setEntry(const QVariantMap &object) {
     return index;
 }
 
+void AppData::removeEntry(int setId, int entryId) {
+    
+    if (db.sets.contains(setId)) {
+        qDebug() << "Remove entry" << entryId << "from set" << setId;
+        int count = db.sets[setId].entries.remove(entryId);
+        
+        if (count < 1) {
+            qDebug() << "Entry not in set?";
+        }
+        else {
+            saveDb();
+            emit dataChanged();
+        }
+    }
+    else {
+        qDebug() << setId << "This set doesn't exist.";
+    }
+}
+
 int AppData::setSet(const QVariantMap &object) {
     
     EntrySet set = EntrySet::fromObject(object);
