@@ -1,8 +1,8 @@
 #include <QtTest/QtTest>
 
-#include "../csvbuilder.h"
+#include "../csvwriter.h"
 
-class CSVBuilderTest : public QObject {
+class CsvWriterTest : public QObject {
     Q_OBJECT
     
 private slots:
@@ -10,20 +10,24 @@ private slots:
     
 };
 
-void CSVBuilderTest::test() {
+void CsvWriterTest::test() {
     
-    QString csv = CSVBuilder()
-        .header("one")
-        .header("two")
-        .header("three,four")
-        .row()
-            .item("abc")
-            .item(QString("uhh\" nice"))
-            .item(QVariant("This \n is \r a mess  "))
-        .end()
-        .row(QVariantList({1, 2.345, 6.0, "neat"}))
-        .row(QStringList({"neat", "stuff"}))
-    .build();
+    QString file;
+    CsvWriter writer(&file);
+    
+    writer.write("one");
+    writer.write("two");
+    writer.write("three,four");
+    writer.newRow();
+    
+    writer.write("abc");
+    writer.write(QString("uhh\" nice"));
+    writer.write(QVariant("This \n is \r a mess  "));
+    writer.newRow();
+    writer.write({1, 2.345, 6.0, "neat"});
+    writer.newRow();
+    writer.write({"neat", "stuff"});
+    writer.newRow();
     
 //    qDebug() << csv;
     
@@ -34,9 +38,9 @@ void CSVBuilderTest::test() {
         "neat,stuff\n"
     ;
     
-    QCOMPARE(csv, expected);
+    QCOMPARE(file, expected);
 }
 
-QTEST_MAIN(CSVBuilderTest)
+QTEST_MAIN(CsvWriterTest)
 
 #include "tst_csvbuildertest.moc"

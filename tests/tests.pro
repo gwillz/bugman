@@ -7,4 +7,4 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES +=  tst_csvbuildertest.cpp \
-    ../csvbuilder.cpp
+    ../csvwriter.cpp
