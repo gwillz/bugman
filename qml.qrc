@@ -8,7 +8,6 @@
         <file>AboutView.qml</file>
         <file>SetSaveView.qml</file>
         <file>SetEditView.qml</file>
-        <file>Fonts.qml</file>
         <file>LouField.qml</file>
         <file>Header.qml</file>
         <file>qmldir</file>
@@ -19,7 +18,7 @@
         <file>LouButton.qml</file>
         <file>TemplateField.qml</file>
         <file>Views.qml</file>
-        <file>Colors.qml</file>
+        <file>Theme.qml</file>
         <file>EntrySet.qml</file>
         <file>ImagePicker.qml</file>
         <file>EntryBlockItem.qml</file>

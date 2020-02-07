@@ -34,11 +34,11 @@ Dialog {
         id: header
         text: qsTr("Edit Field")
         padding: 10
-        font.pointSize: Fonts.subtitle
+        font.pointSize: Theme.subtitle
     }
     
     background: Rectangle {
-        color: Colors.putty
+        color: Theme.putty
     }
     
     Column {

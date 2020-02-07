@@ -44,11 +44,11 @@ Dialog {
     header: Text {
         text: qsTr("Delete %1").arg(root.type)
         padding: 10
-        font.pointSize: Fonts.subtitle
+        font.pointSize: Theme.subtitle
     }
     
     background: Rectangle {
-        color: Colors.putty
+        color: Theme.putty
     }
     
     footer: DialogButtonBox {
@@ -73,7 +73,7 @@ Dialog {
     Text {
         text: qsTr("Delete \"%1\", are you sure?").arg(root.target)
         wrapMode: Text.WordWrap
-        font.pointSize: Fonts.body
+        font.pointSize: Theme.body
         anchors.fill: parent
     }
 }

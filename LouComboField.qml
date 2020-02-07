@@ -27,7 +27,7 @@ Item {
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.leftMargin: 30
-        font.pointSize: Fonts.body
+        font.pointSize: Theme.body
     }
     
     ComboBox {
@@ -39,17 +39,17 @@ Item {
         leftPadding: 30
         
         contentItem: Text {
-            color: Colors.text
+            color: Theme.text
             text: current
             bottomPadding: 5
             topPadding: 5
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: Fonts.body
+            font.pointSize: Theme.body
         }
         
         background: Rectangle {
             radius: 5
-            color: Colors.cloud
+            color: Theme.cloud
         }
         
         model: root.model

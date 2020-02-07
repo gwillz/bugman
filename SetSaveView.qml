@@ -22,7 +22,7 @@ Item {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 padding: 10
-                font.pointSize: Fonts.subtitle
+                font.pointSize: Theme.subtitle
             }
         }
         

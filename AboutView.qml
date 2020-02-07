@@ -7,7 +7,7 @@ Item {
     
     Text {
         text: "About"
-        font.pointSize: Fonts.subtitle
+        font.pointSize: Theme.subtitle
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
     }

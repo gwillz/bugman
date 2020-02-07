@@ -33,12 +33,12 @@ Dialog {
     header: Text {
         id: header
         text: qsTr("Templates")
-        font.pointSize: Fonts.subtitle
+        font.pointSize: Theme.subtitle
         padding: 10
     }
     
     background: Rectangle {
-        color: Colors.putty
+        color: Theme.putty
     }
     
     ListView {

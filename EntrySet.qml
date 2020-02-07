@@ -26,7 +26,7 @@ Item {
         Text {
             id: title
             text: entrySet.name || "??"
-            font.pointSize: Fonts.subtitle
+            font.pointSize: Theme.subtitle
         }
         
         Row {

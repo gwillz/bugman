@@ -146,7 +146,7 @@ Item {
                     topPadding: 10
                     anchors.left: parent.left
                     anchors.leftMargin: 30
-                    font.pointSize: Fonts.body
+                    font.pointSize: Theme.body
                 }
                 
                 Grid{
@@ -165,12 +165,12 @@ Item {
                     Button {
                         id: imageButton
                         background: Rectangle {
-                            color: Colors.cloud
+                            color: Theme.cloud
                         }
                         text: "Add"
                         display: AbstractButton.IconOnly
                         icon.source: "icons/plus.svg"
-                        icon.color: Colors.brick
+                        icon.color: Theme.brick
                         width: grid.itemWidth
                         height: width
                         icon.width: width / 2

@@ -13,7 +13,7 @@ Button {
 //    highlighted: true
     
     contentItem: Text {
-        color: root.enabled ? Colors.cloud : Colors.brick
+        color: root.enabled ? Theme.cloud : Theme.brick
         horizontalAlignment: Text.AlignHCenter
         font: root.font
         text: root.text
@@ -23,8 +23,8 @@ Button {
         radius: 5
         color: root.enabled
                ? root.highlighted
-                    ? Colors.bee
-                    : Colors.brick
+                    ? Theme.bee
+                    : Theme.brick
                : "transparent"
         border {
             width: 2

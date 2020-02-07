@@ -11,7 +11,7 @@ Item {
     
     Rectangle {
         id: headerBg
-        color: Colors.cloud
+        color: Theme.cloud
         anchors.fill: parent
     }
     
@@ -36,7 +36,7 @@ Item {
     Text {
         text: qsTr("Field Assistant")
         anchors.centerIn: parent
-        font.pointSize: Fonts.title
+        font.pointSize: Theme.title
     }
     
     Button {
@@ -47,7 +47,7 @@ Item {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         icon.source: "icons/bugman_logo.svg"
-        icon.color: Colors.bee
+        icon.color: Theme.bee
         icon.height: parent.height
         icon.width: parent.height
         onClicked: nav.navigate(Views.about)

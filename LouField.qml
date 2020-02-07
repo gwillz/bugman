@@ -19,7 +19,7 @@ Item {
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.leftMargin: 30
-        font.pointSize: Fonts.body
+        font.pointSize: Theme.body
     }
     
     TextField {
@@ -30,11 +30,11 @@ Item {
         anchors.left: parent.left
         placeholderText: placeholder
         leftPadding: 30
-        font.pointSize: Fonts.body
+        font.pointSize: Theme.body
         
         background: Rectangle {
             radius: 5
-            color: Colors.cloud
+            color: Theme.cloud
         }
     }
 }
