@@ -17,7 +17,6 @@
         <file>DeleteDialog.qml</file>
         <file>LouButton.qml</file>
         <file>TemplateField.qml</file>
-        <file>Views.qml</file>
         <file>Theme.qml</file>
         <file>EntrySet.qml</file>
         <file>ImagePicker.qml</file>

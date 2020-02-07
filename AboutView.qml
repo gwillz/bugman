@@ -3,8 +3,6 @@ import QtQuick 2.12
 Item {
     id: element
     
-    property Navigation nav
-    
     Text {
         text: "About"
         font.pointSize: Theme.subtitle

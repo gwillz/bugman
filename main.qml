@@ -11,11 +11,9 @@ ApplicationWindow {
     width: 520
 //    color: palette.window
     
-    property var nav: Navigation {}
-    
     onClosing: {
-        close.accepted = nav.isExitReady;
-        nav.goBack();
+        close.accepted = Navigation.isExitReady;
+        Navigation.goBack();
     }
     
     ColumnLayout {
@@ -27,7 +25,6 @@ ApplicationWindow {
             id: header
             z: 100
             Layout.fillWidth: true
-            nav: root.nav
         }
         
         StackLayout {
@@ -36,31 +33,26 @@ ApplicationWindow {
             height: 100
             Layout.fillWidth: true
             Layout.margins: 10
-            currentIndex: nav.index
+            currentIndex: Navigation.index
             
             HomeView {
                 id: homeView
-                nav: root.nav
             }
             
             AboutView {
                 id: aboutView
-                nav: root.nav
             }
             
             EntryEditView {
                 id: entryEditView
-                nav: root.nav
             }
             
             SetEditView {
                 id: setEditView
-                nav: root.nav
             }
             
             SetSaveView {
                 id: saveSetView
-                nav: root.nav
             }
         }
     }

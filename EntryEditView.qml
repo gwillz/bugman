@@ -10,8 +10,6 @@ Item {
     implicitHeight: 720
     implicitWidth: 420
     
-    property Navigation nav
-    
     property int entry_id
     property int entry_set_id
     property string voucher
@@ -21,21 +19,27 @@ Item {
     property var images
     property var fields
     
-    onNavChanged: {
-        nav.onIndexChanged.connect(() => {
-            if (nav.index === Views.entryEdit) {
-               root.entry_id = nav.data.entry_id || AppData.nextEntryId()
-               root.entry_set_id = nav.data.entry_set_id || nav.data.set_id || 0;
-               root.voucher = nav.data.getNextVoucher
-                   ? nav.data.getNextVoucher()
-                   : (nav.data.voucher || "")
-               root.timestamp = nav.data.timestamp || +new Date() + ""
-               root.position = nav.data.position || gps.position.coordinate;
-               root.collector = nav.data.collector || "";
-               root.images = nav.data.images || [];
-               root.fields = nav.data.fields || [];
+    property bool isEditing: false
+    
+    Connections {
+        target: Navigation
+        function onIndexChanged() {
+            const {index, data} = Navigation;
+            
+            if (index === Navigation.entryEditView) {
+                root.isEditing = !!data.entry_id
+                root.entry_id = data.entry_id || AppData.nextEntryId()
+                root.entry_set_id = data.entry_set_id || data.set_id || 0;
+                root.voucher = data.getNextVoucher
+                    ? data.getNextVoucher()
+                    : (data.voucher || "")
+                root.timestamp = data.timestamp || +new Date() + ""
+                root.position = data.position || gps.position.coordinate;
+                root.collector = data.collector || "";
+                root.images = data.images || [];
+                root.fields = data.fields || [];
             }
-        })
+        }
     }
     
     PositionSource {
@@ -49,8 +53,8 @@ Item {
         
         Text {
             id: title
-            text: nav.data.entry_id
-                  ? qsTr("Edit %1").arg(nav.data.voucher) 
+            text: isEditing
+                  ? qsTr("Edit %1").arg(voucher) 
                   : qsTr("New Entry")
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
@@ -193,7 +197,7 @@ Item {
         LouButton {
             id: createButton
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            text: nav.data.entry_id ? qsTr("Save") : qsTr("Create")
+            text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
             
             onClicked: {
@@ -215,14 +219,13 @@ Item {
                     fields,
                 })
                 
-                nav.navigate(Views.home)
+                Navigation.navigate(Navigation.homeView)
             }
         }
     }
     
     ImagePicker {
         id: imageDialog
-        nav: root.nav
     }
 }
 

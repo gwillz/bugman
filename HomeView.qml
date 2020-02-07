@@ -7,15 +7,16 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    property Navigation nav
-    
-    onNavChanged: {
-        nav.onIndexChanged.connect(() => {
-            if (nav.index === Views.home &&
-                nav.data.index !== undefined) {
-                swipeView.currentIndex = nav.data.index || 0;
+    Connections {
+        target: Navigation
+        function onIndexChanged() {
+            const {index, data} = Navigation;
+            
+            if (index === Navigation.homeView &&
+                data.index !== undefined) {
+                swipeView.currentIndex = data.index || 0;
             }
-        })
+        }
     }
     
     SwipeView {
@@ -30,7 +31,6 @@ Item {
             
             delegate: EntrySet {
                 entrySet: modelData
-                nav: root.nav
             }
         }
         
@@ -45,7 +45,7 @@ Item {
                 text: qsTr("Add Set")
                 focusPolicy: Qt.NoFocus
                 highlighted: true
-                onClicked: nav.navigate(Views.setEdit)
+                onClicked: Navigation.navigate(Navigation.setEditView)
             }
         }
     }

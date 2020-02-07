@@ -18,14 +18,15 @@ Item {
     signal accepted()
     signal rejected()
     
-    property Navigation nav
-    
-    onNavChanged: {
-        nav.onCloseDialog.connect(root.close)
+    Connections {
+        target: Navigation
+        function onCloseDialog() {
+            root.close()
+        }
     }
     
     onEnabledChanged: {
-        if (root.nav) nav.hasDialog = root.enabled
+        Navigation.hasDialog = root.enabled
     }
     
     property int offset: flick.height

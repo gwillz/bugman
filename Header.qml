@@ -7,8 +7,6 @@ Item {
     implicitHeight: 80
     implicitWidth: 520
     
-    property Navigation nav
-    
     Rectangle {
         id: headerBg
         color: Theme.cloud
@@ -19,7 +17,7 @@ Item {
         id: backButton
         text: qsTr("Back")
         padding: 15
-        enabled: !nav.isHome
+        enabled: !Navigation.isHome
         opacity: enabled ? 1 : 0.3
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -30,7 +28,7 @@ Item {
         icon.height: parent.height
         icon.width: parent.height
         width: parent.height
-        onClicked: nav.navigate(Views.home)
+        onClicked: Navigation.navigate(Navigation.homeView)
     }
     
     Text {
@@ -50,7 +48,7 @@ Item {
         icon.color: Theme.bee
         icon.height: parent.height
         icon.width: parent.height
-        onClicked: nav.navigate(Views.about)
+        onClicked: Navigation.navigate(Navigation.aboutView)
     }
 }
 

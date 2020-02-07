@@ -7,24 +7,26 @@ import AppData 1.0
 Item {
     id: root
     
-    property Navigation nav
-    
     property var set_id
     property string name
     property string voucher_format
     property string collector
+    property bool isEditing: false
     
-    onNavChanged: {
-        nav.onIndexChanged.connect(() => {
-            if (nav.index === Views.setEdit) {
-                root.set_id = nav.data.set_id || AppData.nextSetId()
-                root.name = nav.data.name  || ""
-                root.voucher_format = nav.data.voucher_format || "E%03d"
-                root.collector = nav.data.collector || ""
+    Connections {
+        target: Navigation
+        function onIndexChanged() {
+            var {index, data} = Navigation;
+            if (index === Navigation.setEditView) {
+                root.isEditing = !!data.set_id
+                root.set_id = data.set_id || AppData.nextSetId()
+                root.name = data.name  || ""
+                root.voucher_format = data.voucher_format || "E%03d"
+                root.collector = data.collector || ""
                 
-                visualModel.model = nav.data.fields || []
+                visualModel.model = data.fields || []
             }
-        })
+        }
     }
     
     implicitWidth: 520
@@ -35,8 +37,8 @@ Item {
         spacing: 10
         
         Text {
-            text: nav.data.name
-                  ? qsTr("Edit: %1").arg(nav.data.name)
+            text: isEditing
+                  ? qsTr("Edit: %1").arg(name)
                   : qsTr("New Set")
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
@@ -152,7 +154,7 @@ Item {
             id: saveButton
             
             highlighted: true
-            text: nav.data.set_id ? qsTr("Save") : qsTr("Create")
+            text: isEditing ? qsTr("Save") : qsTr("Create")
             onClicked: {
                 console.log("save set", set_id)
                 
@@ -171,14 +173,14 @@ Item {
                     fields,
                 });
                 
-                nav.navigate(Views.home, { index });
+                Navigation.navigate(Navigation.homeView, { index });
             }
         }
     }
     
     DelegateModel {
        id: visualModel
-       model: nav.data.fields || []
+       model: Navigation.data.fields || []
        delegate: dragDelegate
     }
     
@@ -264,7 +266,6 @@ Item {
     
     TemplateFieldDialog {
         id: fieldDialog
-        nav: root.nav
         
         onAccepted: {
             visualModel.model = visualModel.model.concat([{name, type}])
@@ -281,7 +282,6 @@ Item {
     
     TemplatesDialog {
         id: templatesDialog
-        nav: root.nav
         
         onAccepted: {
             visualModel.model = template.fields

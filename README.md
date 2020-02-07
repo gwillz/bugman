@@ -19,9 +19,12 @@
     - copy new entry images
     - export images zip
 - different entry fields per 'type'
-- merge colors/fonts into "Theme"
 - rename AppData -> App
-
+- templates fields:
+    - add dialog close button
+    - add clear button 
+    - icons
+- post message/dialog after exporting
 
 ### Development
 

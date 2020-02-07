@@ -5,7 +5,7 @@ import QtQml.Models 2.14
 import AppData 1.0
 
 Dialog {
-    id: dialog
+    id: root
     padding: 10
     modal: true
     
@@ -14,17 +14,16 @@ Dialog {
     
     signal accepted(var template)
     
-    property Navigation nav
-    
-    onNavChanged: {
-        nav.onCloseDialog.connect(() => {
-            if (dialog.visible) dialog.reject();
-            else dialog.close();
-        })
+    Connections {
+        target: Navigation
+        function onCloseDialog() {
+            if (root.visible) root.reject();
+            else root.close();
+        }
     }
     
     onVisibleChanged: {
-        if (nav) nav.hasDialog = dialog.visible
+        Navigation.hasDialog = root.visible
     }
     
     width: 320

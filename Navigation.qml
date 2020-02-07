@@ -1,3 +1,4 @@
+pragma Singleton
 import QtQuick 2.0
 
 Item {
@@ -5,7 +6,7 @@ Item {
     
     signal closeDialog()
     
-    property int index: Views.home
+    property int index: homeView
     property var data: ({})
     property bool hasDialog: false
     
@@ -14,7 +15,7 @@ Item {
     }
     
     readonly property int isHome: {
-        return index === Views.home
+        return index === homeView
     }
     
     function navigate(index, data) {
@@ -27,10 +28,16 @@ Item {
         if (isExitReady) return;
         
         if (!nav.hasDialog) {
-            nav.navigate(Views.home);
+            nav.navigate(homeView);
         }
         
         nav.closeDialog()
         nav.hasDialog = false
     }
+    
+    readonly property int homeView:      0;
+    readonly property int aboutView:     1;
+    readonly property int entryEditView: 2;
+    readonly property int setEditView:   3;
+    readonly property int setSaveView:   4;
 }

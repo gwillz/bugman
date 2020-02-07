@@ -6,7 +6,19 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    property Navigation nav: Navigation {}
+    property string name
+    property string set_id
+    
+    Connections {
+        target: Navigation
+        function onIndexChanged() {
+            var {index, data} = Navigation;
+            if (index === Navigation.saveEditView) {
+                root.name = data.name;
+                root.set_id = data.set_id;
+            }
+        }
+    }
     
     Column {
         spacing: 15
@@ -18,7 +30,7 @@ Item {
             height: 80
             
             Text {
-                text: qsTr("Export: %1").arg(nav.data.name)
+                text: qsTr("Export: %1").arg(name)
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 padding: 10
@@ -32,8 +44,8 @@ Item {
             anchors.right: parent.right
             
             label: qsTr("File name")
-            placeholder: nav.data.name + ".csv"
-            text: nav.data.name + ".csv"
+            placeholder: name + ".csv"
+            text: name + ".csv"
         }
         
         LouButton {
@@ -43,7 +55,7 @@ Item {
             anchors.leftMargin: 30
             
             onClicked: {
-                AppData.exportSet(fileNameField.text, nav.data.set_id)
+                AppData.exportSet(fileNameField.text, set_id)
             }
         }
     }

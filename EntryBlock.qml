@@ -8,7 +8,6 @@ import "EntryModel.js" as EntryModel
 
 Frame {
     id: root
-    property Navigation nav
     
     // debug
     implicitWidth: 520
@@ -215,7 +214,7 @@ Frame {
                     text: qsTr("Edit")
                     flat: true
                     display: AbstractButton.IconOnly
-                    onClicked: nav.navigate(Views.entryEdit, entry)
+                    onClicked: Navigation.navigate(Navigation.entryEditView, entry)
                     icon.source: "icons/pencil.svg"
                     width: height
                 }
@@ -235,7 +234,6 @@ Frame {
     
     DeleteDialog {
         id: deleteDialog
-        nav: root.nav
         type: "Entry"
         target: entry.voucher
         

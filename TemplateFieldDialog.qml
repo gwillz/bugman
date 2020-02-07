@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.13
 
 Dialog {
-    id: dialog
+    id: root
     padding: 10
     modal: true
     
@@ -12,17 +12,16 @@ Dialog {
     property string name: ""
     property string type: ""
     
-    property Navigation nav
-    
-    onNavChanged: {
-        nav.onCloseDialog.connect(() => {
-            if (dialog.visible) dialog.reject();
-            else dialog.close();
-        })
+    Connections {
+        target: Navigation
+        function onCloseDialog() {
+            if (root.visible) root.reject();
+            else root.close();
+        }
     }
     
     onVisibleChanged: {
-        if (nav) nav.hasDialog = dialog.visible
+        Navigation.hasDialog = root.visible
     }
     
     implicitWidth: Math.max(
@@ -53,10 +52,10 @@ Dialog {
             placeholder: "..."
             anchors.right: parent.right
             anchors.left: parent.left
-            text: dialog.name
+            text: root.name
             
             Binding {
-                target: dialog
+                target: root
                 property: "name"
                 value: nameEdit.text
             }
@@ -68,11 +67,11 @@ Dialog {
             anchors.right: parent.right
             anchors.left: parent.left
             
-            current: dialog.type
+            current: root.type
             model: ["string", "integer", "decimal", "text"]
             
             Binding {
-                target: dialog
+                target: root
                 property: "type"
                 value: typeEdit.current
             }

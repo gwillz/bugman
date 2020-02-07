@@ -9,19 +9,19 @@ Dialog {
     anchors.centerIn: Overlay.overlay
     padding: 10
     
-    property Navigation nav
     property string type
     property var target
     
-    onNavChanged: {
-        nav.onCloseDialog.connect(() => {
+    Connections {
+        target: Navigation
+        function onCloseDialog() {
             if (root.visible) root.reject();
             else root.close();
-        })
+        }
     }
     
     onVisibleChanged: {
-        if (nav) nav.hasDialog = root.visible
+        Navigation.hasDialog = root.visible
         
         if (root.visible) {
             deleteButton.enabled = false

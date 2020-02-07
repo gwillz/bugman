@@ -1,3 +1,3 @@
 
 singleton Theme 1.0 Theme.qml
-singleton Views 1.0 Views.qml
+singleton Navigation 1.0 Navigation.qml

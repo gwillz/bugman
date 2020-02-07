@@ -7,7 +7,6 @@ import "EntryModel.js" as EntryModel
 Item {
     id: root
     
-    property Navigation nav
     property var entrySet: EntryModel.data[0]
     
     implicitWidth: 520
@@ -39,7 +38,7 @@ Item {
                 flat: true
                 width: height
                 icon.source: "icons/plus.svg"
-                onClicked: nav.navigate(Views.entryEdit, entrySet)
+                onClicked: Navigation.navigate(Navigation.entryEditView, entrySet)
             }
             
             Button {
@@ -47,7 +46,7 @@ Item {
                 flat: true
                 width: height
                 icon.source: "icons/download.svg"
-                onClicked: nav.navigate(Views.setSave, entrySet)
+                onClicked: Navigation.navigate(Navigation.setSaveView, entrySet)
             }
             
             Button {
@@ -55,7 +54,7 @@ Item {
                 flat: true
                 width: height
                 icon.source: "icons/pencil.svg"
-                onClicked: nav.navigate(Views.setEdit, entrySet)
+                onClicked: Navigation.navigate(Navigation.setEditView, entrySet)
             }
             
             Button {
@@ -85,7 +84,6 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 10
-            nav: root.nav
             entry: modelData
         }
     }
@@ -95,12 +93,11 @@ Item {
         visible: entrySet.entries.length === 0
         text: qsTr("Add Entry")
         highlighted: true
-        onClicked: nav.navigate(Views.entryEdit, entrySet)
+        onClicked: Navigation.navigate(Navigation.entryEditView, entrySet)
     }
     
     DeleteDialog {
         id: deleteDialog
-        nav: root.nav
         type: "Set"
         target: entrySet.name
         
