@@ -10,7 +10,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDateTime>
-#include "csvbuilder.h"
+#include "csvwriter.h"
 
 static App* instance = nullptr;
 
@@ -219,48 +219,6 @@ void App::exportSet(const QString &fileName, int setId) {
     }
     
     const EntrySet set = db.sets[setId];
-    
-    CSVBuilder builder = CSVBuilder()
-        .header("Voucher")
-        .header("Date")
-        .header("Time")
-        .header("Latitude")
-        .header("Longitude")
-        .header("Altitude (m)")
-        .header("Collector");
-    
-    QStringList fieldNames = set.getFieldNames();
-    
-    for (const QString name : fieldNames) {
-        builder.header(name);
-    }
-    
-    for (const Entry entry : set.entries) {
-        CSVRow row = builder.row();
-        
-        QDateTime date = QDateTime::fromMSecsSinceEpoch(entry.timestamp.toLongLong());
-        
-        row.item(entry.voucher);
-        row.item(date.date().toString(Qt::ISODate));
-        row.item(date.time().toString(Qt::ISODate));
-        row.item(entry.position.latitude);
-        row.item(entry.position.longitude);
-        row.item(entry.position.altitude);
-        row.item(entry.collector);
-        
-        QMap<QString, EntryField> fields = entry.getFieldMap(); 
-        
-        for (const QString name : fieldNames) {
-            const EntryField field = fields[name];
-            row.item(field.value);
-        }
-        
-        row.end();
-    }
-    
-    QString csv = builder.build();
-    qDebug() << csv;
-    
     QString path = getExportPath(fileName);
     QFile file(path);
     
@@ -274,16 +232,51 @@ void App::exportSet(const QString &fileName, int setId) {
         }
     }
     
-    if (file.open(QIODevice::WriteOnly)) {
-        QTextStream stream(&file);
-        stream << csv;
-        
-        qDebug() << "Written file" << path;
-        file.close();
-    }
-    else {
+    if (!file.open(QIODevice::WriteOnly)) {
         qWarning() << "Cannot write file" << path;
+        return;
     }
+    
+    CsvWriter csv(&file);
+    csv.write("Voucher");
+    csv.write("Date");
+    csv.write("Time");
+    csv.write("Latitude");
+    csv.write("Longitude");
+    csv.write("Altitude (m)");
+    csv.write("Collector");
+    
+    QStringList fieldNames = set.getFieldNames();
+    
+    for (const QString name : fieldNames) {
+        csv.write(name);
+    }
+    
+    csv.newRow();
+    
+    for (const Entry entry : set.entries) {
+        QDateTime date = QDateTime::fromMSecsSinceEpoch(entry.timestamp.toLongLong());
+        
+        csv.write(entry.voucher);
+        csv.write(date.date().toString(Qt::ISODate));
+        csv.write(date.time().toString(Qt::ISODate));
+        csv.write(entry.position.latitude);
+        csv.write(entry.position.longitude);
+        csv.write(entry.position.altitude);
+        csv.write(entry.collector);
+        
+        QMap<QString, EntryField> fields = entry.getFieldMap(); 
+        
+        for (const QString name : fieldNames) {
+            const EntryField field = fields[name];
+            csv.write(field.value);
+        }
+        
+        csv.newRow();
+    }
+    
+    qDebug() << "Written file" << path;
+    file.close();
 }
 
 QString App::sprintf(const QString format, int number) const {

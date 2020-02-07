@@ -21,8 +21,7 @@ SOURCES += \
     app.cpp \
     csvwriter.cpp \
     entry.cpp \
-    main.cpp \
-    csvbuilder.cpp
+    main.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc \
@@ -41,7 +40,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     app.h \
-    csvbuilder.h \
     csvwriter.h \
     entry.h
 

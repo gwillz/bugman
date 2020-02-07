@@ -12,22 +12,18 @@
   - try android-28
 - about view
 - migrate qlist to qmlpropertylist
-- create csvwriter to replace csvbuilder
 - images:
     - image picker actions
     - load entry images
     - copy new entry images
     - export images zip
 - different entry fields per 'type'
-- templates fields:
-    - add dialog close button
-    - add clear button 
-    - icons
 - post message/dialog after exporting
 - field validations
     - set edit
     - entry edit
     - template field edit
+- separate entry types into separate files
 
 ### Development
 
