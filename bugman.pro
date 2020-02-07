@@ -1,8 +1,10 @@
-QT += quick svg positioning
+QT += quick
 
 android {
     QT += androidextras
 }
+
+QTPLUGIN += imageformats_svg
 
 #QTPLUGIN += qtaudio_coreaudio
 #QTPLUGIN += qtmedia_audioengine

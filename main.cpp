@@ -68,7 +68,7 @@ void requestAndroidPermissions() {
             break;
             
         case Permission::Granted:
-            qDebug() << permission << ": Denied";
+            qDebug() << permission << ": Granted";
             break;
         }
     }
