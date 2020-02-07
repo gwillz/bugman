@@ -1,15 +1,8 @@
-QT += quick
+QT += quick svg
 
 android {
     QT += androidextras
 }
-
-QTPLUGIN += imageformats_svg
-
-#QTPLUGIN += qtaudio_coreaudio
-#QTPLUGIN += qtmedia_audioengine
-#QTPLUGIN += qavfcamera
-#QTPLUGIN += qavfmediaplayer
 
 CONFIG += c++11
 
