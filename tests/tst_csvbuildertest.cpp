@@ -24,8 +24,7 @@ void CsvWriterTest::test() {
     writer.write(QString("uhh\" nice"));
     writer.write(QVariant("This \n is \r a mess  "));
     writer.newRow();
-    writer.write({1, 2.345, 6.0, "neat"});
-    writer.newRow();
+    writer.writeList({1, 2.345, 6.0, "neat"});
     writer.write({"neat", "stuff"});
     writer.newRow();
     

@@ -16,15 +16,17 @@ public:
     CsvWriter(QString* file);
     ~CsvWriter();
     
-    void write(const QVariant &item);
-    void write(const QString &item);
-    void write(const char* item);
-    void write(const int item);
-    void write(const qreal item);
-    void write(std::initializer_list<QVariant> list);
-    void writeList(QVariantList list);
-    
-    void newRow();
+    CsvWriter& write(const QVariant &item);
+    CsvWriter& write(const QString &item);
+    CsvWriter& write(const QDateTime &item);
+    CsvWriter& write(const QDate &item);
+    CsvWriter& write(const QTime &item);
+    CsvWriter& write(const char* item);
+    CsvWriter& write(const int item);
+    CsvWriter& write(const qreal item);
+    CsvWriter& write(std::initializer_list<QVariant> list);
+    CsvWriter& writeList(QVariantList list);
+    CsvWriter& newRow();
 };
 
 #endif // CSVWRITER_H

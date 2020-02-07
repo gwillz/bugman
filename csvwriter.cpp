@@ -3,7 +3,7 @@
 #include <QTextStream>
 #include <QIODevice>
 #include <QRegularExpression>
-#include <QDebug>
+#include <QDateTime>
 
 static const auto DIRTY_RE = QRegularExpression("[ ,'\"\\r\\n]");
 static const auto BREAK_RE = QRegularExpression("[\\r\\n]");
@@ -52,53 +52,83 @@ CsvWriter::~CsvWriter() {
     delete stream;
 }
 
-void CsvWriter::write(const QVariant &item) {
+CsvWriter& CsvWriter::write(const QVariant &item) {
     
     if (item.type() == QVariant::String) {
-        write(item.toString());
+        return write(item.toString());
     }
-    else if (item.type() == QVariant::Int) {
-        write(item.toInt());
+    
+    if (item.type() == QVariant::Int) {
+        return write(item.toInt());
     }
-    else if (item.type() == QVariant::Double) {
-        write(item.toDouble());
+    
+    if (item.type() == QVariant::Double) {
+        return write(item.toDouble());
     }
-    else if (item.type() == QVariant::List) {
-        writeList(item.toList());
+    
+    if (item.type() == QVariant::Date) {
+        return write(item.toDate());
     }
-    else {
-        write(item.toString());
+    
+    if (item.type() == QVariant::Time) {
+        return write(item.toTime());
     }
+    
+    if (item.type() == QVariant::DateTime) {
+        return write(item.toDateTime());
+    }
+    
+    if (item.type() == QVariant::List) {
+        for (const QVariant &item : item.toList()) {
+            write(item);
+        }
+        return *this;
+    }
+    
+    return write(item.toString());
 }
 
-void CsvWriter::write(const QString &item) {
+CsvWriter& CsvWriter::write(const QDateTime &item) {
+    return write(item.toString(Qt::ISODate));
+}
+
+CsvWriter& CsvWriter::write(const QDate &item) {
+    return write(item.toString(Qt::ISODate));
+}
+
+CsvWriter& CsvWriter::write(const QTime &item) {
+    return write(item.toString(Qt::ISODate));
+}
+
+CsvWriter& CsvWriter::write(const QString &item) {
     if (rowCount++) (*stream) << ",";
     (*stream) << cleanString(item);
+    return *this;
 }
 
-void CsvWriter::write(const char* item) {
-    write(QString::fromLocal8Bit(item));
+CsvWriter& CsvWriter::write(const char* item) {
+    return write(QString::fromLocal8Bit(item));
 }
 
-void CsvWriter::write(const int item) {
-    write(QString::number(item));
+CsvWriter& CsvWriter::write(const int item) {
+    return write(QString::number(item));
 }
 
-void CsvWriter::write(const qreal item) {
-    write(cleanZeros(QString::number(item, 'f', 8)));
+CsvWriter& CsvWriter::write(const qreal item) {
+    return write(cleanZeros(QString::number(item, 'f', 8)));
 }
 
-void CsvWriter::write(std::initializer_list<QVariant> list) {
-    writeList(QVariantList(list));
+CsvWriter& CsvWriter::write(std::initializer_list<QVariant> list) {
+    return write(QVariantList(list));
 }
 
-void CsvWriter::writeList(QVariantList list) {
-    for (const QVariant &item : list) {
-        write(item);
-    }
+CsvWriter& CsvWriter::writeList(QVariantList list) {
+    write(list);
+    return newRow();
 }
 
-void CsvWriter::newRow() {
+CsvWriter& CsvWriter::newRow() {
     rowCount = 0;
     (*stream) << "\n";
+    return *this;
 }

@@ -258,8 +258,8 @@ void App::exportSet(const QString &fileName, int setId) {
         QDateTime date = QDateTime::fromMSecsSinceEpoch(entry.timestamp.toLongLong());
         
         csv.write(entry.voucher);
-        csv.write(date.date().toString(Qt::ISODate));
-        csv.write(date.time().toString(Qt::ISODate));
+        csv.write(date.date());
+        csv.write(date.time());
         csv.write(entry.position.latitude);
         csv.write(entry.position.longitude);
         csv.write(entry.position.altitude);
