@@ -151,7 +151,7 @@ Item {
                     font.pointSize: Theme.body
                 }
                 
-                Grid{
+                Grid {
                     id: grid
                     spacing: 10
                     columns: 4
@@ -206,12 +206,15 @@ Item {
                 
                 console.log("save entry", entry_id, entry_set_id)
                 
+                // It appears the QCoordinate object is a bit funny.
+                const {latitude, longitude, altitude} = position;
+                
                 App.setEntry({
                     entry_id,
                     entry_set_id,
                     voucher,
                     timestamp,
-                    position,
+                    position: { latitude, longitude, altitude },
                     collector,
                     images,
                     fields,

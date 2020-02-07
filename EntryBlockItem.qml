@@ -14,6 +14,7 @@ Row {
         lineHeight: 1.3
         font.pointSize: Theme.small
     }
+    
     Text {
         text: root.value || "--"
         wrapMode: Text.WordWrap
