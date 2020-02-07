@@ -3,7 +3,6 @@ import QtQuick.Controls 2.13
 import QtMultimedia 5.14
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.12
-import AppData 1.0
 
 Item {
     id: root
@@ -162,7 +161,7 @@ Item {
                 }
                 
                 Repeater {
-                    model: AppData.images
+                    model: App.images
                     delegate: Image {
                         width: grid.itemWidth
                         height: width

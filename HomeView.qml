@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.13
-import AppData 1.0
 
 Item {
     id: root
@@ -27,7 +26,7 @@ Item {
         
         Repeater {
             id: repeater
-            model: AppData.sets
+            model: App.sets
             
             delegate: EntrySet {
                 entrySet: modelData

@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.13
-import AppData 1.0
 
 import "EntryModel.js" as EntryModel
 
@@ -102,7 +101,7 @@ Item {
         target: entrySet.name
         
         onAccepted: {
-            AppData.removeSet(entrySet.set_id)
+            App.removeSet(entrySet.set_id)
         }
     }
 }

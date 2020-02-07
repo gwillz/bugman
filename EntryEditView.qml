@@ -1,9 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.0
 import QtPositioning 5.12
-import AppData 1.0
 
 Item {
     id: root
@@ -28,7 +26,7 @@ Item {
             
             if (index === Navigation.entryEditView) {
                 root.isEditing = !!data.entry_id
-                root.entry_id = data.entry_id || AppData.nextEntryId()
+                root.entry_id = data.entry_id || App.nextEntryId()
                 root.entry_set_id = data.entry_set_id || data.set_id || 0;
                 root.voucher = data.getNextVoucher
                     ? data.getNextVoucher()
@@ -208,7 +206,7 @@ Item {
                 
                 console.log("save entry", entry_id, entry_set_id)
                 
-                AppData.setEntry({
+                App.setEntry({
                     entry_id,
                     entry_set_id,
                     voucher,

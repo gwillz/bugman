@@ -19,12 +19,15 @@
     - copy new entry images
     - export images zip
 - different entry fields per 'type'
-- rename AppData -> App
 - templates fields:
     - add dialog close button
     - add clear button 
     - icons
 - post message/dialog after exporting
+- field validations
+    - set edit
+    - entry edit
+    - template field edit
 
 ### Development
 

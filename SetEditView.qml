@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
 import QtQml.Models 2.14
-import AppData 1.0
 
 Item {
     id: root
@@ -19,7 +18,7 @@ Item {
             var {index, data} = Navigation;
             if (index === Navigation.setEditView) {
                 root.isEditing = !!data.set_id
-                root.set_id = data.set_id || AppData.nextSetId()
+                root.set_id = data.set_id || App.nextSetId()
                 root.name = data.name  || ""
                 root.voucher_format = data.voucher_format || "E%03d"
                 root.collector = data.collector || ""
@@ -94,7 +93,7 @@ Item {
                         anchors.bottom: parent.bottom
                         verticalAlignment: Text.AlignVCenter
                         height: parent.editHeight
-                        text: qsTr("\"%1\"").arg(AppData.sprintf(parent.text, 1))
+                        text: qsTr("\"%1\"").arg(App.sprintf(parent.text, 1))
                         font.pointSize: Theme.small
                         color: Theme.brick
                     }
@@ -165,7 +164,7 @@ Item {
                     fields.push(item.model.modelData);
                 }
                 
-                var index = AppData.setSet({
+                var index = App.setSet({
                     set_id,
                     name,
                     voucher_format,

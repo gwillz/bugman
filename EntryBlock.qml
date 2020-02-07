@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.13
 import QtGraphicalEffects 1.0
-import AppData 1.0
 
 import "EntryModel.js" as EntryModel
 
@@ -238,7 +237,7 @@ Frame {
         target: entry.voucher
         
         onAccepted: {
-            AppData.removeEntry(entry.entry_set_id, entry.entry_id)
+            App.removeEntry(entry.entry_set_id, entry.entry_id)
         }
     }
 }

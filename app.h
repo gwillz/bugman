@@ -10,7 +10,7 @@ class QJSValue;
 class QJSEngine;
 class QFileSystemWatcher;
 
-class AppData : public QObject {
+class App : public QObject {
     Q_OBJECT
     
     Q_PROPERTY(QStringList images READ getImages NOTIFY imagesChanged)
@@ -33,9 +33,11 @@ class AppData : public QObject {
     void watchImages();
     
 public:
-    explicit AppData(QObject *parent = nullptr);
+    explicit App(QObject *parent = nullptr);
     
     static QJSValue registerType(QQmlEngine* engine, QJSEngine *script);
+    
+    static void registerSingleton(QQmlEngine* engine);
     
     QStringList getImages();
     

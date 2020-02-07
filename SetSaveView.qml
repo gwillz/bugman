@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import AppData 1.0
 
 Item {
     id: root
@@ -55,7 +54,7 @@ Item {
             anchors.leftMargin: 30
             
             onClicked: {
-                AppData.exportSet(fileNameField.text, set_id)
+                App.exportSet(fileNameField.text, set_id)
             }
         }
     }

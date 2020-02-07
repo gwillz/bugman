@@ -1,18 +1,20 @@
-#include "appdata.h"
+#include "app.h"
 
 #include <QDebug>
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileSystemWatcher>
 #include <QQmlEngine>
+#include <QQmlContext>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDateTime>
-
 #include "csvbuilder.h"
 
-AppData::AppData(QObject *parent)
+static App* instance = nullptr;
+
+App::App(QObject *parent)
         : QObject(parent) {
     
     appPath = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last();
@@ -20,25 +22,35 @@ AppData::AppData(QObject *parent)
     imagePaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
     dbPath = appPath + "/db.json";
     
+    QDir().mkpath(appPath);
+    
     loadDb();
     loadTemplates();
 }
 
-QJSValue AppData::registerType(QQmlEngine* engine, QJSEngine *script) {
-    return script->newQObject(new AppData(engine));
+QJSValue App::registerType(QQmlEngine* engine, QJSEngine *script) {
+    return script->newQObject(new App(engine));
 }
 
-void AppData::watchImages() {
+void App::registerSingleton(QQmlEngine *qmlEngine) {
+    if (instance == nullptr) {
+        instance = new App(qmlEngine);
+    }
+    QQmlContext* rootContext = qmlEngine->rootContext();
+    rootContext->setContextProperty("App", instance);
+}
+
+void App::watchImages() {
     if (imageWatcher != nullptr) delete imageWatcher;
     
     imageWatcher = new QFileSystemWatcher(this);
     imageWatcher->addPaths(imagePaths);
     
     connect(imageWatcher, &QFileSystemWatcher::directoryChanged,
-            this, &AppData::imagesChanged);
+            this, &App::imagesChanged);
 }
 
-void AppData::loadDb() {
+void App::loadDb() {
     db.clear();
     
     qDebug() << "DB:" << dbPath;
@@ -59,7 +71,7 @@ void AppData::loadDb() {
     qDebug() << "Entries:" << entryCount;
 }
 
-void AppData::saveDb() const {
+void App::saveDb() const {
     QFile dbFile(dbPath);
     
     if (!dbFile.open(QIODevice::WriteOnly)) {
@@ -78,7 +90,7 @@ void AppData::saveDb() const {
     qDebug() << "DB written.";
 }
 
-void AppData::loadTemplates() {
+void App::loadTemplates() {
     templates.clear();
     QDir dir(":templates");
     
@@ -102,7 +114,7 @@ void AppData::loadTemplates() {
     qDebug() << "Templates:" << templates.size();
 }
 
-QStringList AppData::getImages() {
+QStringList App::getImages() {
     QStringList paths;
     
     if (!imagePaths.isEmpty()) {
@@ -118,11 +130,11 @@ QStringList AppData::getImages() {
     return paths;
 }
 
-QList<EntrySet> AppData::getData() const {
+QList<EntrySet> App::getData() const {
     return db.sets.values();
 }
 
-int AppData::setEntry(const QVariantMap &object) {
+int App::setEntry(const QVariantMap &object) {
     
     Entry entry = Entry::fromObject(object);
     if (!entry.entry_id || !entry.entry_set_id) {
@@ -142,7 +154,7 @@ int AppData::setEntry(const QVariantMap &object) {
     return index;
 }
 
-void AppData::removeEntry(int setId, int entryId) {
+void App::removeEntry(int setId, int entryId) {
     
     if (db.sets.contains(setId)) {
         qDebug() << "Remove entry" << entryId << "from set" << setId;
@@ -161,7 +173,7 @@ void AppData::removeEntry(int setId, int entryId) {
     }
 }
 
-int AppData::setSet(const QVariantMap &object) {
+int App::setSet(const QVariantMap &object) {
     
     EntrySet set = EntrySet::fromObject(object);
     if (!set.set_id) return -1;
@@ -175,7 +187,7 @@ int AppData::setSet(const QVariantMap &object) {
     return index;
 }
 
-void AppData::removeSet(int setId) {
+void App::removeSet(int setId) {
     db.sets.remove(setId);
     qDebug() << "Remove set" << setId;
     
@@ -183,7 +195,7 @@ void AppData::removeSet(int setId) {
     emit dataChanged();
 }
 
-QString AppData::getExportPath(const QString fileName, int revision) const {
+QString App::getExportPath(const QString fileName, int revision) const {
     QString path(fileName);
     
     if (!path.endsWith(".csv")) {
@@ -200,7 +212,7 @@ QString AppData::getExportPath(const QString fileName, int revision) const {
     return path;
 }
 
-void AppData::exportSet(const QString &fileName, int setId) {
+void App::exportSet(const QString &fileName, int setId) {
     if (!db.sets.contains(setId)) {
         qDebug() << setId << "set not found.";
         return;
@@ -274,7 +286,7 @@ void AppData::exportSet(const QString &fileName, int setId) {
     }
 }
 
-QString AppData::sprintf(const QString format, int number) const {
+QString App::sprintf(const QString format, int number) const {
     QByteArray bytes = format.toUtf8();
     const char* cformat = bytes.data();
     return QString::asprintf(cformat, number);

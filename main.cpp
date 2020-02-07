@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QDebug>
-#include "appdata.h"
+#include "app.h"
 #include "entry.h"
 
 #ifdef Q_OS_ANDROID
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 //    qmlRegisterType<EntryPosition>("entry", 1, 0, "EntryPosition");
 //    qmlRegisterType<EntryTemplate>("entry", 1, 0, "EntryTemplate");
     
-    qmlRegisterSingletonType("AppData", 1, 0, "AppData", AppData::registerType);
+//    qmlRegisterSingletonType("App", 1, 0, "App", App::registerType);
     
     QGuiApplication app(argc, argv);
     
@@ -27,6 +27,8 @@ int main(int argc, char *argv[]) {
 #endif
     
     QQmlApplicationEngine engine;
+    
+    App::registerSingleton(&engine);
     
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     
