@@ -1,7 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.13
-import QtQuick.Layouts 1.3
-import QtQml.Models 2.14
 
 Dialog {
     id: root
@@ -60,6 +58,18 @@ Dialog {
                 accepted(modelData)
                 close()
             }
+        }
+    }
+    
+    footer: DialogButtonBox {
+        id: footer
+        background: Rectangle { color: "transparent" }
+        spacing: 10
+        visible: true
+        
+        LouButton {
+            text: qsTr("Close")
+            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }
     }
 }

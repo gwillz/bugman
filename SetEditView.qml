@@ -114,32 +114,51 @@ Item {
                     }
                 }
                 
-                Column {
+                Row {
+                    id: row
+                    anchors.left: parent.left
+                    anchors.leftMargin: 30
                     spacing: 10
+//                    height: fieldLabel.height
+                    
                     Text {
                         id: fieldLabel
-                        anchors.left: parent.left
-                        anchors.leftMargin: 30
-                        anchors.right: parent.right
                         font.pointSize: Theme.body
                         text: qsTr("Fields")
                     }
                     
-                    Row {
-                        spacing: 10
-                        
-                        LouButton {
-                            id: addButton
-                            text: qsTr("Add")
-                            onClicked: fieldDialog.open()
-                        }
-                        
-                        LouButton {
-                            id: templateButton
-                            text: qsTr("Load")
-                            onClicked: templatesDialog.open()
-                        }
+                    Button {
+                        id: addButton
+                        text: qsTr("Add")
+                        anchors.bottom: parent.bottom
+                        flat: true
+                        display: AbstractButton.IconOnly
+                        icon.source: "icons/plus.svg"
+                        padding: 0
+                        width: height
+                        height: parent.height
+                        onClicked: fieldDialog.open()
                     }
+                    
+                    Button {
+                        id: clearButton
+                        text: qsTr("Clear")
+                        flat: true
+                        display: AbstractButton.IconOnly
+                        icon.source: "icons/trash.svg"
+                        padding: 0
+                        width: height
+                        height: parent.height
+                        onClicked: deleteDialog.open()
+                    }
+                }
+                
+                LouButton {
+                    id: templateButton
+                    text: qsTr("Load from template")
+                    visible: visualModel.count === 0
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: templatesDialog.open()
                 }
                 
                 Item { height: 1; width: parent.width }
@@ -151,9 +170,10 @@ Item {
         
         LouButton {
             id: saveButton
-            
-            highlighted: true
             text: isEditing ? qsTr("Save") : qsTr("Create")
+            highlighted: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            
             onClicked: {
                 console.log("save set", set_id)
                 
@@ -284,6 +304,16 @@ Item {
         
         onAccepted: {
             visualModel.model = template.fields
+        }
+    }
+    
+    DeleteDialog {
+        id: deleteDialog
+        type: "all fields"
+        text: qsTr("Are you sure?")
+        
+        onAccepted: {
+            visualModel.model = []
         }
     }
 }
