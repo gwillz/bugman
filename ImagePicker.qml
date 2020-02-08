@@ -60,6 +60,7 @@ Item {
         captureMode: Camera.CaptureViewfinder
         position: Camera.BackFace
         
+        
 //        onAvailabilityChanged: console.log("avaiable", availability)
 //        onCameraStateChanged: console.log("state", cameraState)
 //        onCameraStatusChanged: console.log("status", cameraStatus)

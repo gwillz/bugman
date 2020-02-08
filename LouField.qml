@@ -5,6 +5,7 @@ Item {
     id: root
     implicitHeight: labelText.height + textField.height + 5
     implicitWidth: 200
+    height: implicitHeight
     
     property string label: ""
     property string placeholder: "..."

@@ -42,7 +42,12 @@ Item {
     
     PositionSource {
         id: gps
-        active: true
+        
+        onPositionChanged: {
+            if (!isEditing) {
+                root.position = position.coordinate
+            }
+        }
     }
     
     ColumnLayout {
@@ -93,16 +98,31 @@ Item {
                     text: Qt.formatDateTime(new Date(+timestamp), "dd/MM/yyyy HH:mm")
                 }
                 
-                LouField {
-                    id: positionField
+                RowLayout {
                     anchors.right: parent.right
                     anchors.left: parent.left
-                    label: qsTr("Position *")
-                    readOnly: true
-                    text: qsTr("%1, %2 @ %3m")
-                        .arg(position.latitude.toFixed(5))
-                        .arg(position.longitude.toFixed(5))
-                        .arg(position.altitude.toFixed(0))
+                    
+                    LouField {
+                        id: positionField
+                        label: qsTr("Position *")
+                        readOnly: true
+                        text: qsTr("%1, %2 @ %3m")
+                            .arg(position.latitude.toFixed(5))
+                            .arg(position.longitude.toFixed(5))
+                            .arg(position.altitude.toFixed(0))
+                        Layout.fillWidth: true
+                    }
+                    
+                    Button {
+                        id: refreshButton
+                        Layout.alignment: Qt.AlignRight | Qt.AlignBottom
+                        display: AbstractButton.IconOnly
+                        text: qsTr("Refresh")
+                        flat: true
+                        implicitWidth: height
+                        icon.source: "icons/refresh.svg"
+                        onClicked: gps.update()
+                    }
                 }
                 
                 LouField {

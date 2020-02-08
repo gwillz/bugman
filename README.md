@@ -14,11 +14,11 @@
     - export images zip
 - different entry fields per 'type'
 - post message/dialog after exporting
-- add refresh position button
 - field validations
     - set edit
     - entry edit
     - template field edit
+- icon button component
 
 #### fixes
 - fix home view first swipe panel
