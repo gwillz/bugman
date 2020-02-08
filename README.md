@@ -22,13 +22,22 @@
 
 #### fixes
 - fix home view first swipe panel
-  - current workaround is gross
+    - current workaround is gross
 - fix camera
 
 #### housework
 - migrate qlist to qmlpropertylist
 - separate entry types into separate files
 - some docs/comments
+- can we do better styles?
+    - https://doc.qt.io/qt-5/qtquickcontrols2-customize.html#definition-of-a-style
+
+#### future
+- more field types
+    - switch/boolean
+    - range (from, to)
+    - combobox (list of options)
+
 
 ### Development
 

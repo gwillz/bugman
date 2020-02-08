@@ -15,6 +15,10 @@
             "type": "integer"
         },
         {
+            "name": "Jaggered",
+            "type": "switch"
+        },
+        {
             "name": "Notes",
             "type": "text"
         }

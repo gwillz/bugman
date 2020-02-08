@@ -68,7 +68,7 @@ Dialog {
             anchors.left: parent.left
             
             current: root.type
-            model: ["string", "integer", "decimal", "text"]
+            model: ["string", "integer", "decimal", "switch", "text"]
             
             Binding {
                 target: root
