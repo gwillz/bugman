@@ -12,7 +12,7 @@ Item {
         target: Navigation
         function onIndexChanged() {
             var {index, data} = Navigation;
-            if (index === Navigation.saveEditView) {
+            if (index === Navigation.setSaveView) {
                 root.name = data.name;
                 root.set_id = data.set_id;
             }
@@ -29,7 +29,7 @@ Item {
             height: 80
             
             Text {
-                text: qsTr("Export: %1").arg(name)
+                text: qsTr("Export: %1").arg(root.name)
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 padding: 10
@@ -43,8 +43,12 @@ Item {
             anchors.right: parent.right
             
             label: qsTr("File name")
-            placeholder: name + ".csv"
-            text: name + ".csv"
+            placeholder: root.name + ".csv"
+            
+            Binding on text {
+                property: "text"
+                value: root.name + ".csv"
+            }
         }
         
         LouButton {
@@ -54,7 +58,7 @@ Item {
             anchors.leftMargin: 30
             
             onClicked: {
-                App.exportSet(fileNameField.text, set_id)
+                App.exportSet(fileNameField.text, root.set_id)
             }
         }
     }

@@ -6,7 +6,7 @@
 #include <QDateTime>
 
 static const auto DIRTY_RE = QRegularExpression("[ ,'\"\\r\\n]");
-static const auto BREAK_RE = QRegularExpression("[\\r\\n]");
+static const auto BREAK_RE = QRegularExpression("[\\r\\n]+");
 
 const QString cleanString(const QString &str) {
     
@@ -14,7 +14,7 @@ const QString cleanString(const QString &str) {
     
     if (match.hasMatch()) {
         QString dirty(str);
-        dirty.replace(BREAK_RE, "");
+        dirty.replace(BREAK_RE, " ");
         dirty.replace("\"", "\\\"");
         
         dirty = dirty.trimmed();

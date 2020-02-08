@@ -22,7 +22,7 @@ void CsvWriterTest::test() {
     
     writer.write("abc");
     writer.write(QString("uhh\" nice"));
-    writer.write(QVariant("This \n is \r a mess  "));
+    writer.write(QVariant("This \n is \r a mess \"  "));
     writer.newRow();
     writer.writeList({1, 2.345, 6.0, "neat"});
     writer.write({"neat", "stuff"});
@@ -32,7 +32,7 @@ void CsvWriterTest::test() {
     
     QString expected =
         "one,two,\"three,four\"\n"
-        "abc,\"uhh\\\" nice\",\"This  is  a mess\"\n"
+        "abc,\"uhh\\\" nice\",\"This   is   a mess \\\"\"\n"
         "1,2.345,6.0,neat\n"
         "neat,stuff\n"
     ;
