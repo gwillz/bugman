@@ -233,7 +233,7 @@ Frame {
     
     DeleteDialog {
         id: deleteDialog
-        type: "Entry"
+        title: "Delete Entry"
         target: entry.voucher
         
         onAccepted: {

@@ -3,11 +3,6 @@ import QtQuick.Controls 2.13
 
 Dialog {
     id: root
-    padding: 10
-    modal: true
-    
-    parent: Overlay.overlay
-    anchors.centerIn: Overlay.overlay
     
     property string name: ""
     property string type: ""
@@ -23,11 +18,6 @@ Dialog {
     onVisibleChanged: {
         Navigation.hasDialog = root.visible
     }
-    
-    implicitWidth: Math.max(
-        header.implicitWidth,
-        leftPadding + contentItem.implicitWidth + rightPadding,
-        footer.implicitWidth)
     
     header: Text {
         id: header
@@ -46,7 +36,7 @@ Dialog {
         anchors.left: parent.left
         spacing: 15
         
-        LouField {
+        StringField {
             id: nameEdit
             label: qsTr("Name")
             placeholder: "..."
@@ -61,7 +51,7 @@ Dialog {
             }
         }
         
-        LouComboField {
+        ComboField {
             id: typeEdit
             label: qsTr("Type")
             anchors.right: parent.right
@@ -84,13 +74,13 @@ Dialog {
         spacing: 10
         visible: true
         
-        LouButton {
+        Button {
             text: qsTr("Save")
             highlighted: true
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
         }
         
-        LouButton {
+        Button {
             text: qsTr("Close")
             DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }

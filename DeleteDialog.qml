@@ -4,12 +4,7 @@ import QtQuick.Layouts 1.3
 
 Dialog {
     id: root
-    modal: true
-    parent: Overlay.overlay
-    anchors.centerIn: Overlay.overlay
-    padding: 10
     
-    property string type
     property var target
     property string text: qsTr("Delete \"%1\", are you sure?").arg(root.target)
     
@@ -30,8 +25,6 @@ Dialog {
         }
     }
     
-    implicitWidth: Math.max(header.implicitWidth, 280, footer.implicitWidth)
-    
     Timer {
         id: timer
         interval: 800
@@ -42,21 +35,19 @@ Dialog {
         }
     }
     
-    header: Text {
-        text: qsTr("Delete %1").arg(root.type)
-        padding: 10
-        font.pointSize: Theme.subtitle
-    }
-    
-    background: Rectangle {
-        color: Theme.putty
+    Text {
+        text: root.text
+        wrapMode: Text.WordWrap
+        font.pointSize: Theme.body
+        anchors.fill: parent
+        width: 280
     }
     
     footer: DialogButtonBox {
         spacing: 10
         background: Rectangle { color: "transparent" }
         
-        LouButton {
+        Button {
             id: deleteButton
             text: qsTr("Delete")
             highlighted: true
@@ -64,18 +55,11 @@ Dialog {
             DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
         }
         
-        LouButton {
+        Button {
             id: cancelButton
             text: qsTr("Wait no!")
             DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }
-    }
-    
-    Text {
-        text: root.text
-        wrapMode: Text.WordWrap
-        font.pointSize: Theme.body
-        anchors.fill: parent
     }
 }
 

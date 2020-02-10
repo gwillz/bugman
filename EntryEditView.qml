@@ -3,6 +3,8 @@ import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.3
 import QtPositioning 5.12
 
+import "EntryModel.js" as EntryModel
+
 Item {
     id: root
     implicitHeight: 720
@@ -15,7 +17,7 @@ Item {
     property string timestamp
     property string collector
     property var images
-    property var fields
+    property var fields: EntryModel.data[0].entries[0].fields
     
     property bool isEditing: false
     
@@ -79,7 +81,7 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 
-                LouField {
+                StringField {
                     id: voucherField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -89,7 +91,7 @@ Item {
                     onTextChanged: voucher = text
                 }
                 
-                LouField {
+                StringField {
                     id: datetimeField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -98,26 +100,26 @@ Item {
                     text: Qt.formatDateTime(new Date(+timestamp), "dd/MM/yyyy HH:mm")
                 }
                 
-                RowLayout {
+                StringField {
+                    id: positionField
+                    label: qsTr("Position *")
+                    readOnly: true
+                    text: qsTr("%1, %2 @ %3m")
+                        .arg(position.latitude.toFixed(5))
+                        .arg(position.longitude.toFixed(5))
+                        .arg(position.altitude.toFixed(0))
+                    
                     anchors.right: parent.right
                     anchors.left: parent.left
-                    
-                    LouField {
-                        id: positionField
-                        label: qsTr("Position *")
-                        readOnly: true
-                        text: qsTr("%1, %2 @ %3m")
-                            .arg(position.latitude.toFixed(5))
-                            .arg(position.longitude.toFixed(5))
-                            .arg(position.altitude.toFixed(0))
-                        Layout.fillWidth: true
-                    }
+                    rightPadding: refreshButton.width
                     
                     Button {
                         id: refreshButton
-                        Layout.alignment: Qt.AlignRight | Qt.AlignBottom
+                        
                         display: AbstractButton.IconOnly
                         text: qsTr("Refresh")
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
                         flat: true
                         implicitWidth: height
                         icon.source: "icons/refresh.svg"
@@ -125,7 +127,7 @@ Item {
                     }
                 }
                 
-                LouField {
+                StringField {
                     id: collectorField
                     anchors.right: parent.right
                     anchors.left: parent.left
@@ -145,11 +147,11 @@ Item {
             
             model: fields
             
-            delegate: LouField {
+            delegate: EntryField {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 label: modelData.name
-                text: modelData.value
+                text: modelData.value || ""
                 type: modelData.type
                 
                 onTextChanged: {
@@ -189,8 +191,7 @@ Item {
                         background: Rectangle {
                             color: Theme.cloud
                         }
-                        text: "Add"
-                        display: AbstractButton.IconOnly
+                        flat: true
                         icon.source: "icons/plus.svg"
                         icon.color: Theme.brick
                         width: grid.itemWidth
@@ -212,7 +213,7 @@ Item {
             }
         }
         
-        LouButton {
+        Button {
             id: createButton
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             text: isEditing ? qsTr("Save") : qsTr("Create")

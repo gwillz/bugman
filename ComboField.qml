@@ -21,13 +21,11 @@ Item {
         if (!current) current = model[0] || "";
     }
     
-    Text {
+    Label {
         id: labelText
         text: root.label || "Label*"
         anchors.right: parent.right
         anchors.left: parent.left
-        anchors.leftMargin: 30
-        font.pointSize: Theme.body
     }
     
     ComboBox {
@@ -36,21 +34,6 @@ Item {
         anchors.topMargin: 5
         anchors.right: parent.right
         anchors.left: parent.left
-        leftPadding: 30
-        
-        contentItem: Text {
-            color: Theme.text
-            text: current
-            bottomPadding: 5
-            topPadding: 5
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: Theme.body
-        }
-        
-        background: Rectangle {
-            radius: 5
-            color: Theme.cloud
-        }
         
         model: root.model
         currentIndex: Math.max(0, model.indexOf(current))

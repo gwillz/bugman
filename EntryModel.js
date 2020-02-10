@@ -18,28 +18,29 @@ var data = [
                         value: "Bee",
                     },
                     {
-                        name: "Specimen Count",
-                        type: "string",
+                        name: "Specimen Count (int)",
+                        type: "integer",
                         value: "2",
                     },
                     {
-                        name: "State/Territory",
-                        type: "string",
-                        value: "SA"
+                        name: "State/Territory (list)",
+                        type: "list",
+                        value: "SA",
+                        options: ["SA", "VIC", "TAS", "QLD", "WA", "NSW", "NT", "ACT"]
                     },
                     {
-                        name: "Location",
-                        type: "string",
-                        value: "N of Snowtown"
+                        name: "Decimal",
+                        type: "decimal",
+                        value: ""
                     },
                      {
-                        name: "Method",
-                        type: "string",
+                        name: "Option 1",
+                        type: "switch",
                         value: "Sweep"
                     },
                      {
-                        name: "Flower/Host Plant",
-                        type: "string",
+                        name: "Option 2",
+                        type: "switch",
                         value: "Daisy"
                     },
                     {

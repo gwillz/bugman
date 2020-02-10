@@ -38,7 +38,7 @@ Item {
                 swipeView.currentIndex = 0
             }
             
-            LouButton {
+            Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("Add Set")

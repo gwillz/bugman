@@ -1,7 +1,7 @@
 pragma Singleton
 import QtQuick 2.0
 
-Item {
+QtObject {
     id: colors
     
     readonly property color stone: "#dcd3c9";
@@ -11,6 +11,7 @@ Item {
     readonly property color bee:   "#d8a619";
     readonly property color text:  "#335259";
     
+    readonly property string font: "Open Sans";
     readonly property int small: 14;
     readonly property int body: 16;
     readonly property int subtitle: 22;

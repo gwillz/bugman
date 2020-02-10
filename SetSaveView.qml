@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 Item {
     id: root
@@ -37,7 +38,7 @@ Item {
             }
         }
         
-        LouField {
+        StringField {
             id: fileNameField
             anchors.left: parent.left
             anchors.right: parent.right
@@ -51,7 +52,7 @@ Item {
             }
         }
         
-        LouButton {
+        Button {
             text: qsTr("Export")
             highlighted: true
             anchors.left: parent.left

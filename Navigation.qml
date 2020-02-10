@@ -1,8 +1,14 @@
 pragma Singleton
 import QtQuick 2.0
 
-Item {
+QtObject {
     id: nav
+    
+    readonly property int homeView:      0
+    readonly property int aboutView:     1
+    readonly property int entryEditView: 2
+    readonly property int setEditView:   3
+    readonly property int setSaveView:   4
     
     signal closeDialog()
     
@@ -34,10 +40,4 @@ Item {
         nav.closeDialog()
         nav.hasDialog = false
     }
-    
-    readonly property int homeView:      0;
-    readonly property int aboutView:     1;
-    readonly property int entryEditView: 2;
-    readonly property int setEditView:   3;
-    readonly property int setSaveView:   4;
 }

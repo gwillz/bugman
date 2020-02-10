@@ -15,19 +15,16 @@ Item {
     
     Button {
         id: backButton
-        text: qsTr("Back")
-        padding: 15
-        enabled: !Navigation.isHome
+//        enabled: !Navigation.isHome
         opacity: enabled ? 1 : 0.3
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
+        anchors.leftMargin: 10
         flat: true
-        display: AbstractButton.IconOnly
+        icon.height: 40
+        icon.width: 40
+        padding: 10
         icon.source: "icons/back.svg"
-        icon.height: parent.height
-        icon.width: parent.height
-        width: parent.height
         onClicked: Navigation.navigate(Navigation.homeView)
     }
     
@@ -39,15 +36,15 @@ Item {
     
     Button {
         id: logoButton
+        anchors.verticalCenter: parent.verticalCenter
         flat: true
-        display: AbstractButton.IconOnly
         anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
         icon.source: "icons/bugman_logo.svg"
         icon.color: Theme.bee
-        icon.height: parent.height
-        icon.width: parent.height
+        icon.height: 55
+        icon.width: 55
+        padding: 5
         onClicked: Navigation.navigate(Navigation.aboutView)
     }
 }

@@ -67,7 +67,7 @@ Dialog {
         spacing: 10
         visible: true
         
-        LouButton {
+        Button {
             text: qsTr("Close")
             DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }

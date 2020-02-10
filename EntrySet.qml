@@ -35,7 +35,6 @@ Item {
             Button {
                 id: addButton
                 flat: true
-                width: height
                 icon.source: "icons/plus.svg"
                 onClicked: Navigation.navigate(Navigation.entryEditView, entrySet)
             }
@@ -43,7 +42,6 @@ Item {
             Button {
                 id: saveButton
                 flat: true
-                width: height
                 icon.source: "icons/download.svg"
                 onClicked: Navigation.navigate(Navigation.setSaveView, entrySet)
             }
@@ -51,7 +49,6 @@ Item {
             Button {
                 id: editButton
                 flat: true
-                width: height
                 icon.source: "icons/pencil.svg"
                 onClicked: Navigation.navigate(Navigation.setEditView, entrySet)
             }
@@ -59,7 +56,6 @@ Item {
             Button {
                 id: deleteButton
                 flat: true
-                width: height
                 icon.source: "icons/trash.svg"
                 onClicked: deleteDialog.open()
             }
@@ -87,7 +83,7 @@ Item {
         }
     }
     
-    LouButton {
+    Button {
         anchors.centerIn: parent
         visible: entrySet.entries.length === 0
         text: qsTr("Add Entry")
@@ -97,7 +93,7 @@ Item {
     
     DeleteDialog {
         id: deleteDialog
-        type: "Set"
+        title: "Delete Set"
         target: entrySet.name
         
         onAccepted: {

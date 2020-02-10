@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.13
+import QtQuick 2.14
+import QtQuick.Controls 2.14
 
 Item {
     id: root
@@ -7,45 +7,38 @@ Item {
     implicitHeight: labelText.height + editHeight + 5
     height: implicitHeight
     
-    property string label: "Label"
+    property string label: "??"
     property string placeholder: "..."
     property string type: "string"
     property alias text: stringField.text
-    property alias readOnly: stringField.readOnly
+    
     readonly property int editHeight:
         stringField.visible ? stringField.height
         : intField.visible ? intField.height
         : realField.visible ? realField.height
         : textField.visible ? textField.height
+        : rangeField.visible ? rangeField.height
         : listField.visible && listField.height
     
-    Text {
+    Label {
         id: labelText
         text: root.label
         anchors.left: parent.left
-        anchors.leftMargin: 30
-        font.pointSize: Theme.body
     }
     
     TextField {
         id: stringField
-        visible: type === "string"
+        visible: !type || type === "string"
         enabled: visible
+        
         anchors.topMargin: 5
         anchors.top: labelText.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        leftPadding: 30
-//        text: root.text
-//        onTextChanged: root.text = text
         
         placeholderText: placeholder
-        font.pointSize: Theme.body
-        
-        background: Rectangle {
-            radius: 5
-            color: Theme.cloud
-        }
+        text: root.text
+        onTextChanged: root.text = text
     }
     
     SpinBox {
@@ -57,8 +50,11 @@ Item {
         anchors.topMargin: 5
         anchors.top: labelText.bottom
         
+        editable: true
         value: +root.text
-        onValueChanged: root.text = value + ""
+        onValueChanged: {
+            if (enabled) root.text = value + ""
+        }
     }
     
     TextField {
@@ -69,12 +65,13 @@ Item {
         anchors.right: parent.right
         anchors.topMargin: 5
         anchors.top: labelText.bottom
-        leftPadding: 30
         
         text: root.text
         onTextChanged: root.text = text
         font.pointSize: Theme.body
+        
         validator: DoubleValidator {}
+        inputMethodHints: Qt.ImhFormattedNumbersOnly
         
         background: Rectangle {
             radius: 5
@@ -86,21 +83,15 @@ Item {
         id: textField
         visible: type === "text"
         enabled: visible
+        
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: 5
         anchors.top: labelText.bottom
-        leftPadding: 30
         
         text: root.text
         onTextChanged: root.text = text
-        font.pointSize: Theme.body
-        height: Math.max(implicitHeight, font.pixelSize * 3)
-        
-        background: Rectangle {
-            radius: 5
-            color: Theme.cloud
-        }
+        placeholderText: placeholder
     }
     
     Switch {
@@ -112,7 +103,16 @@ Item {
         anchors.leftMargin: 10
         padding: 0
         checked: root.text === "yes"
+//        checked: true
         onCheckedChanged: root.text = checked ? "yes" : "no"
+    }
+    
+    Slider {
+        id: rangeField
+        visible: type === "range"
+        anchors.right: parent.right
+        anchors.topMargin: 5
+        anchors.top: labelText.bottom
     }
     
     ComboBox {
@@ -123,11 +123,12 @@ Item {
         anchors.right: parent.right
         anchors.topMargin: 5
         anchors.top: labelText.bottom
-        leftPadding: 30
         
-        model: ["test", "one", "two", "three"]
-        currentIndex: model.indexOf(root.text)
-        onCurrentValueChanged: root.text = currentValue
+        model: ["one", "two", "three"]
+        currentIndex: Math.max(0, model.indexOf(root.text))
+        onCurrentValueChanged: {
+            if (enabled) root.text = currentValue
+        }
         
         contentItem: Text {
             color: Theme.text

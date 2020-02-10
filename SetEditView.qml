@@ -58,7 +58,7 @@ Item {
                 anchors.right: parent.right
                 spacing: 15
                 
-                LouField {
+                StringField {
                     id: nameEdit
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -73,7 +73,7 @@ Item {
                     }
                 }
                 
-                LouField {
+                StringField {
                     id: formatEdit
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -87,7 +87,10 @@ Item {
                         value: formatEdit.text
                     }
                     
+                    rightPadding: formatPreview.width
+                    
                     Text {
+                        id: formatPreview
                         anchors.right: parent.right
                         anchors.rightMargin: 10
                         anchors.bottom: parent.bottom
@@ -99,7 +102,7 @@ Item {
                     }
                 }
                 
-                LouField {
+                StringField {
                     id: collectorEdit
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -153,7 +156,7 @@ Item {
                     }
                 }
                 
-                LouButton {
+                Button {
                     id: templateButton
                     text: qsTr("Load from template")
                     visible: visualModel.count === 0
@@ -168,7 +171,7 @@ Item {
             delegate: dragDelegate
         }
         
-        LouButton {
+        Button {
             id: saveButton
             text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
@@ -309,7 +312,7 @@ Item {
     
     DeleteDialog {
         id: deleteDialog
-        type: "all fields"
+        title: "Delete all fields"
         text: qsTr("Are you sure?")
         
         onAccepted: {
