@@ -21,6 +21,31 @@ Item {
     
     property bool isEditing: false
     
+    function onCreate() {
+        if (entry_set_id === 0) {
+            console.warn("Missing set_id.");
+            return;
+        }
+        
+        console.log("save entry", entry_id, entry_set_id)
+        
+        // It appears the QCoordinate object is a bit funny.
+        const {latitude, longitude, altitude} = position;
+        
+        const index = App.setEntry({
+            entry_id,
+            entry_set_id,
+            voucher,
+            timestamp,
+            position: { latitude, longitude, altitude },
+            collector,
+            images,
+            fields,
+        })
+        
+        Navigation.navigate(Navigation.homeView, index)
+    }
+    
     Connections {
         target: Navigation
         function onIndexChanged() {
@@ -219,30 +244,7 @@ Item {
             text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
             
-            onClicked: {
-                if (entry_set_id === 0) {
-                    console.warn("Missing set_id.");
-                    return;
-                }
-                
-                console.log("save entry", entry_id, entry_set_id)
-                
-                // It appears the QCoordinate object is a bit funny.
-                const {latitude, longitude, altitude} = position;
-                
-                const index = App.setEntry({
-                    entry_id,
-                    entry_set_id,
-                    voucher,
-                    timestamp,
-                    position: { latitude, longitude, altitude },
-                    collector,
-                    images,
-                    fields,
-                })
-                
-                Navigation.navigate(Navigation.homeView, index)
-            }
+            onClicked: onCreate()
         }
     }
     

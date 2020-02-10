@@ -8,13 +8,20 @@ import "EntryModel.js" as EntryModel
 Frame {
     id: root
     
-    // debug
     implicitWidth: 520
+    implicitHeight: tab.height + body.height + offset
     
     property var entry: EntryModel.data[0].entries[0]
     property int offset: root.focus ? 60 : 0
     
-    implicitHeight: tab.height + body.height + offset
+    function onRemove() {
+        const index = App.removeEntry(entry.entry_set_id, entry.entry_id);
+        Navigation.navigate(Navigation.homeView, index);
+    }
+    
+    function onEdit() {
+        Navigation.navigate(Navigation.entryEditView, entry)
+    }
     
     background: Rectangle { visible: false }
     
@@ -209,7 +216,7 @@ Frame {
                     id: editButton
                     text: qsTr("Edit")
                     flat: true
-                    onClicked: Navigation.navigate(Navigation.entryEditView, entry)
+                    onClicked: onEdit()
                     icon.source: "icons/pencil.svg"
                     width: height
                 }
@@ -231,10 +238,7 @@ Frame {
         title: "Delete Entry"
         target: entry.voucher
         
-        onAccepted: {
-            const index = App.removeEntry(entry.entry_set_id, entry.entry_id);
-            Navigation.navigate(Navigation.homeView, index);
-        }
+        onAccepted: onRemove()
     }
 }
 

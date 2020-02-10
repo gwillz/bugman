@@ -11,6 +11,18 @@ Item {
     implicitWidth: 520
     implicitHeight: 600
     
+    function onNewEntry() {
+        Navigation.navigate(Navigation.entryEditView, entrySet)
+    }
+    
+    function onExportSet() {
+        Navigation.navigate(Navigation.setSaveView, entrySet)
+    }
+    
+    function onEditSet() {
+        Navigation.navigate(Navigation.setEditView, entrySet)
+    }
+    
     Item {
         id: header
         anchors.top: parent.top
@@ -36,21 +48,21 @@ Item {
                 id: addButton
                 flat: true
                 icon.source: "icons/plus.svg"
-                onClicked: Navigation.navigate(Navigation.entryEditView, entrySet)
+                onClicked: onNewEntry()
             }
             
             Button {
                 id: saveButton
                 flat: true
                 icon.source: "icons/download.svg"
-                onClicked: Navigation.navigate(Navigation.setSaveView, entrySet)
+                onClicked: onExportSet()
             }
             
             Button {
                 id: editButton
                 flat: true
                 icon.source: "icons/pencil.svg"
-                onClicked: Navigation.navigate(Navigation.setEditView, entrySet)
+                onClicked: onEditSet()
             }
             
             Button {
@@ -89,7 +101,7 @@ Item {
         visible: entrySet.entries.length === 0
         text: qsTr("Add Entry")
         highlighted: true
-        onClicked: Navigation.navigate(Navigation.entryEditView, entrySet)
+        onClicked: onNewEntry()
     }
     
     DeleteDialog {

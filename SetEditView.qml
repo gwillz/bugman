@@ -28,6 +28,27 @@ Item {
         }
     }
     
+    function onCreate() {
+        console.log("save set", set_id)
+        
+        const fields = [];
+        
+        for (let i = 0; i < visualModel.count; i++) {
+            let item = visualModel.items.get(i);
+            fields.push(item.model.modelData);
+        }
+        
+        const index = App.setSet({
+            set_id,
+            name,
+            voucher_format,
+            collector,
+            fields,
+        });
+        
+        Navigation.navigate(Navigation.homeView, index);
+    }
+    
     implicitWidth: 520
     implicitHeight: 900
     
@@ -177,26 +198,7 @@ Item {
             highlighted: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             
-            onClicked: {
-                console.log("save set", set_id)
-                
-                const fields = [];
-                
-                for (let i = 0; i < visualModel.count; i++) {
-                    let item = visualModel.items.get(i);
-                    fields.push(item.model.modelData);
-                }
-                
-                var index = App.setSet({
-                    set_id,
-                    name,
-                    voucher_format,
-                    collector,
-                    fields,
-                });
-                
-                Navigation.navigate(Navigation.homeView, { index });
-            }
+            onClicked: onCreate()
         }
     }
     
@@ -291,7 +293,6 @@ Item {
         
         onAccepted: {
             visualModel.model = visualModel.model.concat([{name, type}])
-//            visualModel.items.create(0, {modelData: {name, type}});
             name = ""
             type = ""
         }
