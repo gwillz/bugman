@@ -19,16 +19,8 @@ Dialog {
         Navigation.hasDialog = root.visible
     }
     
-    header: Text {
-        id: header
-        text: qsTr("Edit Field")
-        padding: 10
-        font.pointSize: Theme.subtitle
-    }
-    
-    background: Rectangle {
-        color: Theme.putty
-    }
+    title: qsTr("Edit Field")
+    standardButtons: Dialog.Save | Dialog.Close
     
     Column {
         id: content
@@ -67,25 +59,6 @@ Dialog {
             }
         }
     }
-    
-    footer: DialogButtonBox {
-        id: footer
-        background: Rectangle { color: "transparent" }
-        spacing: 10
-        visible: true
-        
-        Button {
-            text: qsTr("Save")
-            highlighted: true
-            DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
-        }
-        
-        Button {
-            text: qsTr("Close")
-            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
-        }
-    }
-    
 }
 
 /*##^##

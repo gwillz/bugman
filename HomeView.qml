@@ -6,15 +6,17 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
+    function onNav() {
+        const {index, data} = Navigation;
+        
+        if (index === Navigation.homeView && typeof data === "number") {
+            swipeView.currentIndex = Math.min(swipeView.currentIndex, Math.max(0, data));
+        }
+    }
+    
     Connections {
         target: Navigation
-        function onIndexChanged() {
-            const {index, data} = Navigation;
-            
-            if (index === Navigation.homeView && typeof data === "number") {
-                swipeView.currentIndex = Math.min(swipeView.currentIndex, Math.max(0, data));
-            }
-        }
+        onIndexChanged: onNav()
     }
     
     SwipeView {

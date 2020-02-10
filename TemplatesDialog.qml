@@ -3,11 +3,6 @@ import QtQuick.Controls 2.13
 
 Dialog {
     id: root
-    padding: 10
-    modal: true
-    
-    parent: Overlay.overlay
-    anchors.centerIn: Overlay.overlay
     
     signal accepted(var template)
     
@@ -26,16 +21,8 @@ Dialog {
     width: 320
     height: parent.height * 0.75
     
-    header: Text {
-        id: header
-        text: qsTr("Templates")
-        font.pointSize: Theme.subtitle
-        padding: 10
-    }
-    
-    background: Rectangle {
-        color: Theme.putty
-    }
+    title: qsTr("Templates")
+    standardButtons: Dialog.Close
     
     ListView {
         id: contents
@@ -58,18 +45,6 @@ Dialog {
                 accepted(modelData)
                 close()
             }
-        }
-    }
-    
-    footer: DialogButtonBox {
-        id: footer
-        background: Rectangle { color: "transparent" }
-        spacing: 10
-        visible: true
-        
-        Button {
-            text: qsTr("Close")
-            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
         }
     }
 }

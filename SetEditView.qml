@@ -12,22 +12,6 @@ Item {
     property string collector
     property bool isEditing: false
     
-    Connections {
-        target: Navigation
-        function onIndexChanged() {
-            var {index, data} = Navigation;
-            if (index === Navigation.setEditView) {
-                root.isEditing = !!data.set_id
-                root.set_id = data.set_id || App.nextSetId()
-                root.name = data.name  || ""
-                root.voucher_format = data.voucher_format || "E%03d"
-                root.collector = data.collector || ""
-                
-                visualModel.model = data.fields || []
-            }
-        }
-    }
-    
     function onCreate() {
         console.log("save set", set_id)
         
@@ -47,6 +31,24 @@ Item {
         });
         
         Navigation.navigate(Navigation.homeView, index);
+    }
+    
+    function onNav() {
+        const {index, data} = Navigation;
+        if (index === Navigation.setEditView) {
+            root.isEditing = !!data.set_id
+            root.set_id = data.set_id || App.nextSetId()
+            root.name = data.name  || ""
+            root.voucher_format = data.voucher_format || "E%03d"
+            root.collector = data.collector || ""
+            
+            visualModel.model = data.fields || []
+        }
+    }
+    
+    Connections {
+        target: Navigation
+        onIndexChanged: onNav()
     }
     
     implicitWidth: 520

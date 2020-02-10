@@ -22,11 +22,17 @@
 - fix home view first swipe panel
     - current workaround is gross
 - fix camera
+- fix export dialog
+- fix editing sets
 
 #### housework
 - migrate qlist to qmlpropertylist
 - separate entry types into separate files
 - some docs/comments
+- rename Theme variables:
+    - color*
+    - size*
+
 
 #### future
 - swipedelegate for editing template fields

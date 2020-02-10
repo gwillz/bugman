@@ -34,5 +34,6 @@
         <file>LouTheme/Dialog.qml</file>
         <file>LouTheme/Label.qml</file>
         <file>StringField.qml</file>
+        <file>LouTheme/DialogButtonBox.qml</file>
     </qresource>
 </RCC>

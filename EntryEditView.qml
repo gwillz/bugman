@@ -46,25 +46,27 @@ Item {
         Navigation.navigate(Navigation.homeView, index)
     }
     
+    function onNav() {
+        const {index, data} = Navigation;
+        
+        if (index === Navigation.entryEditView) {
+            root.isEditing = !!data.entry_id
+            root.entry_id = data.entry_id || App.nextEntryId()
+            root.entry_set_id = data.entry_set_id || data.set_id || 0;
+            root.voucher = data.getNextVoucher
+                ? data.getNextVoucher()
+                : (data.voucher || "")
+            root.timestamp = data.timestamp || +new Date() + ""
+            root.position = data.position || gps.position.coordinate;
+            root.collector = data.collector || "";
+            root.images = data.images || [];
+            root.fields = data.fields || [];
+        }
+    }
+    
     Connections {
         target: Navigation
-        function onIndexChanged() {
-            const {index, data} = Navigation;
-            
-            if (index === Navigation.entryEditView) {
-                root.isEditing = !!data.entry_id
-                root.entry_id = data.entry_id || App.nextEntryId()
-                root.entry_set_id = data.entry_set_id || data.set_id || 0;
-                root.voucher = data.getNextVoucher
-                    ? data.getNextVoucher()
-                    : (data.voucher || "")
-                root.timestamp = data.timestamp || +new Date() + ""
-                root.position = data.position || gps.position.coordinate;
-                root.collector = data.collector || "";
-                root.images = data.images || [];
-                root.fields = data.fields || [];
-            }
-        }
+        onIndexChanged: onNav()
     }
     
     PositionSource {

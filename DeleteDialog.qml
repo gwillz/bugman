@@ -44,8 +44,6 @@ Dialog {
     }
     
     footer: DialogButtonBox {
-        spacing: 10
-        background: Rectangle { color: "transparent" }
         
         Button {
             id: deleteButton
