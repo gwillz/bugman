@@ -197,7 +197,7 @@ Item {
                     topPadding: 10
                     anchors.left: parent.left
                     anchors.leftMargin: 30
-                    font.pointSize: Theme.body
+                    font.pointSize: Theme.fontBody
                 }
                 
                 Grid {
@@ -216,11 +216,11 @@ Item {
                     Button {
                         id: imageButton
                         background: Rectangle {
-                            color: Theme.cloud
+                            color: Theme.colorCloud
                         }
                         flat: true
                         icon.source: "icons/plus.svg"
-                        icon.color: Theme.brick
+                        icon.color: Theme.colorBrick
                         width: grid.itemWidth
                         height: width
                         icon.width: width / 2

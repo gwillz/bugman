@@ -68,14 +68,14 @@ Item {
         
         text: root.text
         onTextChanged: root.text = text
-        font.pointSize: Theme.body
+        font.pointSize: Theme.fontBody
         
         validator: DoubleValidator {}
         inputMethodHints: Qt.ImhFormattedNumbersOnly
         
         background: Rectangle {
             radius: 5
-            color: Theme.cloud
+            color: Theme.colorCloud
         }
     }
     
@@ -131,17 +131,17 @@ Item {
         }
         
         contentItem: Text {
-            color: Theme.text
+            color: Theme.colorText
             text: parent.currentText
             bottomPadding: 5
             topPadding: 5
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: Theme.body
+            font.pointSize: Theme.fontBody
         }
         
         background: Rectangle {
             radius: 5
-            color: Theme.cloud
+            color: Theme.colorCloud
         }
     }
 }

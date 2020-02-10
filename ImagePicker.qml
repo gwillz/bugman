@@ -103,7 +103,7 @@ Item {
                 id: titleText
                 text: "Images"
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: Theme.body
+                font.pointSize: Theme.fontBody
                 height: closeButton.height
             }
         }

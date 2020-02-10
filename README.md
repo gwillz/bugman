@@ -12,7 +12,6 @@
     - load entry images
     - copy new entry images
     - export images zip
-- post message/dialog after exporting
 - field validations
     - set edit
     - entry edit
@@ -22,7 +21,6 @@
 - fix home view first swipe panel
     - current workaround is gross
 - fix camera
-- fix export dialog
 - fix editing sets
 
 #### housework

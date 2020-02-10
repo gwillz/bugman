@@ -38,7 +38,7 @@ Dialog {
     Text {
         text: root.text
         wrapMode: Text.WordWrap
-        font.pointSize: Theme.body
+        font.pointSize: Theme.fontBody
         anchors.fill: parent
         width: 280
     }

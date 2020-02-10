@@ -64,7 +64,7 @@ Item {
                   : qsTr("New Set")
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
-            font.pointSize: Theme.subtitle
+            font.pointSize: Theme.fontSubtitle
         }
         
         ListView {
@@ -120,8 +120,8 @@ Item {
                         verticalAlignment: Text.AlignVCenter
                         height: parent.editHeight
                         text: qsTr("\"%1\"").arg(App.sprintf(parent.text, 1))
-                        font.pointSize: Theme.small
-                        color: Theme.brick
+                        font.pointSize: Theme.fontSmall
+                        color: Theme.colorBrick
                     }
                 }
                 
@@ -149,7 +149,7 @@ Item {
                     
                     Text {
                         id: fieldLabel
-                        font.pointSize: Theme.body
+                        font.pointSize: Theme.fontBody
                         text: qsTr("Fields")
                     }
                     

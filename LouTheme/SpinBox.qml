@@ -24,15 +24,15 @@ T.SpinBox {
         top: Math.max(control.from, control.to)
     }
     
-    font.pointSize: Theme.body
+    font.pointSize: Theme.fontBody
     
     contentItem: TextInput {
         z: 2
         text: control.textFromValue(control.value, control.locale)
         
         font: control.font
-        color: Theme.text
-        selectionColor: Theme.bee
+        color: Theme.colorText
+        selectionColor: Theme.colorBee
         selectedTextColor: "white"
         
         readOnly: !control.editable
@@ -46,13 +46,13 @@ T.SpinBox {
         implicitHeight: 40
         height: parent.height
         width: height
-        color: control.up.pressed ? Theme.bee : Theme.cloud
+        color: control.up.pressed ? Theme.colorBee : Theme.colorCloud
         radius: 5
 
         Text {
             text: "+"
             font: control.font
-            color: enabled ? Theme.text : Theme.brick
+            color: enabled ? Theme.colorText : Theme.colorBrick
             anchors.fill: parent
             fontSizeMode: Text.Fit
             horizontalAlignment: Text.AlignHCenter
@@ -65,13 +65,13 @@ T.SpinBox {
         implicitHeight: 40
         height: parent.height
         width: height
-        color: control.down.pressed ? Theme.bee : Theme.cloud
+        color: control.down.pressed ? Theme.colorBee : Theme.colorCloud
         radius: 5
         
         Text {
             text: "-"
             font: control.font
-            color: enabled ? Theme.text : Theme.brick
+            color: enabled ? Theme.colorText : Theme.colorBrick
             anchors.fill: parent
             fontSizeMode: Text.Fit
             horizontalAlignment: Text.AlignHCenter
@@ -82,7 +82,7 @@ T.SpinBox {
     background: Rectangle {
         implicitWidth: 160
         implicitHeight: 40
-        color: Theme.cloud
+        color: Theme.colorCloud
         radius: 5
     }
 }

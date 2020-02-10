@@ -9,7 +9,7 @@ ApplicationWindow {
     
     height: 720
     width: 520
-    color: Theme.stone
+    color: Theme.colorStone
     
     onClosing: {
         close.accepted = Navigation.isExitReady;

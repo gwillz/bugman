@@ -19,10 +19,10 @@ T.Dialog {
     modal: true
     parent: Overlay.overlay
     anchors.centerIn: Overlay.overlay
-    font.pointSize: Theme.body
+    font.pointSize: Theme.fontBody
     
     background: Rectangle {
-        color: Theme.putty
+        color: Theme.colorPutty
     }
     
     header: Text {
@@ -30,7 +30,7 @@ T.Dialog {
         visible: control.title
         elide: Label.ElideRight
         padding: 10
-        font.pointSize: Theme.subtitle
+        font.pointSize: Theme.fontSubtitle
     }
     
     footer: DialogButtonBox {

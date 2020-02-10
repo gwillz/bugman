@@ -9,7 +9,7 @@ Item {
     
     Rectangle {
         id: headerBg
-        color: Theme.cloud
+        color: Theme.colorCloud
         anchors.fill: parent
     }
     
@@ -31,7 +31,7 @@ Item {
     Text {
         text: qsTr("Field Assistant")
         anchors.centerIn: parent
-        font.pointSize: Theme.title
+        font.pointSize: Theme.fontTitle
     }
     
     Button {
@@ -41,7 +41,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 10
         icon.source: "icons/bugman_logo.svg"
-        icon.color: Theme.bee
+        icon.color: Theme.colorBee
         icon.height: 55
         icon.width: 55
         padding: 5

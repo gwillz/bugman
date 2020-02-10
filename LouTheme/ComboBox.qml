@@ -16,7 +16,7 @@ T.ComboBox {
     spacing: 6
     leftPadding: 30
     
-    font.pointSize: Theme.body
+    font.pointSize: Theme.fontBody
     model: ["hum"]
     
     delegate: ItemDelegate {
@@ -25,7 +25,7 @@ T.ComboBox {
         
         contentItem: Text {
             text: modelData
-            color: Theme.text
+            color: Theme.colorText
             font: control.font
             elide: Text.ElideRight
             verticalAlignment: Text.AlignRight
@@ -43,7 +43,7 @@ T.ComboBox {
         ColorOverlay {
             source: icon
             anchors.fill: icon
-            color: control.pressed ? Theme.brick : Theme.text
+            color: control.pressed ? Theme.colorBrick : Theme.colorText
         }
     }
     
@@ -54,7 +54,7 @@ T.ComboBox {
         
         text: control.displayText
         font: control.font
-        color: control.pressed ? Theme.brick : Theme.text
+        color: control.pressed ? Theme.colorBrick : Theme.colorText
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
     }
@@ -62,7 +62,7 @@ T.ComboBox {
     background: Rectangle {
         implicitWidth: 120
         implicitHeight: 40
-        color: Theme.cloud
+        color: Theme.colorCloud
         radius: 5
     }
 

@@ -20,10 +20,10 @@ Rectangle {
     radius: 5
     
     color: highlighted
-        ? Theme.brick
+        ? Theme.colorBrick
         : hovered
-        ? Theme.cloud
-        : Theme.putty
+        ? Theme.colorCloud
+        : Theme.colorPutty
     
     Behavior on color {
         ColorAnimation { duration: 100 }
@@ -44,11 +44,11 @@ Rectangle {
             
             
             Text {
-                font.pointSize: Theme.body
+                font.pointSize: Theme.fontBody
                 text: root.name
             }
             Text {
-                font.pointSize: Theme.small
+                font.pointSize: Theme.fontSmall
                 text: root.type
             }
         }

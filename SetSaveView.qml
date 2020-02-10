@@ -44,7 +44,7 @@ Item {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 padding: 10
-                font.pointSize: Theme.subtitle
+                font.pointSize: Theme.fontSubtitle
             }
         }
         
@@ -97,7 +97,7 @@ Item {
             id: content
             text: qsTr("File saved as: \"%1\"").arg(dialog.path)
             elide: Text.ElideRight
-            font.pointSize: Theme.body
+            font.pointSize: Theme.fontBody
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             width: parent.width
         }

@@ -20,7 +20,7 @@ T.Switch {
     
     indicator: Rectangle {
         id: indicator
-        color: control.checked ? Theme.bee : Theme.brick
+        color: control.checked ? Theme.colorBee : Theme.colorBrick
         implicitWidth: 46
         implicitHeight: 26
         x: control.leftPadding
@@ -34,7 +34,7 @@ T.Switch {
         Rectangle {
             y: 3
             x: control.checked ? parent.width - width - y : y
-            color: Theme.cloud
+            color: Theme.colorCloud
             radius: 10
             width: 20
             height: 20
@@ -58,7 +58,7 @@ T.Switch {
             ColorOverlay {
                 anchors.fill: tick
                 source: tick
-                color: Theme.bee
+                color: Theme.colorBee
                 
                 opacity: control.checked ? 1 : 0
                 

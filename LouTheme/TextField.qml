@@ -14,11 +14,11 @@ T.TextField {
     padding: 6
     leftPadding: 30
     
-    font.pointSize: Theme.body
-    color: Theme.text
-    selectionColor: Theme.bee
+    font.pointSize: Theme.fontBody
+    color: Theme.colorText
+    selectionColor: Theme.colorBee
     selectedTextColor: "white"
-    placeholderTextColor: Theme.brick
+    placeholderTextColor: Theme.colorBrick
     verticalAlignment: TextInput.AlignVCenter
     
     Text {
@@ -39,7 +39,7 @@ T.TextField {
         implicitWidth: 200
         implicitHeight: 40
         radius: 5
-        color: Theme.cloud
+        color: Theme.colorCloud
     }
 }
 

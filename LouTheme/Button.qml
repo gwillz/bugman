@@ -16,14 +16,14 @@ AbstractButton {
     padding: 6
     horizontalPadding: control.flat ? padding : padding + 2
     
-    font.pointSize: Theme.body
+    font.pointSize: Theme.fontBody
     
     icon.height: 24
     icon.width: 24
     icon.color: control.enabled
         ? control.checked || control.highlighted && !control.flat
-            ? "white" : Theme.text
-        : Theme.brick
+            ? "white" : Theme.colorText
+        : Theme.colorBrick
     
     property bool flat: false
     property bool highlighted: false
@@ -40,7 +40,7 @@ AbstractButton {
         font: control.font
         text: control.text
         icon: control.icon
-        color: control.enabled ? "white" : Theme.brick
+        color: control.enabled ? "white" : Theme.colorBrick
     }
     
     background: Rectangle {
@@ -51,15 +51,15 @@ AbstractButton {
         radius: 5
         color: control.enabled
                 ? control.down
-                    ? Theme.stone
+                    ? Theme.colorStone
                     : control.highlighted
-                        ? Theme.bee
-                        : Theme.brick
+                        ? Theme.colorBee
+                        : Theme.colorBrick
                 : "transparent"
         
         border {
             width: 2
-            color: control.enabled ? "transparent" : Theme.brick
+            color: control.enabled ? "transparent" : Theme.colorBrick
         }
     }
 }

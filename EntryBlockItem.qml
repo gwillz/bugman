@@ -12,7 +12,7 @@ Row {
         font.italic: true
         font.letterSpacing: 0.5
         lineHeight: 1.3
-        font.pointSize: Theme.small
+        font.pointSize: Theme.fontSmall
     }
     
     Text {
@@ -20,6 +20,6 @@ Row {
         wrapMode: Text.WordWrap
         font.letterSpacing: 0.5
         lineHeight: 1.3
-        font.pointSize: Theme.small
+        font.pointSize: Theme.fontSmall
     }
 }

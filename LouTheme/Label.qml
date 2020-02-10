@@ -4,8 +4,8 @@ import QtQuick.Templates 2.14 as T
 T.Label {
     id: control
     
-    color: Theme.text
-    linkColor: Theme.bee
-    font.pointSize: Theme.body
+    color: Theme.colorText
+    linkColor: Theme.colorBee
+    font.pointSize: Theme.fontBody
     leftPadding: 30
 }

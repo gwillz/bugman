@@ -83,7 +83,7 @@ Frame {
         
         Rectangle {
             id: tabBg
-            color: root.focus ? Theme.cloud : Theme.putty
+            color: root.focus ? Theme.colorCloud : Theme.colorPutty
             radius: 8
             border.width: 0
             anchors.fill: parent
@@ -125,7 +125,7 @@ Frame {
         
         Rectangle {
             id: bodyBg
-            color: root.focus ? Theme.cloud : Theme.putty
+            color: root.focus ? Theme.colorCloud : Theme.colorPutty
             radius: 10
             anchors.fill: parent
             border.color: "#00000000"
@@ -142,7 +142,7 @@ Frame {
             anchors.top: parent.top
             anchors.topMargin: 5
             anchors.left: parent.left
-            font.pointSize: Theme.small
+            font.pointSize: Theme.fontSmall
             height: 100
             
             opacity : root.focus ? 0 : 1

@@ -14,7 +14,7 @@ Rectangle {
     border.width: 0
     radius: 5
     
-    color: Theme.cloud
+    color: Theme.colorCloud
     
     MouseArea {
         anchors.fill: parent
@@ -34,11 +34,11 @@ Rectangle {
             
             Text {
                 text: root.text
-                font.pointSize: Theme.body
+                font.pointSize: Theme.fontBody
             }
             Text {
                 text: root.subtext
-                font.pointSize: Theme.small
+                font.pointSize: Theme.fontSmall
             }
         }
     }
