@@ -12,7 +12,7 @@ Item {
     property string collector
     property bool isEditing: false
     
-    property var invalid
+    property string invalid: ""
     
     function onCreate() {
         console.log("save set", set_id)

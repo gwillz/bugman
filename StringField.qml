@@ -37,7 +37,9 @@ Item {
         placeholderText: placeholder
         
         onTextEdited: {
-            root.valid = true
+            if (!root.valid) {
+                root.valid = !!text
+            }
         }
         
         background: Rectangle {

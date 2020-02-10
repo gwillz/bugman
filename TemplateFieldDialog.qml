@@ -7,6 +7,15 @@ Dialog {
     property string name: ""
     property string type: ""
     
+    property bool valid: true
+    
+    Connections {
+        target: root
+        function onNameChanged() {
+            root.valid = !!name;
+        }
+    }
+    
     Connections {
         target: Navigation
         function onCloseDialog() {
@@ -20,7 +29,6 @@ Dialog {
     }
     
     title: qsTr("Edit Field")
-    standardButtons: Dialog.Save | Dialog.Close
     
     Column {
         id: content
@@ -35,6 +43,7 @@ Dialog {
             anchors.right: parent.right
             anchors.left: parent.left
             text: root.name
+            valid: root.valid
             
             Binding {
                 target: root
@@ -58,6 +67,24 @@ Dialog {
                 value: typeEdit.current
             }
         }
+    }
+    
+    footer: DialogButtonBox {
+        
+        Button {
+            id: saveButton
+            text: qsTr("Save")
+            highlighted: true
+            enabled: valid
+            DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+        }
+        
+        Button {
+            id: cancelButton
+            text: qsTr("Cancel")
+            DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
+        }
+        
     }
 }
 
