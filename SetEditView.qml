@@ -12,7 +12,7 @@ Item {
     property string collector
     property bool isEditing: false
     
-    property string invalid: ""
+    property bool valid: !!name && !!voucher_format && !!collector
     
     function onCreate() {
         console.log("save set", set_id)
@@ -23,23 +23,16 @@ Item {
             let item = visualModel.items.get(i);
             fields.push(item.model.modelData);
         }
+    
+        const index = App.setSet({
+            set_id,
+            name,
+            voucher_format,
+            collector,
+            fields,
+        });
         
-        root.invalid =
-            !name && "name" ||
-            !voucher_format && "voucher_format" ||
-            !collector && "collector";
-        
-        if (!root.invalid) {
-            const index = App.setSet({
-                set_id,
-                name,
-                voucher_format,
-                collector,
-                fields,
-            });
-            
-            Navigation.navigate(Navigation.homeView, index);
-        }
+        Navigation.navigate(Navigation.homeView, index);
     }
     
     function onNav() {
@@ -97,13 +90,7 @@ Item {
                     label: qsTr("Name")
                     placeholder: qsTr("Set One")
                     text: name
-                    valid: root.invalid !== "name"
-                    
-                    Binding {
-                        target: root
-                        property: "name"
-                        value: nameEdit.text
-                    }
+                    onTextChanged: name = text
                 }
                 
                 StringField {
@@ -113,13 +100,7 @@ Item {
                     label: qsTr("Voucher Format")
                     placeholder: qsTr("E%03d")
                     text: voucher_format
-                    valid: root.invalid !== "voucher_format"
-                    
-                    Binding {
-                        target: root
-                        property: "voucher_format"
-                        value: formatEdit.text
-                    }
+                    onTextChanged: voucher_format = text
                     
                     rightPadding: formatPreview.width + 16
                     
@@ -144,13 +125,7 @@ Item {
                     label: qsTr("Collector")
                     placeholder: qsTr("N. A. Thornberry")
                     text: collector
-                    valid: root.invalid !== "collector"
-                    
-                    Binding {
-                        target: root
-                        property: "collector"
-                        value: collectorEdit.text
-                    }
+                    onTextChanged: collector = text
                 }
                 
                 Row {
@@ -212,7 +187,7 @@ Item {
             text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            
+            enabled: root.valid
             onClicked: onCreate()
         }
     }

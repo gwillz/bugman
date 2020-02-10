@@ -6,15 +6,7 @@ Dialog {
     
     property string name: ""
     property string type: ""
-    
-    property bool valid: true
-    
-    Connections {
-        target: root
-        function onNameChanged() {
-            root.valid = !!name;
-        }
-    }
+    property bool valid: !!name
     
     Connections {
         target: Navigation
@@ -43,7 +35,6 @@ Dialog {
             anchors.right: parent.right
             anchors.left: parent.left
             text: root.name
-            valid: root.valid
             
             Binding {
                 target: root

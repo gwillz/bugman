@@ -12,9 +12,6 @@
     - load entry images
     - copy new entry images
     - export images zip
-- field validations
-    - entry edit
-    - template field edit
 
 #### fixes
 - fix home view first swipe panel

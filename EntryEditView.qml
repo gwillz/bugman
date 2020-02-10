@@ -20,6 +20,7 @@ Item {
     property var fields: EntryModel.data[0].entries[0].fields
     
     property bool isEditing: false
+    property bool valid: !!voucher && !!collector
     
     function onCreate() {
         if (entry_set_id === 0) {
@@ -116,6 +117,7 @@ Item {
                     placeholder: "NAT01R001"
                     text: voucher
                     onTextChanged: voucher = text
+                    valid: root.invalid !== "voucher"
                 }
                 
                 StringField {
@@ -162,6 +164,7 @@ Item {
                     placeholder: qsTr("N. A. Thornberry")
                     text: collector
                     onTextChanged: collector = text
+                    valid: root.invalid !== "collector"
                 }
                 
                 Rectangle {
@@ -245,7 +248,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
-            
+            enabled: root.valid
             onClicked: onCreate()
         }
     }

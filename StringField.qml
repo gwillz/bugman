@@ -10,6 +10,7 @@ Item {
     property string label: field.name
     property string placeholder: "..."
     property bool valid: true
+    property bool required: true
     property alias text: field.text
     property alias readOnly: field.readOnly
     readonly property alias editHeight: field.height
@@ -36,10 +37,11 @@ Item {
         
         placeholderText: placeholder
         
-        onTextEdited: {
-            if (!root.valid) {
-                root.valid = !!text
-            }
+        Binding {
+            target: root
+            when: root.required
+            property: "valid"
+            value: !!field.text
         }
         
         background: Rectangle {
