@@ -72,6 +72,7 @@ Item {
         
         spacing: -45
         clip: true
+        focus: false
         
         model: entrySet.entries
         
@@ -97,7 +98,8 @@ Item {
         target: entrySet.name
         
         onAccepted: {
-            App.removeSet(entrySet.set_id)
+            const index = App.removeSet(entrySet.set_id);
+            Navigation.navigate(Navigation.homeView, index);
         }
     }
 }

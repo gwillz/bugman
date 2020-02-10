@@ -12,13 +12,11 @@
     - load entry images
     - copy new entry images
     - export images zip
-- different entry fields per 'type'
 - post message/dialog after exporting
 - field validations
     - set edit
     - entry edit
     - template field edit
-- icon button component
 
 #### fixes
 - fix home view first swipe panel
@@ -29,12 +27,11 @@
 - migrate qlist to qmlpropertylist
 - separate entry types into separate files
 - some docs/comments
-- can we do better styles?
-    - https://doc.qt.io/qt-5/qtquickcontrols2-customize.html#definition-of-a-style
 
 #### future
+- swipedelegate for editing template fields
+- swipedelegate for switch..?
 - more field types
-    - switch/boolean
     - range (from, to)
     - combobox (list of options)
 

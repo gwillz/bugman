@@ -154,22 +154,26 @@ int App::setEntry(const QVariantMap &object) {
     return index;
 }
 
-void App::removeEntry(int setId, int entryId) {
+int App::removeEntry(int setId, int entryId) {
     
     if (db.sets.contains(setId)) {
         qDebug() << "Remove entry" << entryId << "from set" << setId;
+        int index = db.sets.keys().indexOf(setId);
         int count = db.sets[setId].entries.remove(entryId);
         
         if (count < 1) {
             qDebug() << "Entry not in set?";
+            return -1;
         }
         else {
             saveDb();
             emit dataChanged();
+            return index;
         }
     }
     else {
         qDebug() << setId << "This set doesn't exist.";
+        return -1;
     }
 }
 
@@ -187,12 +191,21 @@ int App::setSet(const QVariantMap &object) {
     return index;
 }
 
-void App::removeSet(int setId) {
-    db.sets.remove(setId);
-    qDebug() << "Remove set" << setId;
+int App::removeSet(int setId) {
+    int index = db.sets.keys().indexOf(setId);
     
-    saveDb();
-    emit dataChanged();
+    int count = db.sets.remove(setId);
+    if (count < 0) {
+        qDebug() << "Set doesn't exist?";
+        return -1;
+    }
+    else {
+        saveDb();
+        emit dataChanged();
+        qDebug() << "Remove set" << setId;
+        
+        return index;
+    }
 }
 
 QString App::getExportPath(const QString fileName, int revision) const {

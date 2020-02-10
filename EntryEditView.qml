@@ -230,7 +230,7 @@ Item {
                 // It appears the QCoordinate object is a bit funny.
                 const {latitude, longitude, altitude} = position;
                 
-                App.setEntry({
+                const index = App.setEntry({
                     entry_id,
                     entry_set_id,
                     voucher,
@@ -241,7 +241,7 @@ Item {
                     fields,
                 })
                 
-                Navigation.navigate(Navigation.homeView)
+                Navigation.navigate(Navigation.homeView, index)
             }
         }
     }

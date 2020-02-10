@@ -45,11 +45,11 @@ public:
     
     Q_INVOKABLE int setEntry(const QVariantMap &entry);
     
-    Q_INVOKABLE void removeEntry(int setId, int entryId);
+    Q_INVOKABLE int removeEntry(int setId, int entryId);
     
     Q_INVOKABLE int setSet(const QVariantMap &set);
     
-    Q_INVOKABLE void removeSet(int setId);
+    Q_INVOKABLE int removeSet(int setId);
     
     Q_INVOKABLE void exportSet(const QString &fileName, int setId);
     

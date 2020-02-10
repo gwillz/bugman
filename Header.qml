@@ -15,7 +15,7 @@ Item {
     
     Button {
         id: backButton
-//        enabled: !Navigation.isHome
+        enabled: !Navigation.isHome
         opacity: enabled ? 1 : 0.3
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left

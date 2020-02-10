@@ -11,23 +11,24 @@ Item {
         function onIndexChanged() {
             const {index, data} = Navigation;
             
-            if (index === Navigation.homeView &&
-                data.index !== undefined) {
-                swipeView.currentIndex = data.index || 0;
+            if (index === Navigation.homeView && typeof data === "number") {
+                swipeView.currentIndex = Math.min(swipeView.currentIndex, Math.max(0, data));
             }
         }
     }
     
     SwipeView {
         id: swipeView
+        interactive: true
         clip: true
-        focusPolicy: Qt.NoFocus
         anchors.fill: parent
+        focus: false
+        focusPolicy: Qt.NoFocus
         
         Repeater {
             id: repeater
             model: App.sets
-            
+
             delegate: EntrySet {
                 entrySet: modelData
             }
@@ -42,7 +43,6 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("Add Set")
-                focusPolicy: Qt.NoFocus
                 highlighted: true
                 onClicked: Navigation.navigate(Navigation.setEditView)
             }

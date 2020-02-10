@@ -367,14 +367,13 @@ int EntryDatabase::setEntry(const Entry &entry) {
         int count = sets[set_id].entries.size();
         
         sets[set_id].entries.insert(entry.entry_id, entry);
-        QList<int> keys = sets[set_id].entries.keys();
         
         if (count != sets[set_id].entries.size()) {
             sets[set_id].entry_count++;
             entry_count++;
         }
         
-        return keys.indexOf(entry.entry_id);
+        return sets.keys().indexOf(set_id);
     }
     
     return -1;

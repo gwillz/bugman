@@ -10,14 +10,11 @@ Frame {
     
     // debug
     implicitWidth: 520
-//    focus: true
     
     property var entry: EntryModel.data[0].entries[0]
-    
     property int offset: root.focus ? 60 : 0
     
-    contentHeight: tab.height + body.height + offset
-    padding: 0
+    implicitHeight: tab.height + body.height + offset
     
     background: Rectangle { visible: false }
     
@@ -212,7 +209,6 @@ Frame {
                     id: editButton
                     text: qsTr("Edit")
                     flat: true
-                    display: AbstractButton.IconOnly
                     onClicked: Navigation.navigate(Navigation.entryEditView, entry)
                     icon.source: "icons/pencil.svg"
                     width: height
@@ -222,7 +218,6 @@ Frame {
                     id: deleteButton
                     text: qsTr("Delete")
                     flat: true
-                    display: AbstractButton.IconOnly
                     onClicked: deleteDialog.open()
                     icon.source: "icons/trash.svg"
                     width: height
@@ -237,7 +232,8 @@ Frame {
         target: entry.voucher
         
         onAccepted: {
-            App.removeEntry(entry.entry_set_id, entry.entry_id)
+            const index = App.removeEntry(entry.entry_set_id, entry.entry_id);
+            Navigation.navigate(Navigation.homeView, index);
         }
     }
 }
