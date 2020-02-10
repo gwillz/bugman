@@ -10,6 +10,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDateTime>
+#include <QRegularExpression>
 #include "csvwriter.h"
 
 static App* instance = nullptr;
@@ -294,7 +295,13 @@ QString App::exportSet(const QString &fileName, int setId) {
     return path;
 }
 
-QString App::sprintf(const QString format, int number) const {
+static const QRegularExpression RE("%\\d*[^\\dd]");
+
+QString App::sprintf(const QString format, int number) {
+    
+    auto match = RE.globalMatch(format);
+    if (match.hasNext()) return "";
+    
     QByteArray bytes = format.toUtf8();
     const char* cformat = bytes.data();
     return QString::asprintf(cformat, number);

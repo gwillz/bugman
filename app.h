@@ -63,7 +63,7 @@ public:
         return db.nextEntryId();
     }
     
-    Q_INVOKABLE QString sprintf(const QString format, int number) const;
+    static Q_INVOKABLE QString sprintf(const QString format, int number);
     
 signals:
     void imagesChanged();
