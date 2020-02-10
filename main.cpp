@@ -12,14 +12,6 @@ void requestAndroidPermissions();
 int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     
-//    qmlRegisterType<Entry>("entry", 1, 0, "Entry");
-//    qmlRegisterType<EntrySet>("entry", 1, 0, "EntrySet");
-//    qmlRegisterType<EntryField>("entry", 1, 0, "EntryField");
-//    qmlRegisterType<EntryPosition>("entry", 1, 0, "EntryPosition");
-//    qmlRegisterType<EntryTemplate>("entry", 1, 0, "EntryTemplate");
-    
-//    qmlRegisterSingletonType("App", 1, 0, "App", App::registerType);
-    
     QGuiApplication app(argc, argv);
     
 #ifdef Q_OS_ANDROID

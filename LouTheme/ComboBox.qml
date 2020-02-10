@@ -76,7 +76,7 @@ T.ComboBox {
             clip: true
             implicitHeight: contentHeight
             model: control.popup.visible ? control.delegateModel : null
-            currentIndex: roo.highlightedIndex
+            currentIndex: control.highlightedIndex
         }
 
         background: Rectangle {

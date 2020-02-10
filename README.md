@@ -13,7 +13,6 @@
     - copy new entry images
     - export images zip
 - field validations
-    - set edit
     - entry edit
     - template field edit
 
@@ -27,10 +26,6 @@
 - migrate qlist to qmlpropertylist
 - separate entry types into separate files
 - some docs/comments
-- rename Theme variables:
-    - color*
-    - size*
-
 
 #### future
 - swipedelegate for editing template fields
