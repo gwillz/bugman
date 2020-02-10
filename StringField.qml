@@ -9,6 +9,7 @@ Item {
     
     property string label: field.name
     property string placeholder: "..."
+    property bool valid: true
     property alias text: field.text
     property alias readOnly: field.readOnly
     readonly property alias editHeight: field.height
@@ -31,9 +32,40 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         leftPadding: root.leftPadding
-        rightPadding: root.rightPadding
+        rightPadding: root.rightPadding + (valid ? 0 : invalid.width + 8)
         
         placeholderText: placeholder
+        
+        onTextEdited: {
+            root.valid = true
+        }
+        
+        background: Rectangle {
+            implicitWidth: 200
+            implicitHeight: 40
+            radius: 5
+            color: Theme.colorCloud
+            
+            border {
+                width: valid ? 0 : 2
+                color: Theme.colorBee
+            }
+        }
     }
+    
+    Text {
+        id: invalid
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        anchors.bottom: parent.bottom
+        height: field.height
+        
+        text: qsTr("Invalid")
+        verticalAlignment: Text.AlignVCenter
+        font.pointSize: Theme.fontSmall
+        color: Theme.colorBee
+        visible: !valid
+    }
+
 }
 

@@ -12,6 +12,8 @@ Item {
     property string collector
     property bool isEditing: false
     
+    property var invalid
+    
     function onCreate() {
         console.log("save set", set_id)
         
@@ -22,15 +24,22 @@ Item {
             fields.push(item.model.modelData);
         }
         
-        const index = App.setSet({
-            set_id,
-            name,
-            voucher_format,
-            collector,
-            fields,
-        });
+        root.invalid =
+            !name && "name" ||
+            !voucher_format && "voucher_format" ||
+            !collector && "collector";
         
-        Navigation.navigate(Navigation.homeView, index);
+        if (!root.invalid) {
+            const index = App.setSet({
+                set_id,
+                name,
+                voucher_format,
+                collector,
+                fields,
+            });
+            
+            Navigation.navigate(Navigation.homeView, index);
+        }
     }
     
     function onNav() {
@@ -88,6 +97,7 @@ Item {
                     label: qsTr("Name")
                     placeholder: qsTr("Set One")
                     text: name
+                    valid: root.invalid !== "name"
                     
                     Binding {
                         target: root
@@ -103,6 +113,7 @@ Item {
                     label: qsTr("Voucher Format")
                     placeholder: qsTr("E%03d")
                     text: voucher_format
+                    valid: root.invalid !== "voucher_format"
                     
                     Binding {
                         target: root
@@ -110,12 +121,13 @@ Item {
                         value: formatEdit.text
                     }
                     
-                    rightPadding: formatPreview.width
+                    rightPadding: formatPreview.width + 16
                     
                     Text {
                         id: formatPreview
+                        visible: formatEdit.valid
                         anchors.right: parent.right
-                        anchors.rightMargin: 10
+                        anchors.rightMargin: 8
                         anchors.bottom: parent.bottom
                         verticalAlignment: Text.AlignVCenter
                         height: parent.editHeight
@@ -132,6 +144,7 @@ Item {
                     label: qsTr("Collector")
                     placeholder: qsTr("N. A. Thornberry")
                     text: collector
+                    valid: root.invalid !== "collector"
                     
                     Binding {
                         target: root
