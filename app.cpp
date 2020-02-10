@@ -225,29 +225,30 @@ QString App::getExportPath(const QString fileName, int revision) const {
     return path;
 }
 
-void App::exportSet(const QString &fileName, int setId) {
+QString App::exportSet(const QString &fileName, int setId) {
     if (!db.sets.contains(setId)) {
         qDebug() << setId << "set not found.";
-        return;
+        return "";
     }
     
     const EntrySet set = db.sets[setId];
     QString path = getExportPath(fileName);
     QFile file(path);
     
+    // This doesn't work!
     int revision = 1;
     while (file.exists()) {
         path = getExportPath(fileName, ++revision);
         
         if (revision >= 100) {
             qDebug() << "Revision limit exceeded" << revision;
-            return;
+            return "";
         }
     }
     
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning() << "Cannot write file" << path;
-        return;
+        return "";
     }
     
     CsvWriter csv(&file);
@@ -290,6 +291,7 @@ void App::exportSet(const QString &fileName, int setId) {
     
     qDebug() << "Written file" << path;
     file.close();
+    return path;
 }
 
 QString App::sprintf(const QString format, int number) const {

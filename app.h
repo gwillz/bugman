@@ -51,7 +51,7 @@ public:
     
     Q_INVOKABLE int removeSet(int setId);
     
-    Q_INVOKABLE void exportSet(const QString &fileName, int setId);
+    Q_INVOKABLE QString exportSet(const QString &fileName, int setId);
     
     QString getExportPath(const QString fileName, int revision = 1) const;
     

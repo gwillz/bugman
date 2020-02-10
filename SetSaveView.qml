@@ -9,15 +9,25 @@ Item {
     property string name
     property string set_id
     
+    function onExport() {
+        const path = App.exportSet(fileNameField.text, root.set_id)
+        if (path) {
+            dialog.path = path
+            dialog.open()
+        }
+    }
+    
+    function onNav() {
+        const {index, data} = Navigation;
+        if (index === Navigation.setSaveView) {
+            root.name = data.name;
+            root.set_id = data.set_id;
+        }
+    }
+    
     Connections {
         target: Navigation
-        function onIndexChanged() {
-            var {index, data} = Navigation;
-            if (index === Navigation.setSaveView) {
-                root.name = data.name;
-                root.set_id = data.set_id;
-            }
-        }
+        onIndexChanged: onNav()
     }
     
     Column {
@@ -58,9 +68,38 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 30
             
-            onClicked: {
-                App.exportSet(fileNameField.text, root.set_id)
+            onClicked: onExport()
+        }
+    }
+    
+    Dialog {
+        id: dialog
+        title: qsTr("Exported %1").arg(name)
+        
+        property string path
+        
+        width: 320
+        standardButtons: Dialog.Ok
+        
+        Connections {
+            target: Navigation
+            function onCloseDialog() {
+                if (dialog.visible) dialog.reject();
+                else dialog.close();
             }
+        }
+        
+        onVisibleChanged: {
+            Navigation.hasDialog = dialog.visible
+        }
+        
+        Text {
+            id: content
+            text: qsTr("File saved as: \"%1\"").arg(dialog.path)
+            elide: Text.ElideRight
+            font.pointSize: Theme.body
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            width: parent.width
         }
     }
 }
