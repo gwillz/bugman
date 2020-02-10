@@ -83,6 +83,7 @@ T.SpinBox {
         implicitWidth: 160
         implicitHeight: 40
         color: Theme.cloud
+        radius: 5
     }
 }
 
