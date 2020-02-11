@@ -12,9 +12,16 @@ Item {
     property string collector
     property bool isEditing: false
     
-    property bool valid: !!name && !!voucher_format && !!collector
+    property string invalid: ""
     
     function onCreate() {
+        root.invalid =
+                !name ? "name" :
+                !voucher_format ? "voucher_format" :
+                !collector ? "collector" : "";
+        
+        if (root.invalid) return;
+        
         console.log("save set", set_id)
         
         const fields = [];
@@ -90,7 +97,11 @@ Item {
                     label: qsTr("Name")
                     placeholder: qsTr("Set One")
                     text: name
-                    onTextChanged: name = text
+                    onTextChanged: {
+                        name = text;
+                        invalid = "";
+                    }
+                    valid: invalid !== "name"
                 }
                 
                 StringField {
@@ -100,7 +111,11 @@ Item {
                     label: qsTr("Voucher Format")
                     placeholder: qsTr("E%03d")
                     text: voucher_format
-                    onTextChanged: voucher_format = text
+                    onTextChanged: {
+                        voucher_format = text;
+                        invalid = "";
+                    }
+                    valid: invalid !== "voucher_format"
                     
                     rightPadding: formatPreview.width + 16
                     
@@ -125,7 +140,11 @@ Item {
                     label: qsTr("Collector")
                     placeholder: qsTr("N. A. Thornberry")
                     text: collector
-                    onTextChanged: collector = text
+                    onTextChanged: {
+                        collector = text;
+                        invalid = "";
+                    }
+                    valid: invalid !== "collector"
                 }
                 
                 Row {
@@ -187,7 +206,7 @@ Item {
             text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            enabled: root.valid
+            enabled: !root.invalid
             onClicked: onCreate()
         }
     }

@@ -10,7 +10,7 @@ Item {
     property string label: field.name
     property string placeholder: "..."
     property bool valid: true
-    property bool required: true
+    property bool required: false
     property alias text: field.text
     property alias readOnly: field.readOnly
     readonly property alias editHeight: field.height

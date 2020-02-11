@@ -53,6 +53,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             
+            required: true
             label: qsTr("File name")
             placeholder: root.name + ".csv"
             

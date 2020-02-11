@@ -20,13 +20,19 @@ Item {
     property var fields: EntryModel.data[0].entries[0].fields
     
     property bool isEditing: false
-    property bool valid: !!voucher && !!collector
+    property string invalid: ""
     
     function onCreate() {
         if (entry_set_id === 0) {
             console.warn("Missing set_id.");
             return;
         }
+        
+        root.invalid =
+            !voucher ? "voucher" :
+            !collector ? "collector" : "";
+        
+        if (root.invalid) return;
         
         console.log("save entry", entry_id, entry_set_id)
         
@@ -116,7 +122,10 @@ Item {
                     label: qsTr("Voucher *")
                     placeholder: "NAT01R001"
                     text: voucher
-                    onTextChanged: voucher = text
+                    onTextChanged: {
+                        voucher = text;
+                        invalid = "";
+                    }
                     valid: root.invalid !== "voucher"
                 }
                 
@@ -163,7 +172,10 @@ Item {
                     label: qsTr("Collector *")
                     placeholder: qsTr("N. A. Thornberry")
                     text: collector
-                    onTextChanged: collector = text
+                    onTextChanged: {
+                        collector = text;
+                        invalid = "";
+                    }
                     valid: root.invalid !== "collector"
                 }
                 
@@ -248,7 +260,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             text: isEditing ? qsTr("Save") : qsTr("Create")
             highlighted: true
-            enabled: root.valid
+            enabled: !root.invalid
             onClicked: onCreate()
         }
     }
