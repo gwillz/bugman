@@ -35,6 +35,7 @@ Item {
         camera.imageCapture.captureToLocation(App.imagePath);
     }
     
+    // Remove this in 5.14.2 update.
     AndroidFilter {
         id: androidFilter
     }
