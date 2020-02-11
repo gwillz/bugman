@@ -1,4 +1,5 @@
 #include "app.h"
+#include "csvwriter.h"
 
 #include <QDebug>
 #include <QStandardPaths>
@@ -6,12 +7,11 @@
 #include <QFileSystemWatcher>
 #include <QQmlEngine>
 #include <QQmlContext>
-#include <QFile>
+#include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDateTime>
 #include <QRegularExpression>
-#include "csvwriter.h"
 
 static App* instance = nullptr;
 
@@ -217,21 +217,15 @@ int App::removeSet(int setId) {
     }
 }
 
-QString App::getExportPath(const QString fileName, int revision) const {
-    QString path(fileName);
+bool App::csvPathExists(const QString &fileName) const {
+    if (fileName.isEmpty()) return false;
     
+    QString path(csvPath + "/" + fileName);
     if (!path.endsWith(".csv")) {
         path.append(".csv");
     }
     
-    if (revision > 1) {
-        path.insert(path.length() - 4, QString("-%1").arg(revision));
-    }
-    
-    path.prepend("/");
-    path.prepend(csvPath);
-    
-    return path;
+    return QFile::exists(path);
 }
 
 QString App::exportSet(const QString &fileName, int setId) {
@@ -240,20 +234,8 @@ QString App::exportSet(const QString &fileName, int setId) {
         return "";
     }
     
-    const EntrySet set = db.sets[setId];
-    QString path = getExportPath(fileName);
-    QFile file(path);
-    
-    // This doesn't work!
-    int revision = 1;
-    while (file.exists()) {
-        path = getExportPath(fileName, ++revision);
-        
-        if (revision >= 100) {
-            qDebug() << "Revision limit exceeded" << revision;
-            return "";
-        }
-    }
+    QFile file(csvPath + "/" + fileName);
+    const QString path = file.fileName();
     
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning() << "Cannot write file" << path;
@@ -268,6 +250,8 @@ QString App::exportSet(const QString &fileName, int setId) {
     csv.write("Longitude");
     csv.write("Altitude (m)");
     csv.write("Collector");
+    
+    const EntrySet set = db.sets[setId];
     
     QStringList fieldNames = set.getFieldNames();
     
@@ -298,8 +282,8 @@ QString App::exportSet(const QString &fileName, int setId) {
         csv.newRow();
     }
     
-    qDebug() << "Written file" << path;
     file.close();
+    qDebug() << "Written file" << path;
     return path;
 }
 

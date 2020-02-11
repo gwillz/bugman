@@ -9,8 +9,11 @@ Item {
     
     property string label: field.name
     property string placeholder: "..."
-    property bool valid: true
+    
     property bool required: false
+    property bool valid: true
+    property string validMessage: qsTr("Invalid")
+    
     property alias text: field.text
     property alias readOnly: field.readOnly
     readonly property alias editHeight: field.height
@@ -64,7 +67,7 @@ Item {
         anchors.bottom: parent.bottom
         height: field.height
         
-        text: qsTr("Invalid")
+        text: validMessage
         verticalAlignment: Text.AlignVCenter
         font.pointSize: Theme.fontSmall
         color: Theme.colorBee

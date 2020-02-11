@@ -10,11 +10,11 @@ Item {
     property string set_id
     
     function onExport() {
-        const path = App.exportSet(fileNameField.text, root.set_id)
-        if (path) {
-            dialog.path = path
-            dialog.open()
+        dialog.path = App.exportSet(fileNameField.text, root.set_id)
+        if (dialog.path) {
+            dialog.open();
         }
+        // or error?
     }
     
     function onNav() {
@@ -53,9 +53,11 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             
-            required: true
             label: qsTr("File name")
             placeholder: root.name + ".csv"
+            
+            validMessage: qsTr("Exists")
+            valid: !App.csvPathExists(text)
             
             Binding on text {
                 property: "text"

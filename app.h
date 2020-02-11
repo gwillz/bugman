@@ -2,7 +2,7 @@
 #define APPDATA_H
 
 #include <QObject>
-#include <QJsonDocument>
+#include <QFile>
 #include "entry.h"
 
 class QQmlEngine;
@@ -58,7 +58,7 @@ public:
     
     Q_INVOKABLE QString exportSet(const QString &fileName, int setId);
     
-    QString getExportPath(const QString fileName, int revision = 1) const;
+    Q_INVOKABLE bool csvPathExists(const QString &fileName) const;
     
     inline Q_INVOKABLE int nextSetId() const {
         return db.nextSetId();
