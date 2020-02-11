@@ -7,11 +7,28 @@ import AndroidFilter 1.0
 Item {
     id: root
     
+    implicitHeight: 700
+    implicitWidth: 420
+    
     property bool fullscreen: false
-//    property var position: ({})
+    property var preview: null
     
     function close() {
         root.fullscreen = false
+        root.reject();
+    }
+    
+    function reject() {
+        if (root.preview) {
+            const path = camera.imageCapture.capturedImagePath;
+            console.log("delete", path);
+            App.removeFile(path);
+        }
+        root.preview = null;
+    }
+    
+    function capture() {
+        camera.imageCapture.captureToLocation(App.imagePath);
     }
     
     AndroidFilter {
@@ -20,8 +37,39 @@ Item {
     
     Camera {
         id: camera
-        captureMode: Camera.CaptureViewfinder
+        captureMode: Camera.CaptureStillImage
         position: Camera.BackFace
+        focus.focusMode: CameraFocus.FocusAuto
+        focus.focusPointMode: CameraFocus.FocusPointCenter
+        
+        onLockStatusChanged: {
+            if (lockStatus === Camera.Locked) {
+                console.log("camera locked")
+                root.capture()
+            }
+            else if (lockStatus === Camera.Searching) {
+                console.log("camera searching")
+            }
+            else {
+                console.log("camera unlocked")
+            }
+        }
+        
+        imageCapture.onImageCaptured: {
+            root.preview = preview
+        }
+    }
+    
+    Timer {
+        id: timer
+        interval: 400
+        running: false
+        repeat: false
+        onTriggered: {
+            if (camera.lockStatus === Camera.Unlocked) {
+                capture();
+            }
+        }
     }
     
     Item {
@@ -40,10 +88,59 @@ Item {
             x: 10; y: 10
             width: 40
             height: 40
-            z: 2
+            z: 3
             
-            onClicked: {
-                root.fullscreen = false
+            onClicked: close()
+        }
+        
+        Image {
+            id: previewImage
+            fillMode: Image.PreserveAspectCrop
+            anchors.fill: parent
+            visible: !!preview
+            source: preview || ""
+            z: 2
+        }
+        
+        Row {
+            id: row
+            anchors.bottomMargin: parent.width * 0.1
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            spacing: parent.width * .4
+            visible: !!preview
+            z: 3
+            
+            Button {
+                id: acceptButton
+                icon.source: "/icons/tick.svg"
+                icon.color: "white"
+                width: 50
+                height: 50
+                
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: Theme.colorBee
+                    radius: 25
+                }
+                
+                onClicked: { preview = null }
+            }
+            
+            Button {
+                id: rejectButton
+                icon.source: "/icons/cross.svg"
+                icon.color: "white"
+                width: 50
+                height: 50
+                
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: Theme.colorBrick
+                    radius: 25
+                }
+                
+                onClicked: root.reject()
             }
         }
     }
@@ -98,7 +195,8 @@ Item {
                     root.fullscreen = true;
                 }
                 else {
-                    camera.imageCapture.capture()
+                    camera.searchAndLock()
+                    timer.start()
                 }
             }
         }

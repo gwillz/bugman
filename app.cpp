@@ -115,7 +115,7 @@ void App::loadTemplates() {
     qDebug() << "Templates:" << templates.size();
 }
 
-QStringList App::getImages() {
+QStringList App::getImages() const {
     QStringList paths;
     
     if (!imagePaths.isEmpty()) {
@@ -129,6 +129,14 @@ QStringList App::getImages() {
     }
     
     return paths;
+}
+
+QString App::getImagePath() const {
+    return imagePaths.last();
+}
+
+void App::removeFile(QString path) const {
+    QFile::remove(path);
 }
 
 QList<EntrySet> App::getData() const {

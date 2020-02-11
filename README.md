@@ -10,13 +10,12 @@
 - images:
     - image picker actions
     - load entry images
-    - copy new entry images
+    - copy existing images
     - export images zip
 
 #### fixes
 - fix home view first swipe panel
     - current workaround is gross
-- fix camera
 - fix editing sets
 
 #### housework

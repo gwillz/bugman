@@ -13,7 +13,7 @@ Item {
     enabled: false
     visible: false
     
-    signal accepted()
+    signal accepted(string image)
     signal rejected()
     
     property int offset: flick.height
