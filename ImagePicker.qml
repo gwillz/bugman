@@ -4,31 +4,31 @@ import QtMultimedia 5.14
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.12
 
+import AndroidFilter 1.0
+
 Item {
     id: root
-    parent: Overlay.overlay
-    anchors.fill: parent
 //    implicitWidth: 420
 //    implicitHeight: 420
     
+    parent: Window.contentItem
+    anchors.fill: parent
     enabled: false
     visible: false
     
     signal accepted()
     signal rejected()
     
+    property int offset: flick.height
+    
     Connections {
         target: Navigation
-        function onCloseDialog() {
-            root.close()
-        }
+        onCloseDialog: root.close()
     }
     
     onEnabledChanged: {
         Navigation.hasDialog = root.enabled
     }
-    
-    property int offset: flick.height
     
     function open() {
         offset = flick.height - 300
@@ -53,18 +53,6 @@ Item {
                 }
             }
         }
-    }
-    
-    Camera {
-        id: camera
-        captureMode: Camera.CaptureViewfinder
-        position: Camera.BackFace
-        
-        
-//        onAvailabilityChanged: console.log("avaiable", availability)
-//        onCameraStateChanged: console.log("state", cameraState)
-//        onCameraStatusChanged: console.log("status", cameraStatus)
-        onErrorStringChanged: console.log(errorString)
     }
     
     Binding {
@@ -109,6 +97,16 @@ Item {
         }
     }
     
+    AndroidFilter {
+        id: androidFilter
+    }
+    
+    Camera {
+        id: camera
+        captureMode: Camera.CaptureVideo
+        position: Camera.BackFace
+    }
+    
     Flickable {
         id: flick
         clip: true
@@ -151,14 +149,15 @@ Item {
                 
                 VideoOutput {
                     source: camera
-                    visible: false
-                    enabled: false
+                    visible: true
+                    enabled: true
                     clip: true
-                    
                     width: grid.itemWidth
                     height: width
                     fillMode: VideoOutput.PreserveAspectCrop
                     autoOrientation: true
+                    
+                    filters: [androidFilter]
                 }
                 
                 Repeater {
