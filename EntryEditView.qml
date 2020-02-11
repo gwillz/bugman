@@ -20,7 +20,10 @@ Item {
     property var fields: EntryModel.data[0].entries[0].fields
     
     property bool isEditing: false
-    property string invalid: ""
+    property int invalid: 0
+    
+    readonly property int validName: 1
+    readonly property int validCollector: 2
     
     function onCreate() {
         if (entry_set_id === 0) {
@@ -29,8 +32,8 @@ Item {
         }
         
         root.invalid =
-            !voucher ? "voucher" :
-            !collector ? "collector" : "";
+            (!voucher ? validName : 0) |
+            (!collector ? validCollector : 0);
         
         if (root.invalid) return;
         
@@ -68,6 +71,7 @@ Item {
             root.collector = data.collector || "";
             root.images = data.images || [];
             root.fields = data.fields || [];
+            root.invalid = 0;
         }
     }
     
@@ -124,9 +128,9 @@ Item {
                     text: voucher
                     onTextChanged: {
                         voucher = text;
-                        invalid = "";
+                        invalid &= ~validName;
                     }
-                    valid: root.invalid !== "voucher"
+                    valid: !(root.invalid & validName)
                 }
                 
                 StringField {
@@ -174,9 +178,9 @@ Item {
                     text: collector
                     onTextChanged: {
                         collector = text;
-                        invalid = "";
+                        invalid &= ~validCollector;
                     }
-                    valid: root.invalid !== "collector"
+                    valid: !(root.invalid & validCollector)
                 }
                 
                 Rectangle {
@@ -267,6 +271,10 @@ Item {
     
     ImagePicker {
         id: imageDialog
+        
+        onAccepted: {
+            console.log(image)
+        }
     }
 }
 

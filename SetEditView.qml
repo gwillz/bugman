@@ -12,13 +12,17 @@ Item {
     property string collector
     property bool isEditing: false
     
-    property string invalid: ""
+    property int invalid: 0
+    
+    readonly property int validName: 1
+    readonly property int validFormat: 2
+    readonly property int validCollector: 4
     
     function onCreate() {
         root.invalid =
-                !name ? "name" :
-                !voucher_format ? "voucher_format" :
-                !collector ? "collector" : "";
+                (!name ? validName : 0) |
+                (!voucher_format ? validFormat : 0) |
+                (!collector ? validCollector : 0);
         
         if (root.invalid) return;
         
@@ -52,6 +56,7 @@ Item {
             root.collector = data.collector || ""
             
             visualModel.model = data.fields || []
+            root.invalid = 0
         }
     }
     
@@ -99,9 +104,9 @@ Item {
                     text: name
                     onTextChanged: {
                         name = text;
-                        invalid = "";
+                        invalid &= ~validName;
                     }
-                    valid: invalid !== "name"
+                    valid: !(invalid & validName)
                 }
                 
                 StringField {
@@ -113,9 +118,9 @@ Item {
                     text: voucher_format
                     onTextChanged: {
                         voucher_format = text;
-                        invalid = "";
+                        invalid &= ~validFormat;
                     }
-                    valid: invalid !== "voucher_format"
+                    valid: !(invalid & validFormat)
                     
                     rightPadding: formatPreview.width + 16
                     
@@ -142,30 +147,24 @@ Item {
                     text: collector
                     onTextChanged: {
                         collector = text;
-                        invalid = "";
+                        invalid &= ~validCollector;
                     }
-                    valid: invalid !== "collector"
+                    valid: !(invalid & validCollector)
                 }
                 
                 Row {
                     id: row
-                    anchors.left: parent.left
-                    anchors.leftMargin: 30
                     spacing: 10
-//                    height: fieldLabel.height
                     
-                    Text {
+                    Label {
                         id: fieldLabel
-                        font.pointSize: Theme.fontBody
                         text: qsTr("Fields")
                     }
                     
                     Button {
                         id: addButton
                         text: qsTr("Add")
-                        anchors.bottom: parent.bottom
                         flat: true
-                        display: AbstractButton.IconOnly
                         icon.source: "icons/plus.svg"
                         padding: 0
                         width: height
@@ -177,7 +176,6 @@ Item {
                         id: clearButton
                         text: qsTr("Clear")
                         flat: true
-                        display: AbstractButton.IconOnly
                         icon.source: "icons/trash.svg"
                         padding: 0
                         width: height
