@@ -9,7 +9,6 @@
 - about view
 - images picker:
     - signals, pass path to edit view
-    - close fullscreen, then close picker
     - kinda jumps when closing
     - should be full height (can't see bottom row)
 - entry view:

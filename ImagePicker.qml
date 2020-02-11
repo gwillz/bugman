@@ -34,10 +34,14 @@ Item {
     }
     
     function close() {
-        enabled = false
-        offset = flick.height
-        flick.contentY = 0
-        camera.close()
+        if (camera.fullscreen) {
+            camera.close()
+        }
+        else {
+            enabled = false
+            offset = flick.height
+            flick.contentY = 0
+        }
     }
     
     Behavior on offset {
@@ -75,11 +79,9 @@ Item {
             
             Button {
                 id: closeButton
-                text: "close"
                 flat: true
-                display: AbstractButton.IconOnly
                 
-                icon.source: "icons/back.svg"
+                icon.source: "/icons/back.svg"
                 width: height
                 
                 onClicked: root.close()
@@ -115,7 +117,7 @@ Item {
         Rectangle {
             id: content
             color: "#fff"
-            implicitHeight: grid.height + header.height + 300
+            implicitHeight: grid.height + header.height + 450
             implicitWidth: flick.width
             y: offset
             
