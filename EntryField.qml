@@ -72,11 +72,6 @@ Item {
         
         validator: DoubleValidator {}
         inputMethodHints: Qt.ImhFormattedNumbersOnly
-        
-        background: Rectangle {
-            radius: 5
-            color: Theme.colorCloud
-        }
     }
     
     TextArea {
@@ -126,22 +121,9 @@ Item {
         
         model: ["one", "two", "three"]
         currentIndex: Math.max(0, model.indexOf(root.text))
+        
         onCurrentValueChanged: {
             if (enabled) root.text = currentValue
-        }
-        
-        contentItem: Text {
-            color: Theme.colorText
-            text: parent.currentText
-            bottomPadding: 5
-            topPadding: 5
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: Theme.fontBody
-        }
-        
-        background: Rectangle {
-            radius: 5
-            color: Theme.colorCloud
         }
     }
 }
