@@ -7,11 +7,16 @@
 
 #### features
 - about view
-- images:
-    - image picker actions
-    - load entry images
-    - copy existing images
-    - export images zip
+- images picker:
+    - signals, pass path to edit view
+    - close fullscreen, then close picker
+    - kinda jumps when closing
+    - should be full height (can't see bottom row)
+- entry view:
+    - record/copy images
+    - load images
+    - view images
+- export images zip
 
 #### fixes
 - fix home view first swipe panel

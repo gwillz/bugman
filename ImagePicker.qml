@@ -140,6 +140,7 @@ Item {
                     width: grid.itemWidth
                     height: width
                     z: 15
+                    layer.enabled: true
                 }
                 
                 Repeater {

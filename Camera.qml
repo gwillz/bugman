@@ -25,9 +25,13 @@ Item {
             App.removeFile(path);
         }
         root.preview = null;
+        timer.stop();
+        camera.unlock();
     }
     
     function capture() {
+        console.log("snap: capture");
+        camera.imageCapture.cancelCapture();
         camera.imageCapture.captureToLocation(App.imagePath);
     }
     
@@ -56,13 +60,14 @@ Item {
         }
         
         imageCapture.onImageCaptured: {
-            root.preview = preview
+            root.preview = preview;
+            camera.unlock();
         }
     }
     
     Timer {
         id: timer
-        interval: 400
+        interval: 600
         running: false
         repeat: false
         onTriggered: {
@@ -107,7 +112,7 @@ Item {
             anchors.bottomMargin: parent.width * 0.1
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            spacing: parent.width * .4
+            spacing: parent.width * 0.4
             visible: !!preview
             z: 3
             
@@ -194,9 +199,16 @@ Item {
                 if (!root.fullscreen) {
                     root.fullscreen = true;
                 }
+                else if (!timer.running && camera.lockStatus === Camera.Unlocked) {
+                    console.log("snap: init");
+                    timer.start();
+                    camera.searchAndLock();
+                }
                 else {
-                    camera.searchAndLock()
-                    timer.start()
+                    console.log("snap: force");
+                    timer.stop();
+                    camera.unlock();
+                    root.capture();
                 }
             }
         }
