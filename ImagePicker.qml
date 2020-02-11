@@ -1,10 +1,7 @@
 import QtQuick 2.14
 import QtQuick.Controls 2.13
-import QtMultimedia 5.14
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.12
-
-import AndroidFilter 1.0
 
 Item {
     id: root
@@ -40,6 +37,7 @@ Item {
         enabled = false
         offset = flick.height
         flick.contentY = 0
+        camera.close()
     }
     
     Behavior on offset {
@@ -97,16 +95,6 @@ Item {
         }
     }
     
-    AndroidFilter {
-        id: androidFilter
-    }
-    
-    Camera {
-        id: camera
-        captureMode: Camera.CaptureVideo
-        position: Camera.BackFace
-    }
-    
     Flickable {
         id: flick
         clip: true
@@ -147,17 +135,11 @@ Item {
                     return (grid.width - spacing) / grid.columns;
                 }
                 
-                VideoOutput {
-                    source: camera
-                    visible: true
-                    enabled: true
-                    clip: true
+                Camera {
+                    id: camera
                     width: grid.itemWidth
                     height: width
-                    fillMode: VideoOutput.PreserveAspectCrop
-                    autoOrientation: true
-                    
-                    filters: [androidFilter]
+                    z: 15
                 }
                 
                 Repeater {
