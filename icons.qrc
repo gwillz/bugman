@@ -10,5 +10,6 @@
         <file>icons/dropdown.svg</file>
         <file>icons/cross.svg</file>
         <file>icons/tick.svg</file>
+        <file>icons/focus.svg</file>
     </qresource>
 </RCC>

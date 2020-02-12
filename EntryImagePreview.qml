@@ -51,9 +51,8 @@ Item {
         height: 50
         
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: parent.width * 0.1
         anchors.right: parent.right
-        anchors.rightMargin: parent.width * 0.1
+        anchors.margins: 50
         
         flat: true
         checkable: true

@@ -2,6 +2,7 @@ import QtQuick 2.14
 import QtQuick.Controls 2.14
 import QtQuick.Window 2.14
 import QtMultimedia 5.14
+import QtGraphicalEffects 1.0
 import AndroidFilter 1.0
 
 Item {
@@ -12,6 +13,9 @@ Item {
     
     property bool fullscreen: false
     property var preview: null
+    property bool searching: false
+    property bool captureAfterSearch: false
+    property bool capturing: false
     
     function close() {
         root.fullscreen = false
@@ -24,13 +28,16 @@ Item {
             console.log("delete", path);
             App.removeFile(path);
         }
-        root.preview = null;
-        timer.stop();
+        
         camera.unlock();
+        root.preview = null;
+        root.searching = false;
     }
     
     function capture() {
-        console.log("snap: capture");
+        if (root.capturing) return;
+        
+        root.capturing = true;
         camera.imageCapture.cancelCapture();
         camera.imageCapture.captureToLocation(App.imagePath);
     }
@@ -44,36 +51,47 @@ Item {
         id: camera
         captureMode: Camera.CaptureStillImage
         position: Camera.BackFace
-        focus.focusMode: CameraFocus.FocusAuto
-        focus.focusPointMode: CameraFocus.FocusPointCenter
+        
+        focus {
+            focusMode: CameraFocus.FocusManual
+            focusPointMode: CameraFocus.FocusPointCenter
+        }
         
         onLockStatusChanged: {
             if (lockStatus === Camera.Locked) {
-                console.log("camera locked")
-                root.capture()
-            }
-            else if (lockStatus === Camera.Searching) {
-                console.log("camera searching")
-            }
-            else {
-                console.log("camera unlocked")
+                if (root.captureAfterSearch) {
+                    root.capture();
+                }
+                else {
+                    root.searching = false;
+                }
             }
         }
         
-        imageCapture.onImageCaptured: {
-            root.preview = preview;
-            camera.unlock();
+        imageCapture {
+            onImageCaptured: {
+                root.preview = preview;
+                camera.unlock();
+                root.capturing = false;
+                root.searching = false;
+            }
+            
+            onCaptureFailed: {
+                camera.unlock();
+                root.capturing = false;
+                root.searching = false;
+            }
         }
     }
     
     Timer {
         id: timer
-        interval: 600
         running: false
         repeat: false
+        interval: 500
         onTriggered: {
             if (camera.lockStatus === Camera.Unlocked) {
-                capture();
+                root.searching = false;
             }
         }
     }
@@ -100,6 +118,25 @@ Item {
         }
         
         Image {
+            id: focusIcon
+            anchors.centerIn: parent
+            z: 3
+            
+            visible: searching
+            source: "/icons/focus.svg"
+            width: 100
+            height: 100
+            
+            ColorOverlay {
+                source: focusIcon
+                anchors.fill: parent
+                color: "white"
+                antialiasing: true
+                smooth: true
+            }
+        }
+        
+        Image {
             id: previewImage
             fillMode: Image.PreserveAspectCrop
             anchors.fill: parent
@@ -110,28 +147,12 @@ Item {
         
         Row {
             id: row
-            anchors.bottomMargin: parent.width * 0.1
+            anchors.bottomMargin: 50
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            spacing: parent.width * 0.4
+            spacing: parent.width - 200
             visible: !!preview
             z: 3
-            
-            Button {
-                id: acceptButton
-                icon.source: "/icons/tick.svg"
-                icon.color: "white"
-                width: 50
-                height: 50
-                
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: Theme.colorBee
-                    radius: 25
-                }
-                
-                onClicked: { preview = null }
-            }
             
             Button {
                 id: rejectButton
@@ -147,6 +168,22 @@ Item {
                 }
                 
                 onClicked: root.reject()
+            }
+            
+            Button {
+                id: acceptButton
+                icon.source: "/icons/tick.svg"
+                icon.color: "white"
+                width: 50
+                height: 50
+                
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: Theme.colorBee
+                    radius: 25
+                }
+                
+                onClicked: { preview = null }
             }
         }
     }
@@ -200,17 +237,20 @@ Item {
                 if (!root.fullscreen) {
                     root.fullscreen = true;
                 }
-                else if (!timer.running && camera.lockStatus === Camera.Unlocked) {
-                    console.log("snap: init");
-                    timer.start();
-                    camera.searchAndLock();
+                else if (root.searching) {
+                    root.captureAfterSearch = true;
                 }
-                else {
-                    console.log("snap: force");
-                    timer.stop();
-                    camera.unlock();
+                else if (!root.preview) {
                     root.capture();
                 }
+            }
+            
+            onPressAndHold: {
+                if (root.preview) return;
+                
+                camera.searchAndLock();
+                root.searching = true;
+//                timer.start();
             }
         }
     }
