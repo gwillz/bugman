@@ -10,11 +10,9 @@
 - images picker:
     - signals, pass path to edit view
     - kinda jumps when closing
-    - should be full height (can't see bottom row)
-- entry view:
     - record/copy images
-    - load images
-    - view images
+- entry view:
+    - add/remove images
 - export images zip
 
 #### fixes

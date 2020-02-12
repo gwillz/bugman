@@ -147,11 +147,11 @@ Item {
                 
                 Repeater {
                     model: App.images
-                    delegate: Image {
+                    delegate: EntryImage {
                         width: grid.itemWidth
                         height: width
                         source: modelData
-                        fillMode: Image.PreserveAspectCrop
+                        overlay: imageOverlay
                     }
                 }
                 
@@ -165,7 +165,10 @@ Item {
 //                }
             }
         }
-        
+    }
+    
+    EntryImagePreview {
+        id: imageOverlay
     }
 }
 

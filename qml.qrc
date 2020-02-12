@@ -36,5 +36,7 @@
         <file>StringField.qml</file>
         <file>LouTheme/DialogButtonBox.qml</file>
         <file>Camera.qml</file>
+        <file>EntryImage.qml</file>
+        <file>EntryImagePreview.qml</file>
     </qresource>
 </RCC>

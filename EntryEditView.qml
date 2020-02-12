@@ -16,7 +16,7 @@ Item {
     property var position: ({})
     property string timestamp
     property string collector
-    property var images
+    property var images: ([])
     property var fields: EntryModel.data[0].entries[0].fields
     
     property bool isEditing: false
@@ -248,11 +248,14 @@ Item {
                     }
                     
                     Repeater {
-                        model: images
-                        delegate: Rectangle {
-                            color: "#fff"
+                        // Why??
+                        model: root.images.slice(0)
+                        
+                        delegate: EntryImage {
                             width: grid.itemWidth
                             height: width
+                            source: modelData
+                            overlay: imageOverlay
                         }
                     }
                 }
@@ -269,8 +272,14 @@ Item {
         }
     }
     
+    EntryImagePreview {
+        id: imageOverlay
+    }
+    
     ImagePicker {
         id: imageDialog
+        
+//        images: root.images
         
         onAccepted: {
             console.log(image)
