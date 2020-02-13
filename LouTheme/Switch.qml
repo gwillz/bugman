@@ -1,5 +1,7 @@
 import QtQuick 2.14
 import QtQuick.Templates 2.14 as T
+import QtQuick.Controls 2.14
+import QtQuick.Controls.impl 2.14
 import QtGraphicalEffects 1.14
 
 T.Switch {
@@ -18,8 +20,8 @@ T.Switch {
         
     }
     
-    indicator: Rectangle {
-        id: indicator
+    background: Rectangle {
+        id: background
         color: control.checked ? Theme.colorBee : Theme.colorBrick
         implicitWidth: 46
         implicitHeight: 26
@@ -30,49 +32,41 @@ T.Switch {
         Behavior on color {
             ColorAnimation { duration: 150 }
         }
+    }
+    
+    indicator: Rectangle {
+        id: indicator
+        y: background.y + 3
+        x: background.x + (control.checked ? background.width - width - 3 : 3)
+        color: Theme.colorCloud
+        radius: 10
+        width: 20
+        height: 20
         
-        Rectangle {
-            y: 3
-            x: control.checked ? parent.width - width - y : y
-            color: Theme.colorCloud
-            radius: 10
-            width: 20
-            height: 20
-            
-            Behavior on x {
-                PropertyAnimation {
-                    easing.type: Easing.OutCirc
-                }
+        Behavior on x {
+            PropertyAnimation {
+                easing.type: Easing.OutCirc
             }
+        }
+        
+        IconLabel {
+            anchors.fill: parent
+            anchors.margins: 2
             
-            Image {
-                id: tick
-                fillMode: Image.PreserveAspectFit
-                anchors.fill: parent
-                anchors.margins: 2
-                source: "/icons/tick.svg"
-                smooth: true
-                visible: false
+            icon.source: "/icons/tick.svg"
+            icon.color: Theme.colorBee
+            
+            opacity: control.checked ? 1 : 0
+            
+            Behavior on opacity {
+                PropertyAnimation { duration: 100 }
             }
-            
-            ColorOverlay {
-                anchors.fill: tick
-                source: tick
-                color: Theme.colorBee
-                
-                opacity: control.checked ? 1 : 0
-                
-                Behavior on opacity {
-                    PropertyAnimation { duration: 100 }
-                }
-            }
-            
         }
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:100;width:100}D{i:3;anchors_height:20;anchors_width:20}
+    D{i:0;autoSize:true;height:100;width:100}
 }
 ##^##*/

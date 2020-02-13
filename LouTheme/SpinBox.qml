@@ -29,6 +29,7 @@ T.SpinBox {
     contentItem: TextInput {
         z: 2
         text: control.textFromValue(control.value, control.locale)
+        verticalAlignment: Text.AlignVCenter
         
         font: control.font
         color: Theme.colorText
@@ -89,6 +90,6 @@ T.SpinBox {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:50;width:200}
 }
 ##^##*/

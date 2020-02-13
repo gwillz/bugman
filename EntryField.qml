@@ -93,9 +93,11 @@ Item {
         id: boolField
         visible: type === "switch"
         enabled: visible
-        anchors.top: parent.top
+        
         anchors.left: labelText.right
+        anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: 10
+        
         padding: 0
         checked: root.text === "yes"
 //        checked: true

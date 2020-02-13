@@ -22,9 +22,9 @@
 - remove filter hack fix after 5.14.2 update
 
 #### housework
-- migrate qlist to qmlpropertylist
 - separate entry types into separate files
 - some docs/comments
+- onTextChanged in EntryField and TemplateField is kinda dodgey
 
 #### future
 - swipedelegate for editing template fields
