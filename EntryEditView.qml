@@ -39,7 +39,8 @@ Item {
         
         console.log("save entry", entry_id, entry_set_id)
         
-        // It appears the QCoordinate object is a bit funny.
+        // It appears the QCoordinate object is a bit funny as a QVariant.
+        // Here we instead create a jsobject version of it.
         const {latitude, longitude, altitude} = position;
         
         const index = App.setEntry({
@@ -67,11 +68,13 @@ Item {
                 ? data.getNextVoucher()
                 : (data.voucher || "")
             root.timestamp = data.timestamp || +new Date() + ""
-            root.position = data.position || gps.position.coordinate;
+            root.position = data.position || Qt.binding(() => gps.position.coordinate);
             root.collector = data.collector || "";
             root.images = data.images ? data.images.slice(0) : [];
             root.fields = data.fields ? data.fields.slice(0) : [];
             root.invalid = 0;
+            
+            if (isEditing) gps.update();
         }
     }
     
@@ -88,14 +91,14 @@ Item {
         onIndexChanged: onNav()
     }
     
+    onPositionChanged: {
+        console.log("update", position)
+    }
+    
     PositionSource {
         id: gps
-        
-        onPositionChanged: {
-            if (!isEditing) {
-                root.position = position.coordinate
-            }
-        }
+        updateInterval: 5000
+        onUpdateTimeout: console.log("GPS timeout")
     }
     
     ColumnLayout {
@@ -166,13 +169,13 @@ Item {
                     Button {
                         id: refreshButton
                         
-                        display: AbstractButton.IconOnly
-                        text: qsTr("Refresh")
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
                         flat: true
-                        implicitWidth: height
-                        icon.source: "icons/refresh.svg"
+                        width: height
+                        icon.source: "/icons/refresh.svg"
+                        
+                        enabled: !isEditing
                         onClicked: gps.update()
                     }
                 }

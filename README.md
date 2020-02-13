@@ -14,6 +14,7 @@
 - entry view:
     - add/remove images
 - export images zip
+- prevent duplicate vouchers
 
 #### fixes
 - fix home view first swipe panel
@@ -22,6 +23,7 @@
 - remove filter hack fix after 5.14.2 update
 
 #### housework
+- migrate navigation to swipeview
 - separate entry types into separate files
 - some docs/comments
 - onTextChanged in EntryField and TemplateField is kinda dodgey
