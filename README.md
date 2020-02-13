@@ -7,26 +7,25 @@
 
 #### features
 - about view
-- images picker:
-    - signals, pass path to edit view
-    - kinda jumps when closing
-    - record/copy images
-- entry view:
-    - add/remove images
 - export images zip
 - prevent duplicate vouchers
+- swipe navigate images in full-screen
 
 #### fixes
 - fix home view first swipe panel
     - current workaround is gross
 - fix editing sets
 - remove filter hack fix after 5.14.2 update
+- images picker kinda jumps when closing
+- fix camera image orientation on saved files
+- move camera path to ".first()/Field Assistant"
 
 #### housework
-- migrate navigation to swipeview
+- migrate navigation to stackview
 - separate entry types into separate files
 - some docs/comments
 - onTextChanged in EntryField and TemplateField is kinda dodgey
+    - could Qt.binding() fix it?
 
 #### future
 - swipedelegate for editing template fields
