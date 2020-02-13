@@ -13,8 +13,7 @@ Item {
     enabled: false
     visible: false
     
-    signal accepted(string image)
-    signal rejected()
+    signal update()
     
     property var images: []
     property int offset: flick.height
@@ -39,10 +38,27 @@ Item {
             camera.close()
         }
         else {
-            enabled = false
-            offset = flick.height
-            flick.contentY = 0
+            enabled = false;
+            offset = flick.height;
+            flick.contentY = 0;
+            root.update();
         }
+    }
+    
+    function onToggleImage(image, toggle) {
+        const index = root.images.indexOf(image);
+        if (index >= 0 && !toggle) {
+            root.images.splice(index, 1);
+        }
+        else {
+            root.images.push(image);
+        }
+        root.imagesChanged();
+    }
+    
+    function onAddImage(image) {
+        root.images.push(image);
+        root.imagesChanged();
     }
     
     Behavior on offset {
@@ -144,15 +160,19 @@ Item {
                     height: width
                     z: 15
                     layer.enabled: true
+                    onCaptured: root.onAddImage(image)
                 }
                 
                 Repeater {
                     model: App.images
+                    
                     delegate: EntryImage {
                         width: grid.itemWidth
                         height: width
                         source: modelData
                         overlay: imageOverlay
+                        checked: images.indexOf(modelData) >= 0
+                        onToggled: root.onToggleImage(modelData, keep)
                     }
                 }
                 

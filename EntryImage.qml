@@ -8,12 +8,13 @@ Item {
     property string source
     property var overlay
     property bool fullscreen: false
+    property bool checked: true
     
     function open() {
         if (!overlay || root.fullscreen) return;
         
         root.fullscreen = true;
-        overlay.open(true);
+        overlay.open(root.checked);
         overlay.onClosed.connect(root.onClosed);
     }
     

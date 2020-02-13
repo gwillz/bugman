@@ -11,6 +11,8 @@ Item {
     implicitHeight: 700
     implicitWidth: 420
     
+    signal captured(string image)
+    
     property bool fullscreen: false
     property var preview: null
     property bool searching: false
@@ -20,6 +22,12 @@ Item {
     function close() {
         root.fullscreen = false
         root.reject();
+    }
+    
+    function accept() {
+        root.preview = null;
+        const path = "file:///" + camera.imageCapture.capturedImagePath;
+        root.captured(path);
     }
     
     function reject() {
@@ -183,7 +191,7 @@ Item {
                     radius: 25
                 }
                 
-                onClicked: { preview = null }
+                onClicked: root.accept()
             }
         }
     }

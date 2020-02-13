@@ -82,7 +82,7 @@ Item {
         const index = images.indexOf(item);
         if (index >= 0) {
             root.images.splice(index, 1);
-            root.images = root.images.slice(0)
+            root.imagesChanged();
         }
     }
     
@@ -291,12 +291,8 @@ Item {
     
     ImagePicker {
         id: imageDialog
-        
         images: root.images
-        
-        onAccepted: {
-            console.log(image)
-        }
+        onUpdate: root.imagesChanged()
     }
 }
 

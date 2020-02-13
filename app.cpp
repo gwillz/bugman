@@ -122,7 +122,7 @@ QStringList App::getImages() const {
         for (QString dirPath : imagePaths) {
             QDir dir(dirPath);
             
-            for (QString path : dir.entryList(QDir::Files)) {
+            for (QString path : dir.entryList(QDir::Files, QDir::Time)) {
                 paths.append("file:///" + dir.absoluteFilePath(path));
             }
         }
