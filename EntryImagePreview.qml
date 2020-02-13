@@ -9,6 +9,7 @@ Item {
 //    signal add(string image)
 //    signal remove(string image)
     
+    property alias toggleButton: toggleButton.visible
     property alias checked: toggleButton.checked
     
     function close() {

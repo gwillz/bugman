@@ -201,7 +201,33 @@ Frame {
                 
                 Repeater {
                     model: entry.fields
-                    delegate: EntryBlockItem { item: modelData }
+                    delegate: EntryBlockItem {
+                        item: modelData
+                        
+                    }
+                }
+            }
+            
+            Grid {
+                id: grid
+                spacing: 10
+                columns: 4
+                Layout.fillWidth: true
+                
+                property int itemWidth: {
+                    var spacing = (grid.columns - 1) * grid.spacing;
+                    return (grid.width - spacing) / grid.columns;
+                }
+                
+                Repeater {
+                    model: entry.images.slice(0)
+                    
+                    delegate: EntryImage {
+                        width: grid.itemWidth
+                        height: width
+                        source: modelData
+                        overlay: imageOverlay
+                    }
                 }
             }
             
@@ -231,6 +257,11 @@ Frame {
                 }
             }
         }
+    }
+    
+    EntryImagePreview {
+        id: imageOverlay
+        toggleButton: false
     }
     
     DeleteDialog {
