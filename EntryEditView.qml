@@ -69,9 +69,17 @@ Item {
             root.timestamp = data.timestamp || +new Date() + ""
             root.position = data.position || gps.position.coordinate;
             root.collector = data.collector || "";
-            root.images = data.images || [];
-            root.fields = data.fields || [];
+            root.images = data.images ? data.images.slice(0) : [];
+            root.fields = data.fields ? data.fields.slice(0) : [];
             root.invalid = 0;
+        }
+    }
+    
+    function onRemoveImage(item) {
+        const index = images.indexOf(item);
+        if (index >= 0) {
+            root.images.splice(index, 1);
+            root.images = root.images.slice(0)
         }
     }
     
@@ -248,14 +256,16 @@ Item {
                     }
                     
                     Repeater {
-                        // Why??
-                        model: root.images.slice(0)
+                        model: root.images
                         
                         delegate: EntryImage {
                             width: grid.itemWidth
                             height: width
                             source: modelData
                             overlay: imageOverlay
+                            onToggled: {
+                                if (!keep) root.onRemoveImage(modelData);
+                            }
                         }
                     }
                 }
@@ -279,7 +289,7 @@ Item {
     ImagePicker {
         id: imageDialog
         
-//        images: root.images
+        images: root.images
         
         onAccepted: {
             console.log(image)

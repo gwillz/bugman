@@ -16,6 +16,7 @@ Item {
     signal accepted(string image)
     signal rejected()
     
+    property var images: []
     property int offset: flick.height
     
     Connections {

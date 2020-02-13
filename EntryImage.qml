@@ -3,18 +3,27 @@ import QtQuick 2.0
 Item {
     id: root
     
+    signal toggled(bool keep)
+    
     property string source
     property var overlay
     property bool fullscreen: false
     
     function open() {
-        if (!overlay) return;
+        if (!overlay || root.fullscreen) return;
         
         root.fullscreen = true;
-        overlay.visible = true;
-        overlay.onClosed.connect(() => {
-            root.fullscreen = false;
-        });
+        overlay.open(true);
+        overlay.onClosed.connect(root.onClosed);
+    }
+    
+    function onClosed() {
+        root.fullscreen = false;
+        root.toggled(overlay.checked);
+        
+        if (overlay) {
+            overlay.onClosed.disconnect(onClosed);
+        }
     }
     
     Image {

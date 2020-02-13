@@ -16,6 +16,11 @@ Item {
         root.closed();
     }
     
+    function open(checked = true) {
+        root.visible = true;
+        toggleButton.checked = checked;
+    }
+    
     Connections {
         target: Navigation
         onCloseDialog: root.close()
