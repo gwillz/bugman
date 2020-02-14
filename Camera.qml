@@ -47,7 +47,7 @@ Item {
         
         root.capturing = true;
         camera.imageCapture.cancelCapture();
-        camera.imageCapture.captureToLocation(App.imagePath);
+        camera.imageCapture.captureToLocation(App.cameraPath);
     }
     
     // Remove this in 5.14.2 update.
@@ -162,35 +162,16 @@ Item {
             visible: !!preview
             z: 3
             
-            Button {
+            CircleButton {
                 id: rejectButton
-                icon.source: "/icons/cross.svg"
-                icon.color: "white"
-                width: 50
-                height: 50
-                
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: Theme.colorBrick
-                    radius: 25
-                }
-                
+                source: "/icons/cross.svg"
                 onClicked: root.reject()
             }
             
-            Button {
+            CircleButton {
                 id: acceptButton
-                icon.source: "/icons/tick.svg"
-                icon.color: "white"
-                width: 50
-                height: 50
-                
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: Theme.colorBee
-                    radius: 25
-                }
-                
+                highlighted: true
+                source: "/icons/tick.svg"
                 onClicked: root.accept()
             }
         }

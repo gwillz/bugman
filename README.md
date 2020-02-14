@@ -9,7 +9,6 @@
 - about view
 - export images zip
 - prevent duplicate vouchers
-- swipe navigate images in full-screen
 
 #### fixes
 - fix home view first swipe panel
@@ -17,8 +16,9 @@
 - fix editing sets
 - remove filter hack fix after 5.14.2 update
 - images picker kinda jumps when closing
+- the image preview slides side-to-side when opening
 - fix camera image orientation on saved files
-- move camera path to ".first()/Field Assistant"
+- I think the position doesn't update properly
 
 #### housework
 - migrate navigation to stackview

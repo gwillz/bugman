@@ -16,12 +16,13 @@ class App : public QObject {
     Q_PROPERTY(QStringList images READ getImages NOTIFY imagesChanged)
     Q_PROPERTY(QList<EntrySet> sets READ getData NOTIFY dataChanged)
     Q_PROPERTY(QList<EntryTemplate> templates MEMBER templates CONSTANT)
-    Q_PROPERTY(QString imagePath READ getImagePath CONSTANT)
+    Q_PROPERTY(QString cameraPath MEMBER cameraPath CONSTANT)
     
     QFileSystemWatcher* imageWatcher;
-    QStringList imagePaths;
     
     QString appPath;
+    QString imagesPath;
+    QString cameraPath;
     QString csvPath;
     QString dbPath;
     
@@ -41,8 +42,6 @@ public:
     static void registerSingleton(QQmlEngine* engine);
     
     QStringList getImages() const;
-    
-    QString getImagePath() const;
     
     QList<EntrySet> getData() const;
     
