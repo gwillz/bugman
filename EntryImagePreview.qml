@@ -37,6 +37,13 @@ Item {
         }
     }
     
+    function jump(image) {
+        const index = root.images.indexOf(image);
+        if (index >= 0) {
+            swipeView.currentIndex = index;
+        }
+    }
+    
     Connections {
         target: Navigation
         onCloseDialog: root.close()
@@ -57,20 +64,6 @@ Item {
         PropertyAnimation {
             easing.type: Easing.OutCirc
         }
-    }
-    
-    Button {
-        id: exitButton
-        flat: true
-        highlighted: true
-        icon.source: "/icons/cross.svg"
-        icon.color: "white"
-        width: 40
-        height: 40
-        x: 10
-        y: 10
-        z: 3
-        onClicked: root.close()
     }
     
     SwipeView {
@@ -97,38 +90,73 @@ Item {
                         source: modelData
                     }
                     
-                    // Make this an external component.
-                    Button {
+                    CircleButton {
                         id: toggleButton
-                        width: 50
-                        height: 50
-                        
-                        anchors.bottom: parent.bottom
-                        anchors.right: parent.right
-                        anchors.margins: 50
-                        
-                        flat: true
                         checkable: true
                         visible: root.checkable
+                        highlighted: true
+                        source: "/icons/tick.svg"
                         
-                        icon.source: checked ? "/icons/tick.svg" : ""
-                        icon.color: "white"
-                        z: 3
+                        anchors.right: parent.right
+                        anchors.rightMargin: 50
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 150
                         
                         checked: root.selection.indexOf(modelData) >= 0
                         onClicked: root.toggle(modelData)
-                        
-                        background: Rectangle {
-                            anchors.fill: parent
-                            color: toggleButton.checked ? Theme.colorBee : "transparent"
-                            radius: 25
-                            border.width: 3
-                            border.color: Theme.colorBee
-                        }
                     }
                 }
             }
         }
+    }
+    
+    Row {
+        id: imageBar
+        x: root.width / 2 - 50 - swipeView.currentIndex * 100
+        anchors.bottom: parent.bottom
+        height: 100
+        spacing: 10
+        
+        Behavior on x {
+            PropertyAnimation {
+                easing.type: Easing.OutCirc
+            }
+        }
+        
+        Repeater {
+            model: root.images
+            
+            Loader {
+                active: index > swipeView.currentIndex - 6 &&
+                        index < swipeView.currentIndex + 6
+                width: 100
+                height: 100
+                
+                Image {
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectCrop
+                    source: modelData
+                    
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: root.jump(modelData)
+                    }
+                }
+            }
+        }
+    }
+    
+    Button {
+        id: exitButton
+        flat: true
+        highlighted: true
+        icon.source: "/icons/cross.svg"
+        icon.color: "white"
+        width: 40
+        height: 40
+        x: 10
+        y: 10
+        onClicked: root.close()
     }
     
     // Page indicator?

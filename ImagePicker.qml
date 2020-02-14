@@ -129,19 +129,15 @@ Item {
             
             Grid {
                 id: grid
-                columns: 4
-                columnSpacing: 10
-                rowSpacing: 10
+                spacing: 10
                 anchors.top: parent.top
                 anchors.topMargin: header.height
                 anchors.right: parent.right
                 anchors.left: parent.left
                 anchors.margins: 10
                 
-                property int itemWidth: {
-                    var spacing = (grid.columns - 1) * grid.rowSpacing;
-                    return (grid.width - spacing) / grid.columns;
-                }
+                columns: Math.floor(width / 100)
+                property int itemWidth: (width + spacing) / columns - spacing
                 
                 Camera {
                     id: camera

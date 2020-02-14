@@ -211,13 +211,10 @@ Frame {
             Grid {
                 id: grid
                 spacing: 10
-                columns: 4
                 Layout.fillWidth: true
                 
-                property int itemWidth: {
-                    var spacing = (grid.columns - 1) * grid.spacing;
-                    return (grid.width - spacing) / grid.columns;
-                }
+                columns: Math.floor(width / 100)
+                property int itemWidth: (width + spacing) / columns - spacing
                 
                 Repeater {
                     model: entry.images.slice(0)

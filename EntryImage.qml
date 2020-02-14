@@ -21,5 +21,19 @@ Item {
             anchors.fill: parent
             onClicked: root.clicked()
         }
+        
+        CircleButton {
+            size: 25
+            source: "/icons/tick.svg"
+            checkable: true
+            highlighted: true
+            checked: true
+            enabled: false
+            visible: root.checked
+            
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.margins: 10
+        }
     }
 }

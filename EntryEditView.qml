@@ -233,15 +233,12 @@ Item {
                 Grid {
                     id: grid
                     spacing: 10
-                    columns: 4
                     
                     anchors.left: parent.left
                     anchors.right: parent.right
                     
-                    property int itemWidth: {
-                        var spacing = (grid.columns - 1) * grid.spacing;
-                        return (grid.width - spacing) / grid.columns;
-                    }
+                    columns: Math.floor(width / 100)
+                    property int itemWidth: (width + spacing) / columns - spacing
                     
                     Button {
                         id: imageButton
