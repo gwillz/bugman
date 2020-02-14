@@ -45,18 +45,7 @@ Item {
         }
     }
     
-    function onToggleImage(image, toggle) {
-        const index = root.images.indexOf(image);
-        if (index >= 0 && !toggle) {
-            root.images.splice(index, 1);
-        }
-        else {
-            root.images.push(image);
-        }
-        root.imagesChanged();
-    }
-    
-    function onAddImage(image) {
+    function addImage(image) {
         root.images.push(image);
         root.imagesChanged();
     }
@@ -160,7 +149,7 @@ Item {
                     height: width
                     z: 15
                     layer.enabled: true
-                    onCaptured: root.onAddImage(image)
+                    onCaptured: root.addImage(image)
                 }
                 
                 Repeater {
@@ -170,26 +159,22 @@ Item {
                         width: grid.itemWidth
                         height: width
                         source: modelData
-                        overlay: imageOverlay
-                        checked: images.indexOf(modelData) >= 0
-                        onToggled: root.onToggleImage(modelData, keep)
+                        
+                        checked: root.images.indexOf(modelData) >= 0
+                        onClicked: imagePreview.open(modelData)
                     }
                 }
-                
-//                Repeater {
-//                    model: 40
-//                    delegate: Rectangle {
-//                        color: "#000"
-//                        width: grid.itemWidth
-//                        height: width
-//                    }
-//                }
             }
         }
     }
     
     EntryImagePreview {
-        id: imageOverlay
+        id: imagePreview
+        checkable: true
+        
+        images: App.images
+        selection: root.images
+        onImagesChanged: root.imagesChanged()
     }
 }
 

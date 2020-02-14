@@ -265,10 +265,8 @@ Item {
                             width: grid.itemWidth
                             height: width
                             source: modelData
-                            overlay: imageOverlay
-                            onToggled: {
-                                if (!keep) root.onRemoveImage(modelData);
-                            }
+                            checked: true
+                            onClicked: imagePreview.open(modelData)
                         }
                     }
                 }
@@ -286,11 +284,17 @@ Item {
     }
     
     EntryImagePreview {
-        id: imageOverlay
+        id: imagePreview
+        checkable: true
+        
+        images: root.images.slice(0)
+        selection: root.images
+        onImagesChanged: root.imagesChanged()
     }
     
     ImagePicker {
         id: imageDialog
+        
         images: root.images
         onUpdate: root.imagesChanged()
     }

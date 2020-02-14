@@ -226,7 +226,8 @@ Frame {
                         width: grid.itemWidth
                         height: width
                         source: modelData
-                        overlay: imageOverlay
+                        checked: false
+                        onClicked: imagePreview.open(modelData)
                     }
                 }
             }
@@ -260,8 +261,9 @@ Frame {
     }
     
     EntryImagePreview {
-        id: imageOverlay
-        toggleButton: false
+        id: imagePreview
+        checkable: false
+        images: entry.images.slice(0)
     }
     
     DeleteDialog {

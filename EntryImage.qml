@@ -3,29 +3,12 @@ import QtQuick 2.0
 Item {
     id: root
     
-    signal toggled(bool keep)
+    signal clicked()
     
     property string source
-    property var overlay
-    property bool fullscreen: false
-    property bool checked: true
+    property bool checked: false
     
-    function open() {
-        if (!overlay || root.fullscreen) return;
-        
-        root.fullscreen = true;
-        overlay.open(root.checked);
-        overlay.onClosed.connect(root.onClosed);
-    }
-    
-    function onClosed() {
-        root.fullscreen = false;
-        root.toggled(overlay.checked);
-        
-        if (overlay) {
-            overlay.onClosed.disconnect(onClosed);
-        }
-    }
+    // Add a checked icon.
     
     Image {
         id: image
@@ -36,40 +19,7 @@ Item {
         
         MouseArea {
             anchors.fill: parent
-            onClicked: root.open()
-        }
-        
-        states: [
-            State {
-                when: root.fullscreen
-                ParentChange {
-                    target: image
-                    parent: overlay
-                    width: parent.width
-                    height: parent.height
-                    x: 0
-                    y: 0
-                }
-            },
-            State {
-                when: !root.fullscreen
-                ParentChange {
-                    target: image
-                    parent: root
-                    width: parent.width
-                    height: parent.height
-                }
-            }
-    
-        ]
-        
-        transitions: Transition {
-            ParentAnimation {
-                NumberAnimation {
-                    properties: "x,y,width,height"
-                    easing.type: Easing.OutCirc
-                }
-            }
+            onClicked: root.clicked()
         }
     }
 }
