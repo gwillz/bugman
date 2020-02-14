@@ -19,6 +19,7 @@
 - the image preview slides side-to-side when opening
 - fix camera image orientation on saved files
 - I think the position doesn't update properly
+- the "active" state for the imagebar loader doesn't really work
 
 #### housework
 - migrate navigation to stackview

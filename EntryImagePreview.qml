@@ -112,7 +112,7 @@ Item {
     
     Row {
         id: imageBar
-        x: root.width / 2 - 50 - swipeView.currentIndex * 100
+        x: root.width / 2 - 55 - swipeView.currentIndex * 110
         anchors.bottom: parent.bottom
         height: 100
         spacing: 10
@@ -132,15 +132,11 @@ Item {
                 width: 100
                 height: 100
                 
-                Image {
+                EntryImage {
                     anchors.fill: parent
-                    fillMode: Image.PreserveAspectCrop
                     source: modelData
-                    
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: root.jump(modelData)
-                    }
+                    checked: root.selection.indexOf(modelData) >= 0
+                    onClicked: root.jump(modelData)
                 }
             }
         }
