@@ -6,17 +6,11 @@ Dialog {
     
     signal accepted(var template)
     
-    Connections {
-        target: Navigation
-        function onCloseDialog() {
-            if (root.visible) root.reject();
-            else root.close();
-        }
-    }
-    
-    onVisibleChanged: {
-        Navigation.hasDialog = root.visible
-    }
+//    Keys.onBackPressed: {
+//        console.log("dialog back");
+//        event.accepted = true;
+//        visible ? reject() : close();
+//    }
     
     width: 320
     height: parent.height * 0.75

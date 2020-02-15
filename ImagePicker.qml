@@ -18,15 +18,6 @@ Item {
     property var images: []
     property int offset: flick.height
     
-    Connections {
-        target: Navigation
-        onCloseDialog: root.close()
-    }
-    
-    onEnabledChanged: {
-        Navigation.hasDialog = root.enabled
-    }
-    
     function open() {
         offset = flick.height - 300
         enabled = true
@@ -48,6 +39,11 @@ Item {
     function addImage(image) {
         root.images.push(image);
         root.imagesChanged();
+    }
+    
+    Keys.onBackPressed: {
+        event.accepted = true;
+        close();
     }
     
     Behavior on offset {

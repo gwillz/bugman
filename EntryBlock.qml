@@ -16,11 +16,11 @@ Frame {
     
     function onRemove() {
         const index = App.removeEntry(entry.entry_set_id, entry.entry_id);
-        Navigation.navigate(Navigation.homeView, index);
+        nav.replace(null, "HomeView.qml", { index });
     }
     
     function onEdit() {
-        Navigation.navigate(Navigation.entryEditView, entry)
+        nav.push("EntryEditView.qml", { entry });
     }
     
     background: Rectangle { visible: false }

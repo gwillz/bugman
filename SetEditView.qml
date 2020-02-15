@@ -6,11 +6,13 @@ import QtQml.Models 2.12
 Item {
     id: root
     
-    property var set_id
-    property string name
-    property string voucher_format
-    property string collector
-    property bool isEditing: false
+    property var entrySet: ({})
+    
+    property var set_id: entrySet.set_id || App.nextSetId()
+    property string name: entrySet.name || ""
+    property string voucher_format: entrySet.voucher_format || "E%03d"
+    property string collector: entrySet.collector || ""
+    property bool isEditing: !!entrySet.set_id
     
     property int invalid: 0
     
@@ -43,26 +45,7 @@ Item {
             fields,
         });
         
-        Navigation.navigate(Navigation.homeView, index);
-    }
-    
-    function onNav() {
-        const {index, data} = Navigation;
-        if (index === Navigation.setEditView) {
-            root.isEditing = !!data.set_id
-            root.set_id = data.set_id || App.nextSetId()
-            root.name = data.name  || ""
-            root.voucher_format = data.voucher_format || "E%03d"
-            root.collector = data.collector || ""
-            
-            visualModel.model = data.fields || []
-            root.invalid = 0
-        }
-    }
-    
-    Connections {
-        target: Navigation
-        onIndexChanged: onNav()
+        nav.replace(null, "HomeView.qml", { index });
     }
     
     implicitWidth: 520
@@ -187,11 +170,12 @@ Item {
                 Button {
                     id: templateButton
                     text: qsTr("Load from template")
-                    visible: visualModel.count === 0
+                    visible: visualModel.items.count === 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     onClicked: templatesDialog.open()
                 }
                 
+                // Hack spacing.
                 Item { height: 1; width: parent.width }
             }
             
@@ -211,7 +195,7 @@ Item {
     
     DelegateModel {
        id: visualModel
-       model: Navigation.data.fields || []
+       model: entrySet.fields || []
        delegate: dragDelegate
     }
     

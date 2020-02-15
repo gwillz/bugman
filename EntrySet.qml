@@ -12,15 +12,15 @@ Item {
     implicitHeight: 600
     
     function onNewEntry() {
-        Navigation.navigate(Navigation.entryEditView, entrySet)
+        nav.push("EntryEditView.qml", { entrySet });
     }
     
     function onExportSet() {
-        Navigation.navigate(Navigation.setSaveView, entrySet)
+        nav.push("SetSaveView.qml", { entrySet });
     }
     
     function onEditSet() {
-        Navigation.navigate(Navigation.setEditView, entrySet)
+        nav.push("SetEditView.qml", { entrySet });
     }
     
     Item {
@@ -106,12 +106,12 @@ Item {
     
     DeleteDialog {
         id: deleteDialog
-        title: "Delete Set"
+        title: qsTr("Delete Set")
         target: entrySet.name
         
         onAccepted: {
             const index = App.removeSet(entrySet.set_id);
-            Navigation.navigate(Navigation.homeView, index);
+            nav.replace(null, "HomeView.qml", { index });
         }
     }
 }

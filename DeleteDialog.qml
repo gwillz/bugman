@@ -7,17 +7,13 @@ Dialog {
     property var target
     property string text: qsTr("Delete \"%1\", are you sure?").arg(root.target)
     
-    Connections {
-        target: Navigation
-        function onCloseDialog() {
-            if (root.visible) root.reject();
-            else root.close();
-        }
-    }
+//    Keys.onBackPressed: {
+//        console.log("dialog back");
+//        event.accepted = true;
+//        visible ? reject() : close();
+//    }
     
     onVisibleChanged: {
-        Navigation.hasDialog = root.visible
-        
         if (root.visible) {
             deleteButton.enabled = false
             timer.start()

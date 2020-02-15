@@ -1,11 +1,15 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
-import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.12
 
 Item {
     id: root
     implicitHeight: 80
     implicitWidth: 520
+    
+    signal back()
+    signal about()
+    
+    property bool active: false
     
     Rectangle {
         id: headerBg
@@ -15,7 +19,7 @@ Item {
     
     Button {
         id: backButton
-        enabled: !Navigation.isHome
+        enabled: active
         opacity: enabled ? 1 : 0.3
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -24,8 +28,8 @@ Item {
         icon.height: 40
         icon.width: 40
         padding: 10
-        icon.source: "icons/back.svg"
-        onClicked: Navigation.navigate(Navigation.homeView)
+        icon.source: "/icons/back.svg"
+        onClicked: root.back()
     }
     
     Text {
@@ -40,12 +44,12 @@ Item {
         flat: true
         anchors.right: parent.right
         anchors.rightMargin: 10
-        icon.source: "icons/bugman_logo.svg"
+        icon.source: "/icons/bugman_logo.svg"
         icon.color: Theme.colorBee
         icon.height: 55
         icon.width: 55
         padding: 5
-        onClicked: Navigation.navigate(Navigation.aboutView)
+        onClicked: root.about()
     }
 }
 

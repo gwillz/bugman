@@ -6,8 +6,9 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    property string name
-    property string set_id
+    property var entrySet
+    property string name: entrySet.name
+    property string set_id: entrySet.set_id
     
     function onExport() {
         dialog.path = App.exportSet(fileNameField.text, root.set_id)
@@ -15,19 +16,6 @@ Item {
             dialog.open();
         }
         // or error?
-    }
-    
-    function onNav() {
-        const {index, data} = Navigation;
-        if (index === Navigation.setSaveView) {
-            root.name = data.name;
-            root.set_id = data.set_id;
-        }
-    }
-    
-    Connections {
-        target: Navigation
-        onIndexChanged: onNav()
     }
     
     Column {
@@ -84,16 +72,10 @@ Item {
         width: 320
         standardButtons: Dialog.Ok
         
-        Connections {
-            target: Navigation
-            function onCloseDialog() {
-                if (dialog.visible) dialog.reject();
-                else dialog.close();
-            }
-        }
-        
-        onVisibleChanged: {
-            Navigation.hasDialog = dialog.visible
+        Keys.onBackPressed: {
+            console.log("dialog back")
+            event.accepted = true;
+            visible ? reject() : close();
         }
         
         Text {

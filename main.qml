@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
-import QtQuick.Layouts 1.3
 
 ApplicationWindow {
     id: root
@@ -11,50 +10,54 @@ ApplicationWindow {
     width: 520
     color: Theme.colorStone
     
-    onClosing: {
-        close.accepted = Navigation.isExitReady;
-        Navigation.goBack();
+//    onClosing: {
+//        close.accepted = Navigation.isExitReady;
+//        Navigation.goBack();
+//    }
+    
+    Header {
+        id: header
+        z: 100
+        active: nav.depth > 1
+        onBack: nav.pop()
+        onAbout: nav.push("AboutView.qml")
     }
     
-    ColumnLayout {
-        id: columnLayout
-        spacing: 0
-        anchors.fill: parent
+    StackView {
+        id: nav
+        anchors.top: header.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         
-        Header {
-            id: header
-            z: 100
-            Layout.fillWidth: true
+        initialItem: "HomeView.qml"
+        
+        Keys.onBackPressed: {
+            event.accepted = nav.depth > 1
+            
+            console.log("root back")
+            console.log(nav.depth)
         }
         
-        StackLayout {
-            id: stackLayout
-            width: 100
-            height: 100
-            Layout.fillWidth: true
-            Layout.margins: 10
-            currentIndex: Navigation.index
-            
-            HomeView {
-                id: homeView
-            }
-            
-            AboutView {
-                id: aboutView
-            }
-            
-            EntryEditView {
-                id: entryEditView
-            }
-            
-            SetEditView {
-                id: setEditView
-            }
-            
-            SetSaveView {
-                id: saveSetView
-            }
-        }
+//        HomeView {
+//            id: homeView
+//        }
+        
+//        AboutView {
+//            id: aboutView
+//        }
+        
+//        EntryEditView {
+//            id: entryEditView
+//        }
+        
+//        SetEditView {
+//            id: setEditView
+//        }
+        
+//        SetSaveView {
+//            id: saveSetView
+//        }
     }
 }
 

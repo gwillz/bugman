@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 
-Item {
+Frame {
     id: root
     
     property var images: ([])
@@ -44,13 +44,14 @@ Item {
         }
     }
     
-    Connections {
-        target: Navigation
-        onCloseDialog: root.close()
+    Keys.onBackPressed: {
+        event.accepted = true;
+        close();
     }
     
-    onEnabledChanged: {
-        Navigation.hasDialog = root.enabled
+    background: Rectangle {
+        anchors.fill: parent
+        color: "black"
     }
     
     parent: Window.contentItem

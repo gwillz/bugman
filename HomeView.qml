@@ -6,18 +6,7 @@ Item {
     implicitHeight: 900
     implicitWidth: 520
     
-    function onNav() {
-        const {index, data} = Navigation;
-        
-        if (index === Navigation.homeView && typeof data === "number") {
-            swipeView.currentIndex = Math.min(swipeView.currentIndex, Math.max(0, data));
-        }
-    }
-    
-    Connections {
-        target: Navigation
-        onIndexChanged: onNav()
-    }
+    property alias index: swipeView.currentIndex
     
     SwipeView {
         id: swipeView
@@ -37,16 +26,16 @@ Item {
         }
         
         Item {
-            Component.onCompleted: {
-                swipeView.currentIndex = 0
-            }
+//            Component.onCompleted: {
+//                swipeView.currentIndex = 0
+//            }
             
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("Add Set")
                 highlighted: true
-                onClicked: Navigation.navigate(Navigation.setEditView)
+                onClicked: nav.push("SetEditView.qml")
             }
         }
     }

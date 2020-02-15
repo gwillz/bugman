@@ -8,18 +8,6 @@ Dialog {
     property string type: ""
     property bool valid: !!name
     
-    Connections {
-        target: Navigation
-        function onCloseDialog() {
-            if (root.visible) root.reject();
-            else root.close();
-        }
-    }
-    
-    onVisibleChanged: {
-        Navigation.hasDialog = root.visible
-    }
-    
     title: qsTr("Edit Field")
     
     Column {

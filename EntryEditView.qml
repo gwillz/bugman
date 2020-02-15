@@ -10,16 +10,20 @@ Item {
     implicitHeight: 720
     implicitWidth: 420
     
-    property int entry_id
-    property int entry_set_id
-    property string voucher
-    property var position: ({})
-    property string timestamp
-    property string collector
-    property var images: ([])
-    property var fields: EntryModel.data[0].entries[0].fields
+    property var entrySet
+    property var entry
     
-    property bool isEditing: false
+    property int entry_id: entry.entry_id || App.nextEntryId()
+    property int entry_set_id: entry.entry_set_id || entrySet.set_id || 0
+    property string voucher: entry.voucher || entrySet.getNextVoucher()
+    property var position: entry.position || gps.position.coordinate
+    property string timestamp: entry.timestamp || +new Date() + ""
+    property string collector: entry.collector || entrySet.collector
+    property var images: entry.images ? entry.images.slice(0) : []
+    property var fields: entry.fields ? entry.fields.slice(0) : []
+//    EntryModel.data[0].entries[0].fields
+    
+    property bool isEditing: !entry
     property int invalid: 0
     
     readonly property int validName: 1
@@ -52,43 +56,9 @@ Item {
             collector,
             images,
             fields,
-        })
+        });
         
-        Navigation.navigate(Navigation.homeView, index)
-    }
-    
-    function onNav() {
-        const {index, data} = Navigation;
-        
-        if (index === Navigation.entryEditView) {
-            root.isEditing = !!data.entry_id
-            root.entry_id = data.entry_id || App.nextEntryId()
-            root.entry_set_id = data.entry_set_id || data.set_id || 0;
-            root.voucher = data.getNextVoucher
-                ? data.getNextVoucher()
-                : (data.voucher || "")
-            root.timestamp = data.timestamp || +new Date() + ""
-            root.position = data.position || Qt.binding(() => gps.position.coordinate);
-            root.collector = data.collector || "";
-            root.images = data.images ? data.images.slice(0) : [];
-            root.fields = data.fields ? data.fields.slice(0) : [];
-            root.invalid = 0;
-            
-            if (isEditing) gps.update();
-        }
-    }
-    
-    function onRemoveImage(item) {
-        const index = images.indexOf(item);
-        if (index >= 0) {
-            root.images.splice(index, 1);
-            root.imagesChanged();
-        }
-    }
-    
-    Connections {
-        target: Navigation
-        onIndexChanged: onNav()
+        nav.replace(null, "HomeView.qml", { index });
     }
     
     onPositionChanged: {
