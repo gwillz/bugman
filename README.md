@@ -18,8 +18,12 @@
 - images picker kinda jumps when closing
 - the image preview slides side-to-side when opening
 - fix camera image orientation on saved files
-- I think the position doesn't update properly
+- I think the gps position doesn't update properly
 - the "active" state for the imagebar loader doesn't really work
+- bugman logo is missing now?
+- back button
+- remove ticks on entryblock imagebar
+- image preview can see a thin slide of each image neighbour
 
 #### housework
 - migrate navigation to stackview
