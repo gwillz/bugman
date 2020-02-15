@@ -1,8 +1,7 @@
-import QtQuick 2.14
-import QtQuick.Templates 2.14 as T
-import QtQuick.Controls 2.14
+import QtQuick 2.12
+import QtQuick.Templates 2.12 as T
+import QtQuick.Controls 2.12
 import QtQuick.Controls.impl 2.12
-import QtGraphicalEffects 1.14
 
 AbstractButton {
     id: control
@@ -31,7 +30,7 @@ AbstractButton {
 //    enabled: false
 //    text: "Button"
 //    icon.source: "/icons/cross.svg"
-    
+
     contentItem: IconLabel {
         spacing: control.spacing
         mirrored: control.mirrored

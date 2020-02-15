@@ -1,5 +1,5 @@
-import QtQuick 2.14
-import QtQuick.Controls 2.14
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 Item {
     id: root
@@ -124,8 +124,8 @@ Item {
         model: ["one", "two", "three"]
         currentIndex: Math.max(0, model.indexOf(root.text))
         
-        onCurrentValueChanged: {
-            if (enabled) root.text = currentValue
+        onCurrentIndexChanged: {
+            if (enabled) root.text = model[currentIndex]
         }
     }
 }

@@ -1,7 +1,7 @@
-import QtQuick 2.14
-import QtQuick.Templates 2.14 as T
-import QtQuick.Controls 2.14
-import QtGraphicalEffects 1.14
+import QtQuick 2.12
+import QtQuick.Templates 2.12 as T
+import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
 
 T.ComboBox {
     id: control
