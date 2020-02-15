@@ -72,11 +72,11 @@ Item {
         width: 320
         standardButtons: Dialog.Ok
         
-        Keys.onBackPressed: {
-            console.log("dialog back")
-            event.accepted = true;
-            visible ? reject() : close();
-        }
+//        Keys.onBackPressed: {
+//            console.log("dialog back")
+//            event.accepted = true;
+//            visible ? reject() : close();
+//        }
         
         Text {
             id: content

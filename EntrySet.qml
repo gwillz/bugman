@@ -27,9 +27,8 @@ Item {
         id: header
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: 10
         anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.margins: 10
         
         implicitHeight: Math.max(title.height, buttons.height)
         
@@ -76,7 +75,6 @@ Item {
     
     ListView {
         id: listView
-        topMargin: 10
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: header.bottom

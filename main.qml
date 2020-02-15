@@ -26,17 +26,15 @@ ApplicationWindow {
     StackView {
         id: nav
         anchors.top: header.bottom
+        anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
         
         initialItem: "HomeView.qml"
         
         Keys.onBackPressed: {
+            nav.pop();
             event.accepted = nav.depth > 1
-            
-            console.log("root back")
-            console.log(nav.depth)
         }
         
 //        HomeView {

@@ -52,8 +52,9 @@ Item {
     implicitHeight: 900
     
     ColumnLayout {
-        anchors.fill: parent
         spacing: 10
+        anchors.fill: parent
+        anchors.margins: 10
         
         Text {
             text: isEditing

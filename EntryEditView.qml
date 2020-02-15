@@ -11,8 +11,9 @@ Item {
     implicitWidth: 420
     
     property var entrySet
-    property var entry
+    property var entry: ({})
     
+    // Perhaps we could just prefill the 'entry' property?
     property int entry_id: entry.entry_id || App.nextEntryId()
     property int entry_set_id: entry.entry_set_id || entrySet.set_id || 0
     property string voucher: entry.voucher || entrySet.getNextVoucher()
@@ -74,6 +75,7 @@ Item {
     ColumnLayout {
         spacing: 10
         anchors.fill: parent
+        anchors.margins: 10
         
         Text {
             id: title
@@ -256,7 +258,7 @@ Item {
         
         images: root.images.slice(0)
         selection: root.images
-        onImagesChanged: root.imagesChanged()
+        onUpdate: root.imagesChanged()
     }
     
     ImagePicker {
