@@ -20,8 +20,8 @@ App::App(QObject *parent)
     
     appPath = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last();
     csvPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).last();
-    imagesPath = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first();
-    cameraPath = imagesPath + "/Field Assistant";
+    imagesPaths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
+    cameraPath = imagesPaths.first() + "/Field Assistant";
     dbPath = appPath + "/db.json";
     
     QDir().mkpath(appPath);
@@ -46,9 +46,9 @@ void App::watchImages() {
     if (imageWatcher != nullptr) delete imageWatcher;
     
     imageWatcher = new QFileSystemWatcher(this);
-    imageWatcher->addPath(imagesPath);
+    imageWatcher->addPaths(imagesPaths);
     
-    connect(imageWatcher, &QFileSystemWatcher::directoryChanged,
+    connect(imageWatcher, &QFileSystemWatcher::fileChanged,
             this, &App::imagesChanged);
 }
 
@@ -118,10 +118,13 @@ void App::loadTemplates() {
 
 QStringList App::getImages() const {
     QStringList paths;
-    QDir dir(imagesPath);
     
-    for (QString path : dir.entryList(QDir::Files, QDir::Time)) {
-        paths.append("file:///" + dir.absoluteFilePath(path));
+    for (QString dirPath : imagesPaths) {
+        QDir dir(dirPath);
+        
+        for (QString path : dir.entryList(QDir::Files, QDir::Time)) {
+            paths.append("file:///" + dir.absoluteFilePath(path));
+        }
     }
     
     return paths;

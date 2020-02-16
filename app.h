@@ -21,7 +21,7 @@ class App : public QObject {
     QFileSystemWatcher* imageWatcher;
     
     QString appPath;
-    QString imagesPath;
+    QStringList imagesPaths;
     QString cameraPath;
     QString csvPath;
     QString dbPath;
