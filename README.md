@@ -20,10 +20,8 @@
 - fix camera image orientation on saved files
 - I think the gps position doesn't update properly
 - the "active" state for the imagebar loader doesn't really work
-- bugman logo is missing now?
-- back button
 - remove ticks on entryblock imagebar
-- image preview can see a thin slide of each image neighbour
+- new transitions for stackview
 
 #### housework
 - migrate navigation to stackview
