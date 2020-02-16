@@ -22,6 +22,7 @@ Frame {
         swipeView.currentIndex = Math.max(0, images.indexOf(image));
         root.enabled = true;
         root.visible = true;
+        root.forceActiveFocus();
         root.y = 0;
     }
     
@@ -50,22 +51,23 @@ Frame {
         }
     }
     
-    Keys.onBackPressed: {
-        event.accepted = true;
-        close();
-    }
+    parent: Window.contentItem
+    height: parent.height
+    width: parent.width
+    padding: 0
+    enabled: false
+    visible: false
+    y: height
     
     background: Rectangle {
         anchors.fill: parent
         color: "black"
     }
     
-    parent: Window.contentItem
-    height: parent.height
-    width: parent.width
-    enabled: false
-    visible: false
-    y: height
+    Keys.onBackPressed: {
+        event.accepted = true;
+        close();
+    }
     
     Behavior on y {
         PropertyAnimation {

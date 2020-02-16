@@ -17,7 +17,11 @@ ApplicationWindow {
     
     Header {
         id: header
+        
+        anchors.left: parent.left
+        anchors.right: parent.right
         z: 100
+        
         active: nav.depth > 1
         onBack: nav.pop()
         onAbout: nav.push("AboutView.qml")
@@ -33,8 +37,8 @@ ApplicationWindow {
         initialItem: "HomeView.qml"
         
         Keys.onBackPressed: {
-            nav.pop();
             event.accepted = nav.depth > 1
+            nav.pop();
         }
         
 //        HomeView {

@@ -3,15 +3,10 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.12
 
-Item {
+Frame {
     id: root
 //    implicitWidth: 420
 //    implicitHeight: 420
-    
-    parent: Window.contentItem
-    anchors.fill: parent
-    enabled: false
-    visible: false
     
     signal update()
     
@@ -19,9 +14,10 @@ Item {
     property int offset: flick.height
     
     function open() {
-        offset = flick.height - 300
-        enabled = true
-        visible = true
+        offset = flick.height - 300;
+        enabled = true;
+        visible = true;
+        forceActiveFocus();
     }
     
     function close() {
@@ -40,6 +36,14 @@ Item {
         root.images.push(image);
         root.imagesChanged();
     }
+    
+    parent: Window.contentItem
+    anchors.fill: parent
+    padding: 0
+    enabled: false
+    visible: false
+    
+    background: Rectangle { visible: false }
     
     Keys.onBackPressed: {
         event.accepted = true;
