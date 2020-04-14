@@ -1,6 +1,1 @@
-node_modules
-public
-.firebase
 .vscode
-*.log
-*.tar
