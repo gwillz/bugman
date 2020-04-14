@@ -1,1 +1,13 @@
 .vscode
+*.autosave
+*.exe
+*.dll
+*.pro.user*
+*.apk
+*.aab
+*.zip
+*.csv
+build/
+build-*
+/zlib
+/quazip

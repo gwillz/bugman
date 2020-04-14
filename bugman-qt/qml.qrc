@@ -1,0 +1,42 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>EntryBlock.qml</file>
+        <file>HomeView.qml</file>
+        <file>EntryEditView.qml</file>
+        <file>AboutView.qml</file>
+        <file>SetSaveView.qml</file>
+        <file>SetEditView.qml</file>
+        <file>EntryField.qml</file>
+        <file>Header.qml</file>
+        <file>qmldir</file>
+        <file>TemplatesDialog.qml</file>
+        <file>EntryModel.js</file>
+        <file>TemplateFieldDialog.qml</file>
+        <file>DeleteDialog.qml</file>
+        <file>TemplateField.qml</file>
+        <file>EntrySet.qml</file>
+        <file>ImagePicker.qml</file>
+        <file>EntryBlockItem.qml</file>
+        <file>TemplateItem.qml</file>
+        <file>ComboField.qml</file>
+        <file>LouTheme/Button.qml</file>
+        <file>LouTheme/Theme.qml</file>
+        <file>LouTheme/qmldir</file>
+        <file>LouTheme/SpinBox.qml</file>
+        <file>LouTheme/ComboBox.qml</file>
+        <file>LouTheme/Switch.qml</file>
+        <file>LouTheme/Slider.qml</file>
+        <file>LouTheme/TextArea.qml</file>
+        <file>LouTheme/TextField.qml</file>
+        <file>LouTheme/Dialog.qml</file>
+        <file>LouTheme/Label.qml</file>
+        <file>StringField.qml</file>
+        <file>LouTheme/DialogButtonBox.qml</file>
+        <file>Camera.qml</file>
+        <file>EntryImage.qml</file>
+        <file>EntryImagePreview.qml</file>
+        <file>CircleButton.qml</file>
+    </qresource>
+</RCC>
