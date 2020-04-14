@@ -39,3 +39,8 @@ firebase deploy
 - images
   - new storage backend (localForage/IndexedDB)
   - some sort of migration..?
+  - create zip files
+  - use react-native
+- use fork-ts plugin
+- remove specimen type from required
+  - add to bugman template
