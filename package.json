@@ -7,7 +7,6 @@
   "scripts": {
     "start": "node serve.js",
     "webpack": "webpack --progress",
-    "assets": "node assets.js",
     "version": "node version.js",
     "clean": "rm public/* || echo clean",
     "pages": "gh-pages -d public",
@@ -46,6 +45,7 @@
     "@types/workbox-sw": "^4.2.0",
     "css-loader": "^3.5.2",
     "express": "^4.17.1",
+    "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "gh-pages": "^2.2.0",
     "html-webpack-plugin": "^4.2.0",

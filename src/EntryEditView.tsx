@@ -153,7 +153,7 @@ export function EntryEditView() {
                             className="button icon"
                             disabled={geo_busy}
                             onClick={getGeo}>
-                            <img src="/gmd-refresh.svg" />
+                            <img src={require('./gmd-refresh.svg')} />
                         </button>
                     </div>
                 </div>

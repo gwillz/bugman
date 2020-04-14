@@ -109,7 +109,7 @@ export function ConfigEditFieldBlock(props: Props) {
             <button type="button"
                 className="button icon"
                 onClick={onRemove}>
-                <img src="/gmd-delete.svg" />
+                <img src={require('./gmd-delete.svg')} />
             </button>
         </div>
     )

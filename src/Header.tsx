@@ -53,7 +53,7 @@ export function Header() {
                 )}
                 <Link to="/">
                     <img
-                        src="/bugman_logo.svg"
+                        src={require('./bugman_logo.svg')}
                         className="logo"
                     />
                 </Link>

@@ -20,6 +20,9 @@ import { TemplatesView } from './TemplatesView';
 Settings.defaultLocale = "en-AU";
 
 import './index.css';
+import './favicon.ico';
+import './apple-touch-icon.png';
+import './manifest.webmanifest';
 
 function App() {
     
@@ -27,7 +30,7 @@ function App() {
         <PersistGate persistor={persistor}>
         <Provider store={store}>
         <HeaderProvider>
-        <BrowserRouter basename="/bugman">
+        <BrowserRouter basename={process.env.BASENAME}>
             <Header/>
             <Switch>
                 <Route exact path="/">
@@ -77,7 +80,7 @@ function App() {
 
 if (process.env.NODE_ENV === "production") {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register("sw.js", { scope: location.pathname });
+        navigator.serviceWorker.register("sw.js", { scope: process.env.BASENAME });
     }
     
     navigator.storage?.persist?.();

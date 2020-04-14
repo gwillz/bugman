@@ -9,12 +9,14 @@ const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const presetMode = process.env.NODE_ENV || 'development';
-const isProduction = (presetMode === 'production');
-
 const r = path.resolve.bind(null, __dirname);
 
+const presetMode = process.env.NODE_ENV || 'development';
+const isProduction = (presetMode === 'production');
+const BASENAME = process.env.BASENAME || "/";
 const VERSION = require("./version")();
+
+console.log("basename", BASENAME);
 
 /** @type {webpack.Configuration} */
 module.exports = {
@@ -26,6 +28,7 @@ module.exports = {
     },
     output: {
         path: r("public"),
+        publicPath: BASENAME,
         filename: isProduction ? "[id].[hash].js" : "[name].js",
     },
     optimization: {
@@ -64,6 +67,14 @@ module.exports = {
                     'css-loader',
                 ],
             },
+            {
+                test: /\.(?:svg|png|webmanifest|ico)$/,
+                include: r('src'),
+                loader: 'file-loader',
+                options: {
+                    esModule: false,
+                }
+            },
         ]
     },
     resolve: {
@@ -83,6 +94,7 @@ module.exports = {
             entry: r("src/sw.ts"),
         }),
         new webpack.EnvironmentPlugin({
+            BASENAME,
             ...process.env,
             VERSION,
             BUILD_TIMESTAMP: +new Date(),
