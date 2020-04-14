@@ -1,6 +1,5 @@
 
 import { h, render } from 'preact';
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Settings } from 'luxon';
@@ -20,13 +19,15 @@ import { TemplatesView } from './TemplatesView';
 
 Settings.defaultLocale = "en-AU";
 
+import './index.css';
+
 function App() {
     
     return (
         <PersistGate persistor={persistor}>
         <Provider store={store}>
         <HeaderProvider>
-        <BrowserRouter>
+        <BrowserRouter basename="/bugman">
             <Header/>
             <Switch>
                 <Route exact path="/">
@@ -75,7 +76,9 @@ function App() {
 }
 
 if (process.env.NODE_ENV === "production") {
-    if ('serviceWorker' in navigator) runtime.register();
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("sw.js", { scope: location.pathname });
+    }
     
     navigator.storage?.persist?.();
 }

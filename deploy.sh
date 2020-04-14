@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-npm run clean
-npm run assets
-NODE_ENV=production npm run webpack
-firebase deploy
+
+function mmm {
+    NODE_ENV=production $@ || exit $?
+}
+
+mmm npm run clean
+mmm npm run assets
+mmm npm run webpack
+# mmm npm run firebase
+mmm npm run pages

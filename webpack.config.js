@@ -6,6 +6,8 @@ const path = require('path');
 const webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const presetMode = process.env.NODE_ENV || 'development';
 const isProduction = (presetMode === 'production');
@@ -24,9 +26,14 @@ module.exports = {
     },
     output: {
         path: r("public"),
+        filename: isProduction ? "[id].[hash].js" : "[name].js",
     },
     optimization: {
         splitChunks: false,
+    },
+    performance: {
+        maxAssetSize: 500 * 1000,
+        maxEntrypointSize: 500 * 1000,
     },
     module: {
         rules: [
@@ -49,10 +56,18 @@ module.exports = {
                     configFile: r("tsconfig.sw.json"),
                 },
             },
+            {
+                test: /\.css$/,
+                include: r('src'),
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                ],
+            },
         ]
     },
     resolve: {
-        extensions: ['.js', '.json', '.mjs', '.ts', '.tsx'],
+        extensions: ['.js', '.json', '.mjs', '.ts', '.tsx', '.css'],
         alias: {
             'react': 'preact/compat',
             'react-dom': 'preact/compat',
@@ -72,5 +87,11 @@ module.exports = {
             VERSION,
             BUILD_TIMESTAMP: +new Date(),
         }),
+        new MiniCssExtractPlugin({
+            filename: isProduction ? "[id].[hash].css" : "[name].css",
+        }),
+        new HtmlWebpackPlugin({
+            template: r("src/index.html"),
+        })
     ]
 }

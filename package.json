@@ -6,10 +6,13 @@
   "private": true,
   "scripts": {
     "start": "node serve.js",
-    "webpack": "webpack",
+    "webpack": "webpack --progress",
     "assets": "node assets.js",
     "version": "node version.js",
-    "clean": "rm public/* || echo clean"
+    "clean": "rm public/* || echo clean",
+    "pages": "gh-pages -d public",
+    "firebase": "firebase deploy",
+    "deploy": "bash deploy.sh"
   },
   "repository": {
     "type": "git",
@@ -41,8 +44,13 @@
     "@types/react-router-dom": "^5.1.0",
     "@types/webpack": "^4.39.1",
     "@types/workbox-sw": "^4.2.0",
+    "css-loader": "^3.5.2",
     "express": "^4.17.1",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
+    "gh-pages": "^2.2.0",
+    "html-webpack-plugin": "^4.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "postcss-loader": "^3.0.0",
     "serviceworker-webpack-plugin": "^1.0.1",
     "ts-loader": "^6.1.2",
     "typescript": "^3.7.2",

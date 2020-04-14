@@ -5,8 +5,6 @@ const fs = require('fs');
 const r = path.resolve.bind(null, __dirname);
 
 const INCLUDE = [
-    ".css",
-    ".html",
     ".webmanifest",
     ".png",
     ".ico",
