@@ -30,7 +30,7 @@ function App() {
         <PersistGate persistor={persistor}>
         <Provider store={store}>
         <HeaderProvider>
-        <BrowserRouter basename={process.env.BASENAME}>
+        <BrowserRouter>
             <Header/>
             <Switch>
                 <Route exact path="/">
@@ -80,7 +80,7 @@ function App() {
 
 if (process.env.NODE_ENV === "production") {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register("sw.js", { scope: process.env.BASENAME });
+        navigator.serviceWorker.register("sw.js");
     }
     
     navigator.storage?.persist?.();

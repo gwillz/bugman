@@ -6,5 +6,5 @@ function mmm {
 
 mmm npm run clean
 mmm npm run webpack
-# mmm npm run firebase
-mmm npm run pages
+mmm npm run firebase
+# mmm npm run pages
